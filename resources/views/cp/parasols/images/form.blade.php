@@ -89,6 +89,7 @@
                     <select name="status" id="status" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30">
                         <option value="available" {{ old('status', $item->status) === 'available' || old('status', $item->status) === null ? 'selected' : '' }}>متاح حالياً</option>
                         <option value="ending_soon" {{ old('status', $item->status) === 'ending_soon' ? 'selected' : '' }}>ينتهي قريباً</option>
+                        <option value="ended" {{ old('status', $item->status) === 'ended' ? 'selected' : '' }}>منتهية</option>
                     </select>
                 </div>
             </div>

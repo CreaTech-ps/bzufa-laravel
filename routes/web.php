@@ -41,6 +41,7 @@ Route::get('/grants/{slug}', [WebsiteScholarshipController::class, 'show'])->nam
 Route::get('/projects/kanani', [WebsiteKananiController::class, 'index'])->name('kanani.index');
 Route::get('/projects/tamkeen', [WebsiteTamkeenController::class, 'index'])->name('tamkeen.index');
 Route::get('/projects/parasols', [WebsiteParasolsController::class, 'index'])->name('parasols.index');
+Route::get('/projects/parasols/spaces', [WebsiteParasolsController::class, 'spaces'])->name('parasols.spaces');
 Route::get('/news', [WebsiteNewsController::class, 'index'])->name('news.index');
 Route::get('/news/{slug}', [WebsiteNewsController::class, 'show'])->name('news.show');
 

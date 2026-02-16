@@ -14,7 +14,7 @@ class ParasolsController extends Controller
         $settings = ParasolsSetting::get();
         $regions = ParasolsRegion::orderBy('sort_order')->orderBy('id')->get();
 
-        $regionId = request('region');
+        $regionId = request('region') ? (int) request('region') : null;
 
         $query = ParasolsImage::with('region')
             ->orderBy('sort_order')
@@ -26,8 +26,36 @@ class ParasolsController extends Controller
 
         $images = $query->paginate(9)->withQueryString();
 
-        $totalSpaces = ParasolsImage::count();
+        $totalSpaces = $regionId
+            ? ParasolsImage::where('region_id', $regionId)->count()
+            : ParasolsImage::count();
 
         return view('website.umbrellas', compact('settings', 'regions', 'images', 'totalSpaces'));
+    }
+
+    /**
+     * مساحات المظلات للطلب عبر AJAX (فلتر حسب المنطقة بدون إعادة تحميل).
+     */
+    public function spaces()
+    {
+        $regionId = request('region') ? (int) request('region') : null;
+
+        $query = ParasolsImage::with('region')
+            ->orderBy('sort_order')
+            ->orderBy('id');
+
+        if ($regionId) {
+            $query->where('region_id', $regionId);
+        }
+
+        $images = $query->get();
+        $totalSpaces = $images->count();
+
+        $html = view('website.partials.parasols_spaces', compact('images', 'totalSpaces'))->render();
+
+        return response()->json([
+            'html' => $html,
+            'total' => $totalSpaces,
+        ]);
     }
 }

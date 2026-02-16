@@ -14,8 +14,19 @@
                 فيديو قصة الجمعية
             </h2>
             <div>
-                <label for="story_video_url" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">رابط الفيديو</label>
-                <input type="url" name="story_video_url" id="story_video_url" value="{{ old('story_video_url', $aboutPage->story_video_url) }}" placeholder="https://..." class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
+                <label for="story_video_url" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">رابط الفيديو (قصة الجمعية)</label>
+                <input type="url" name="story_video_url" id="story_video_url" value="{{ old('story_video_url', $aboutPage->story_video_url) }}" placeholder="https://youtube.com/... أو رابط فيديو مباشر" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
+            </div>
+        </section>
+
+        <section class="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+            <h2 class="text-lg font-bold text-slate-800 dark:text-white mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">groups</span>
+                فيديو صفحة فريقنا
+            </h2>
+            <div>
+                <label for="team_video_url" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">رابط الفيديو</label>
+                <input type="url" name="team_video_url" id="team_video_url" value="{{ old('team_video_url', $aboutPage->team_video_url ?? '') }}" placeholder="https://..." class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
             </div>
         </section>
 

@@ -17,25 +17,32 @@
         @endif
 
         <section class="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 shadow-sm space-y-4">
-            <h2 class="text-lg font-bold text-slate-800 dark:text-white">المحتوى</h2>
+            <h2 class="text-lg font-bold text-slate-800 dark:text-white">المحتوى (يُعرض في سلايدر «إشادة من طلبتنا» بالصفحة الرئيسية)</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div>
-                    <label for="title_ar" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">العنوان (عربي) <span class="text-red-500">*</span></label>
-                    <input type="text" name="title_ar" id="title_ar" value="{{ old('title_ar', $item->title_ar) }}" required class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
+                    <label for="title_ar" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">اسم صاحب القصة (عربي) <span class="text-red-500">*</span></label>
+                    <input type="text" name="title_ar" id="title_ar" value="{{ old('title_ar', $item->title_ar) }}" required maxlength="80" placeholder="مثال: أحمد محمود" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
+                    <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">حد أقصى 80 حرفاً</p>
                     @error('title_ar')<p class="mt-1 text-sm text-red-500">{{ $message }}</p>@enderror
                 </div>
                 <div>
-                    <label for="title_en" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">العنوان (إنجليزي)</label>
-                    <input type="text" name="title_en" id="title_en" value="{{ old('title_en', $item->title_en) }}" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
+                    <label for="title_en" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">الوصف التحتي (اختياري)</label>
+                    <input type="text" name="title_en" id="title_en" value="{{ old('title_en', $item->title_en) }}" maxlength="120" placeholder="مثال: خريج هندسة حاسوب - دفعة 2023" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
+                    <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">حد أقصى 120 حرفاً (يظهر تحت الاسم في السلايدر)</p>
+                    @error('title_en')<p class="mt-1 text-sm text-red-500">{{ $message }}</p>@enderror
                 </div>
             </div>
             <div>
-                <label for="content_ar" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">النص (عربي)</label>
-                <textarea name="content_ar" id="content_ar" rows="4" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30">{{ old('content_ar', $item->content_ar) }}</textarea>
+                <label for="content_ar" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">نص الإشادة (عربي) <span class="text-red-500">*</span></label>
+                <textarea name="content_ar" id="content_ar" rows="4" maxlength="350" placeholder="اقتباس أو شهادة من صاحب القصة..." class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30">{{ old('content_ar', $item->content_ar) }}</textarea>
+                <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">حد أقصى 350 حرفاً و 50 كلمة (مناسب لعرض السلايدر)</p>
+                @error('content_ar')<p class="mt-1 text-sm text-red-500">{{ $message }}</p>@enderror
             </div>
             <div>
-                <label for="content_en" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">النص (إنجليزي)</label>
-                <textarea name="content_en" id="content_en" rows="4" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30">{{ old('content_en', $item->content_en) }}</textarea>
+                <label for="content_en" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">نص الإشادة (إنجليزي، اختياري)</label>
+                <textarea name="content_en" id="content_en" rows="4" maxlength="350" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30">{{ old('content_en', $item->content_en) }}</textarea>
+                <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">حد أقصى 350 حرفاً</p>
+                @error('content_en')<p class="mt-1 text-sm text-red-500">{{ $message }}</p>@enderror
             </div>
         </section>
 

@@ -49,7 +49,7 @@
     <form action="{{ route('grants.apply.store', $scholarship->slug_ar ?: $scholarship->id) }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         @csrf
         <div class="lg:col-span-8 space-y-8">
-            <section class="bg-white dark:bg-card-dark border border-gray-200 dark:border-white/10 rounded-2xl p-6 relative overflow-hidden group">
+            <section id="form-step-1" class="bg-white dark:bg-card-dark border border-gray-200 dark:border-white/10 rounded-2xl p-6 relative overflow-hidden group">
                 <div class="absolute top-0 right-0 w-1 h-full bg-primary"></div>
                 <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                     <div class="flex items-start gap-4">
@@ -68,7 +68,7 @@
                     @endif
                 </div>
             </section>
-            <section class="bg-white dark:bg-card-dark border border-gray-200 dark:border-white/10 rounded-2xl p-8">
+            <section id="form-step-2" class="bg-white dark:bg-card-dark border border-gray-200 dark:border-white/10 rounded-2xl p-8">
                 <div class="flex items-center gap-3 mb-6">
                     <span class="bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 px-3 py-1 rounded-md text-xs font-bold">خطوة 2</span>
                     <h3 class="text-xl font-bold">رفع النموذج المعبأ</h3>
@@ -87,7 +87,7 @@
                 <p class="mt-2 text-sm text-red-500">{{ $message }}</p>
                 @enderror
             </section>
-            <section class="bg-white dark:bg-card-dark border border-gray-200 dark:border-white/10 rounded-2xl p-8">
+            <section id="form-step-3" class="bg-white dark:bg-card-dark border border-gray-200 dark:border-white/10 rounded-2xl p-8">
                 <div class="flex items-center gap-3 mb-8">
                     <span class="bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 px-3 py-1 rounded-md text-xs font-bold">خطوة 3</span>
                     <h3 class="text-xl font-bold">البيانات والوثائق الإضافية</h3>
@@ -109,9 +109,29 @@
                         <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
+                    <div class="space-y-4">
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">إرفاق وثائق إضافية (اختياري — حتى 10 ملفات، PDF أو JPG أو PNG، كل ملف حتى 10MB)</p>
+                        <div id="additional-files-container" class="space-y-3">
+                            @for($i = 0; $i < 5; $i++)
+                            <div class="flex items-center gap-3 additional-file-row">
+                                <input type="file" name="additional_files[]" accept=".pdf,.jpg,.jpeg,.png" class="hidden additional-file-input" />
+                                <label class="flex-1 border-2 border-dashed border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 text-sm text-gray-500 dark:text-gray-400 cursor-pointer hover:border-primary transition-colors additional-file-label">اختر ملفاً</label>
+                                <span class="additional-file-name text-sm text-primary hidden"></span>
+                                <button type="button" class="remove-additional text-slate-400 hover:text-red-500 hidden" aria-label="إزالة"><span class="material-symbols-outlined text-lg">close</span></button>
+                            </div>
+                            @endfor
+                        </div>
+                        <button type="button" id="add-more-files-btn" class="text-primary font-bold text-sm flex items-center gap-1 hover:underline">
+                            <span class="material-symbols-outlined text-lg">add_circle</span>
+                            إضافة مرفق آخر
+                        </button>
+                        @error('additional_files.*')
+                        <p class="text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
             </section>
-            <section class="bg-white dark:bg-card-dark border border-gray-200 dark:border-white/10 rounded-2xl p-8">
+            <section id="form-step-4" class="bg-white dark:bg-card-dark border border-gray-200 dark:border-white/10 rounded-2xl p-8">
                 <div class="flex items-center gap-3 mb-8">
                     <span class="bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 px-3 py-1 rounded-md text-xs font-bold">خطوة 4</span>
                     <h3 class="text-xl font-bold">تأكيد وإرسال الطلب</h3>
@@ -151,32 +171,44 @@
                     <span class="material-symbols-outlined text-primary">fact_check</span>
                     <h3 class="font-bold text-lg">دليل خطوات التقديم</h3>
                 </div>
-                <div class="relative timeline-line space-y-10">
-                    <div class="flex gap-4 step-node">
-                        <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold flex-shrink-0">1</div>
+                <div class="relative timeline-line space-y-10" id="sidebar-steps">
+                    <div id="sidebar-step-1" class="flex gap-4 step-node transition-all duration-300" data-step="1">
+                        <div class="step-circle w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold flex-shrink-0">
+                            <span class="step-number">1</span>
+                            <span class="step-check material-symbols-outlined text-2xl hidden">check</span>
+                        </div>
                         <div>
-                            <h4 class="font-bold text-primary">تحميل وتعبئة النموذج</h4>
+                            <h4 class="font-bold text-primary step-title">تحميل وتعبئة النموذج</h4>
                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">ابدأ بتحميل ملف الـ PDF الرسمي للمنحة وقم بتعبئة كافة الحقول المطلوبة.</p>
                         </div>
                     </div>
-                    <div class="flex gap-4 step-node opacity-60">
-                        <div class="w-10 h-10 rounded-full bg-gray-200 dark:bg-white/10 text-gray-600 dark:text-gray-400 flex items-center justify-center font-bold flex-shrink-0">2</div>
+                    <div id="sidebar-step-2" class="flex gap-4 step-node opacity-60 transition-all duration-300" data-step="2">
+                        <div class="step-circle w-10 h-10 rounded-full bg-gray-200 dark:bg-white/10 text-gray-600 dark:text-gray-400 flex items-center justify-center font-bold flex-shrink-0">
+                            <span class="step-number">2</span>
+                            <span class="step-check material-symbols-outlined text-2xl hidden">check</span>
+                        </div>
                         <div>
-                            <h4 class="font-bold">رفع النموذج المعبأ</h4>
+                            <h4 class="font-bold step-title">رفع النموذج المعبأ</h4>
                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">بعد التوقيع والتأكد من البيانات، أعد رفع النموذج بصيغة رقمية واضحة.</p>
                         </div>
                     </div>
-                    <div class="flex gap-4 step-node opacity-60">
-                        <div class="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold flex-shrink-0 border border-primary/30">3</div>
+                    <div id="sidebar-step-3" class="flex gap-4 step-node opacity-60 transition-all duration-300" data-step="3">
+                        <div class="step-circle w-10 h-10 rounded-full bg-gray-200 dark:bg-white/10 text-gray-600 dark:text-gray-400 flex items-center justify-center font-bold flex-shrink-0">
+                            <span class="step-number">3</span>
+                            <span class="step-check material-symbols-outlined text-2xl hidden">check</span>
+                        </div>
                         <div>
-                            <h4 class="font-bold">إرفاق الوثائق والهوية</h4>
+                            <h4 class="font-bold step-title">إرفاق الوثائق والهوية</h4>
                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">أدخل رقم هويتك الوطنية وارفع الوثائق الداعمة والمرفقات المطلوبة في قسم واحد.</p>
                         </div>
                     </div>
-                    <div class="flex gap-4 step-node opacity-60">
-                        <div class="w-10 h-10 rounded-full bg-gray-200 dark:bg-white/10 text-gray-600 dark:text-gray-400 flex items-center justify-center font-bold flex-shrink-0">4</div>
+                    <div id="sidebar-step-4" class="flex gap-4 step-node opacity-60 transition-all duration-300" data-step="4">
+                        <div class="step-circle w-10 h-10 rounded-full bg-gray-200 dark:bg-white/10 text-gray-600 dark:text-gray-400 flex items-center justify-center font-bold flex-shrink-0">
+                            <span class="step-number">4</span>
+                            <span class="step-check material-symbols-outlined text-2xl hidden">check</span>
+                        </div>
                         <div>
-                            <h4 class="font-bold">إرسال الطلب</h4>
+                            <h4 class="font-bold step-title">إرسال الطلب</h4>
                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">المراجعة النهائية والضغط على زر الإرسال للحصول على رقم طلبك.</p>
                         </div>
                     </div>
@@ -197,14 +229,61 @@
 
 @section('scripts')
 <script>
+function updateSidebarSteps() {
+    var filledForm = document.getElementById('filled_form');
+    var step2Done = filledForm && filledForm.files && filledForm.files.length > 0;
+    var nameEl = document.getElementById('applicant_name');
+    var idEl = document.getElementById('applicant_id_number');
+    var step3Done = nameEl && idEl && nameEl.value.trim() !== '' && idEl.value.trim() !== '';
+    var consentEl = document.getElementById('consent');
+    var step4Done = consentEl && consentEl.checked;
+    var completed = [ true, step2Done, step3Done, step4Done ];
+    var currentStep = 1;
+    for (var s = 1; s <= 4; s++) {
+        if (!completed[s - 1]) { currentStep = s; break; }
+    }
+    if (completed[3]) currentStep = 4;
+    for (var i = 1; i <= 4; i++) {
+        var node = document.getElementById('sidebar-step-' + i);
+        if (!node) continue;
+        var circle = node.querySelector('.step-circle');
+        var numSpan = node.querySelector('.step-number');
+        var checkSpan = node.querySelector('.step-check');
+        var titleEl = node.querySelector('.step-title');
+        var isDone = completed[i - 1];
+        var isCurrent = (i === currentStep);
+        node.classList.remove('opacity-60');
+        node.style.opacity = '';
+        circle.classList.remove('bg-primary', 'bg-green-500', 'bg-gray-200', 'text-white', 'text-gray-600', 'dark:bg-white/10', 'dark:text-gray-400', 'border', 'border-primary/30');
+        if (numSpan) numSpan.classList.add('hidden');
+        if (checkSpan) checkSpan.classList.add('hidden');
+        if (titleEl) titleEl.classList.remove('text-primary');
+        if (isDone) {
+            circle.classList.add('bg-green-500', 'text-white');
+            if (numSpan) numSpan.classList.add('hidden');
+            if (checkSpan) checkSpan.classList.remove('hidden');
+        } else if (isCurrent) {
+            circle.classList.add('bg-primary', 'text-white');
+            if (numSpan) numSpan.classList.remove('hidden');
+            if (titleEl) titleEl.classList.add('text-primary');
+            node.style.opacity = '1';
+        } else {
+            circle.classList.add('bg-gray-200', 'dark:bg-white/10', 'text-gray-600', 'dark:text-gray-400');
+            if (numSpan) numSpan.classList.remove('hidden');
+            node.classList.add('opacity-60');
+        }
+    }
+}
+
 document.getElementById('filled_form')?.addEventListener('change', function() {
-    const fileName = document.getElementById('file-name');
-    if (this.files?.length) {
+    var fileName = document.getElementById('file-name');
+    if (this.files && this.files.length) {
         fileName.textContent = 'تم اختيار: ' + this.files[0].name;
         fileName.classList.remove('hidden');
     } else {
         fileName.classList.add('hidden');
     }
+    updateSidebarSteps();
 });
 var dropZone = document.getElementById('drop-zone');
 if (dropZone) {
@@ -215,5 +294,56 @@ if (dropZone) {
         if (input && e.dataTransfer.files.length) { input.files = e.dataTransfer.files; input.dispatchEvent(new Event('change')); }
     });
 }
+document.getElementById('applicant_name')?.addEventListener('input', updateSidebarSteps);
+document.getElementById('applicant_name')?.addEventListener('blur', updateSidebarSteps);
+document.getElementById('applicant_id_number')?.addEventListener('input', updateSidebarSteps);
+document.getElementById('applicant_id_number')?.addEventListener('blur', updateSidebarSteps);
+document.getElementById('consent')?.addEventListener('change', updateSidebarSteps);
+document.addEventListener('DOMContentLoaded', updateSidebarSteps);
+(function() {
+    var container = document.getElementById('additional-files-container');
+    var addBtn = document.getElementById('add-more-files-btn');
+    var maxFiles = 10;
+    function countRows() { return container ? container.querySelectorAll('.additional-file-row').length : 0; }
+    function bindRow(row) {
+        var input = row.querySelector('.additional-file-input');
+        var label = row.querySelector('.additional-file-label');
+        var nameSpan = row.querySelector('.additional-file-name');
+        var removeBtn = row.querySelector('.remove-additional');
+        if (!input || !label) return;
+        input.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                nameSpan.textContent = this.files[0].name;
+                nameSpan.classList.remove('hidden');
+                if (removeBtn) removeBtn.classList.remove('hidden');
+            } else {
+                nameSpan.classList.add('hidden');
+                if (removeBtn) removeBtn.classList.add('hidden');
+            }
+        });
+        label.addEventListener('click', function(e) { e.preventDefault(); input.click(); });
+        if (removeBtn) {
+            removeBtn.addEventListener('click', function() {
+                input.value = '';
+                nameSpan.classList.add('hidden');
+                removeBtn.classList.add('hidden');
+            });
+        }
+    }
+    container.querySelectorAll('.additional-file-row').forEach(bindRow);
+    addBtn && addBtn.addEventListener('click', function() {
+        if (countRows() >= maxFiles) return;
+        var first = container.querySelector('.additional-file-row');
+        if (!first) return;
+        var clone = first.cloneNode(true);
+        clone.querySelector('.additional-file-input').value = '';
+        clone.querySelector('.additional-file-name').textContent = '';
+        clone.querySelector('.additional-file-name').classList.add('hidden');
+        var rb = clone.querySelector('.remove-additional');
+        if (rb) rb.classList.add('hidden');
+        container.appendChild(clone);
+        bindRow(clone);
+    });
+})();
 </script>
 @endsection

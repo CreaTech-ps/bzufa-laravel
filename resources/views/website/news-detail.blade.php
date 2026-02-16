@@ -24,10 +24,10 @@
         <h1 class="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-8 leading-tight">
             {{ $news->title_ar }}
         </h1>
-        <div class="flex items-center justify-center gap-4">
-            <button type="button" onclick="navigator.clipboard.writeText(window.location.href)"
-                class="w-10 h-10 rounded-full bg-slate-100 dark:bg-bg-dark-card flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition-all text-slate-500"
-                title="نسخ الرابط">
+        <div class="flex items-center justify-center gap-4 flex-wrap">
+            <button type="button" id="news-share-btn"
+                class="w-10 h-10 rounded-full bg-slate-100 dark:bg-bg-dark-card flex items-center justify-center hover:bg-primary hover:text-white transition-all text-slate-500"
+                title="مشاركة">
                 <span class="material-symbols-outlined text-lg">share</span>
             </button>
             <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->url()) }}&text={{ urlencode($news->title_ar) }}"
@@ -36,12 +36,32 @@
                 title="تغريد">
                 <span class="material-symbols-outlined text-lg">public</span>
             </a>
-            <button type="button" onclick="navigator.clipboard.writeText(window.location.href)"
+            <a href="https://wa.me/?text={{ urlencode($news->title_ar . ' ' . request()->url()) }}"
+                target="_blank" rel="noopener"
+                class="w-10 h-10 rounded-full bg-slate-100 dark:bg-bg-dark-card flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-all text-slate-500"
+                title="واتساب">
+                <span class="material-symbols-outlined text-lg">chat</span>
+            </a>
+            <button type="button" onclick="navigator.clipboard.writeText(window.location.href); this.title='تم النسخ!';"
                 class="w-10 h-10 rounded-full bg-slate-100 dark:bg-bg-dark-card flex items-center justify-center hover:bg-[#0A66C2] hover:text-white transition-all text-slate-500"
                 title="نسخ الرابط">
                 <span class="material-symbols-outlined text-lg">link</span>
             </button>
         </div>
+        <script>
+        document.getElementById('news-share-btn')?.addEventListener('click', function() {
+            var url = window.location.href;
+            var title = @json($news->title_ar);
+            var text = @json(Str::limit(strip_tags($news->summary_ar ?? $news->title_ar), 100));
+            if (navigator.share) {
+                navigator.share({ title: title, text: text, url: url }).catch(function() {
+                    navigator.clipboard.writeText(url);
+                });
+            } else {
+                navigator.clipboard.writeText(url);
+            }
+        });
+        </script>
     </div>
 
     {{-- Featured Image --}}

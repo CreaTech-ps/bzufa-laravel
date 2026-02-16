@@ -19,10 +19,10 @@
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDe_U2g2RKthf6bg7nsaHl03IYlCYNKMqNGc6mYzqwbhjCEaop6Adw_KAL77i-bqGwUaq2iZo8oI37R-keedDS1qWj4h7bjxIrZdeKrAOonw-fiUkxT5GWbNwyPKE_HxW0evyw51IAFgC1t2nL_bMiRoSWStjagBGkBp7wjJkiKok0b17rAx1PwK80YD0e2CesrMvX1Deq34pr5Ke5BtB_PeqFhUVcgzdh1q4qcBWNtXt1Vn3dYkHlNsZUiqxW3wBj31t6gm0WapZQ" />
                 <div class="absolute inset-0 flex items-center justify-center">
                     @if($aboutPage->story_video_url)
-                    <a href="{{ $aboutPage->story_video_url }}" target="_blank" rel="noopener"
-                        class="w-24 h-24 bg-primary text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
+                    <button type="button" onclick="openVideoModal(@json($aboutPage->story_video_url))"
+                        class="w-24 h-24 bg-primary text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform cursor-pointer border-0">
                         <span class="material-symbols-outlined text-6xl">play_arrow</span>
-                    </a>
+                    </button>
                     @else
                     <div class="w-24 h-24 bg-primary text-white rounded-full flex items-center justify-center shadow-2xl cursor-default">
                         <span class="material-symbols-outlined text-6xl">play_arrow</span>
@@ -119,8 +119,63 @@
 </div>
 @endsection
 
+{{-- مودال مشغل الفيديو --}}
+<div id="video-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4" aria-hidden="true">
+    <div class="relative w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl">
+        <button type="button" onclick="closeVideoModal()" class="absolute top-4 left-4 z-20 w-12 h-12 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/70 transition-colors" aria-label="إغلاق">
+            <span class="material-symbols-outlined text-3xl">close</span>
+        </button>
+        <div id="video-modal-content" class="w-full h-full"></div>
+    </div>
+</div>
+
 @section('scripts')
     <script>
+        function embedUrl(url) {
+            if (!url) return '';
+            url = url.trim();
+            var m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+            if (m) return 'https://www.youtube.com/embed/' + m[1] + '?autoplay=1';
+            var v = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+            if (v) return 'https://player.vimeo.com/video/' + v[1] + '?autoplay=1';
+            return url;
+        }
+        function isEmbedable(url) {
+            return /youtube\.com|youtu\.be|vimeo\.com/i.test(url);
+        }
+        function openVideoModal(url) {
+            var modal = document.getElementById('video-modal');
+            var content = document.getElementById('video-modal-content');
+            if (!modal || !content) return;
+            content.innerHTML = '';
+            var embed = embedUrl(url);
+            if (isEmbedable(url)) {
+                var iframe = document.createElement('iframe');
+                iframe.setAttribute('src', embed);
+                iframe.setAttribute('class', 'w-full h-full');
+                iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+                iframe.setAttribute('allowfullscreen', '');
+                content.appendChild(iframe);
+            } else {
+                var video = document.createElement('video');
+                video.setAttribute('src', url);
+                video.setAttribute('controls', '');
+                video.setAttribute('autoplay', '');
+                video.setAttribute('class', 'w-full h-full');
+                content.appendChild(video);
+            }
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeVideoModal() {
+            var modal = document.getElementById('video-modal');
+            var content = document.getElementById('video-modal-content');
+            if (modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
+            if (content) content.innerHTML = '';
+            document.body.style.overflow = '';
+        }
+        document.getElementById('video-modal')?.addEventListener('click', function(e) { if (e.target === this) closeVideoModal(); });
         function openLightbox(title, text, icon) {
             const lightbox = document.getElementById('lightbox');
             const content = document.getElementById('lightbox-content');

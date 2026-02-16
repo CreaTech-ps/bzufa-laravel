@@ -60,6 +60,13 @@
                 </div>
             </div>
             <div>
+                <label class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">التقرير السنوي (PDF) — تنزيل مباشر من الصفحة الرئيسية</label>
+                @if($home->annual_report_pdf_path ?? null)
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-2">الملف الحالي: <a href="{{ asset('storage/' . $home->annual_report_pdf_path) }}" target="_blank" rel="noopener" class="text-primary hover:underline">تحميل</a></p>
+                @endif
+                <input type="file" name="annual_report_pdf" accept=".pdf" class="cp-input w-full max-w-md rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 file:mr-4 file:py-2 file:rounded-lg file:border-0 file:bg-primary/10 file:text-primary" />
+            </div>
+            <div>
                 <button type="submit" class="cp-btn px-6 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white font-medium shadow-sm transition-colors flex items-center gap-2">
                     <span class="material-symbols-outlined text-xl">save</span>
                     حفظ إعدادات Hero

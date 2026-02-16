@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use App\Models\AboutPage;
 use App\Models\TeamMember;
 
 class TeamController extends Controller
 {
     public function index()
     {
+        $aboutPage = AboutPage::get();
         $boardMembers = TeamMember::where('type', 'board')
             ->orderBy('sort_order')
             ->orderBy('id')
@@ -19,6 +21,6 @@ class TeamController extends Controller
             ->orderBy('id')
             ->get();
 
-        return view('website.our_team', compact('boardMembers', 'executiveStaff'));
+        return view('website.our_team', compact('boardMembers', 'executiveStaff', 'aboutPage'));
     }
 }

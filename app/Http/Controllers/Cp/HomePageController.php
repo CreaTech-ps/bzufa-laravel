@@ -30,6 +30,7 @@ class HomePageController extends Controller
             'cta_text_ar' => ['nullable', 'string', 'max:255'],
             'cta_text_en' => ['nullable', 'string', 'max:255'],
             'cta_url' => ['nullable', 'string', 'max:500'],
+            'annual_report_pdf' => ['nullable', 'file', 'mimes:pdf', 'max:51200'],
         ]);
 
         $home = HomeSetting::get();
@@ -40,6 +41,14 @@ class HomePageController extends Controller
             }
             $validated['hero_media_path'] = $request->file('hero_media')->store('cp/home', 'public');
         }
+
+        if ($request->hasFile('annual_report_pdf')) {
+            if ($home->annual_report_pdf_path) {
+                Storage::disk('public')->delete($home->annual_report_pdf_path);
+            }
+            $validated['annual_report_pdf_path'] = $request->file('annual_report_pdf')->store('cp/home', 'public');
+        }
+        unset($validated['annual_report_pdf']);
 
         $home->update($validated);
 

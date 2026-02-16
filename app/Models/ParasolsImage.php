@@ -22,6 +22,7 @@ class ParasolsImage extends Model
 
     public const STATUS_AVAILABLE = 'available';
     public const STATUS_ENDING_SOON = 'ending_soon';
+    public const STATUS_ENDED = 'ended';
 
     public function region()
     {

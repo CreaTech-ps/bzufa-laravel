@@ -21,6 +21,7 @@ class AboutController extends Controller
     {
         $request->validate([
             'story_video_url' => ['nullable', 'string', 'max:500'],
+            'team_video_url' => ['nullable', 'string', 'max:500'],
             'sections' => ['nullable', 'array'],
             'sections.*.id' => ['required', 'exists:about_sections,id'],
             'sections.*.title_ar' => ['required', 'string', 'max:255'],
@@ -31,6 +32,7 @@ class AboutController extends Controller
 
         AboutPage::get()->update([
             'story_video_url' => $request->story_video_url,
+            'team_video_url' => $request->team_video_url,
         ]);
 
         if ($request->has('sections')) {

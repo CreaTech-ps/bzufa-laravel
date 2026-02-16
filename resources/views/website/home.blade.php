@@ -20,7 +20,13 @@
 
                     <div
                         class="order-2 lg:order-2 relative flex justify-center items-center py-10 md:py-0 scale-90 md:scale-100 float-animation">
-
+                        @if(($homeSetting->hero_type ?? 'image') === 'video' && !empty($homeSetting->hero_media_path))
+                        <div class="w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 aspect-video bg-black">
+                            <video class="w-full h-full object-cover" autoplay muted loop playsinline
+                                src="{{ asset('storage/' . $homeSetting->hero_media_path) }}">
+                            </video>
+                        </div>
+                        @else
                         <div class="parallel-cyrcle cyrcle-1">
                             <img alt="Student" class="rotated-img"
                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUPXODDN0v4kZRHFbTZmKaHw3iMD1kBS1QCI9FQqCTASiLUm9InU61rKi8Q-r3eIc0AwfzPP6ALeGWWyKQpa6W0Ah_bJlI_XqF0YWlOV5JSta7QRyYGtMFjvBfwkyE8mD94y2ZXYJ0-Jmk6zpOiYygCH2xYPO4Pl2OvCpQhXhD9ldBmEZwKDD_oT3V-2-zcMLyHtQfFLqywbB6EXQrS87kZBz5xW6_zBzYI4ttU2scrOq0k3jXqEDI11UpfnGsx4AqKqq9NpEb5-4" />
@@ -47,6 +53,7 @@
                                 class="w-[300px] h-[300px] md:w-[450px] md:h-[450px] lg:w-[550px] lg:h-[550px] border border-dashed border-primary/30 rounded-full">
                             </div>
                         </div>
+                        @endif
                     </div>
 
                     <div class="order-1 lg:order-1 text-center lg:text-right">
@@ -67,10 +74,17 @@
                                 class="bg-primary hover:bg-secondary text-white px-8 lg:px-12 py-4 rounded-full text-lg lg:text-xl font-bold transition-all hover:scale-105 shadow-lg shadow-primary/20 text-center">
                                 {{ $homeSetting->cta_text_ar ?? 'تبرع الآن' }}
                             </a>
-                            <button
-                                class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-primary px-8 lg:px-12 py-4 rounded-full text-lg lg:text-xl font-bold transition-all">
+                            @if(!empty($homeSetting->annual_report_pdf_path))
+                            <a href="{{ asset('storage/' . $homeSetting->annual_report_pdf_path) }}" download
+                                class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-primary px-8 lg:px-12 py-4 rounded-full text-lg lg:text-xl font-bold transition-all inline-flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined">download</span>
                                 التقرير السنوي
-                            </button>
+                            </a>
+                            @else
+                            <span class="bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-500 px-8 lg:px-12 py-4 rounded-full text-lg lg:text-xl font-bold cursor-default inline-flex items-center justify-center gap-2">
+                                التقرير السنوي
+                            </span>
+                            @endif
                         </div>
                     </div>
 
@@ -245,63 +259,56 @@
 
                 <div class="swiper successStoriesSwiper pb-12">
                     <div class="swiper-wrapper">
-
-                        <div class="swiper-slide">
-                            <div class="main-container text-center relative z-10">
-                                <div class="inline-block bg-white/20 px-4 py-1 rounded-full text-sm font-bold mb-8">
-                                    dsdsdsd إشادة من طلبتنا
-                                </div>
-                                <blockquote
-                                    class="text-3xl md:text-4xl font-extrabold leading-snug mb-10 italic max-w-4xl mx-auto drop-shadow-sm">
-                                    "بفضل منحة جمعية أصدقاء جامعة بيرزيت، استطعت إكمال دراستي في الهندسة دون القلق من
-                                    الرسوم المرتفعة.
-                                    اليوم أعمل كمهندس في كبرى شركات التكنولوجيا."
-                                </blockquote>
-                                <div class="flex flex-col items-center">
-                                    <div
-                                        class="w-20 h-20 rounded-full border-4 border-white/30 overflow-hidden mb-4 shadow-xl">
-                                        <img alt="Graduate Portrait" class="w-full h-full object-cover"
-                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDkzatml77qca_VfxhewphZL3fjRhGSlQb54nyYRw59exbtzScoLKwBNj38muJv_EgYGzBDfLmgKsXlihhpUai2z5gbLXrGz_SUDe3X7mfNWca5aOy9aVZp11APEyzdVFQZdBGiGDjs6ZD1BlypgNPCBwgkMQdiPlu38q6yx3pidn25VTy1NC_-bo2pYhv02lHmunNOPv00uC2M9RMXiNar4lkS70L9mlLQIltwv4aQYNPf9-G8zGbhK9CIKJb8LfCso5q61pdE-Y" />
-                                    </div>
-                                    <h4 class="text-xl font-bold">أحمد محمود</h4>
-                                    <p class="text-white/90">خريج هندسة حاسوب - دفعة 2023</p>
-                                </div>
-                            </div>
-                        </div>
-
+                        @forelse($successStories as $story)
                         <div class="swiper-slide">
                             <div class="main-container text-center relative z-10">
                                 <div class="inline-block bg-white/20 px-4 py-1 rounded-full text-sm font-bold mb-8">
                                     إشادة من طلبتنا
                                 </div>
+                                @if($story->content_ar)
                                 <blockquote
                                     class="text-3xl md:text-4xl font-extrabold leading-snug mb-10 italic max-w-4xl mx-auto drop-shadow-sm">
-                                    "بفضل منحة جمعية أصدقاء جامعة بيرزيت، استطعت إكمال دراستي في الهندسة دون القلق من
-                                    الرسوم المرتفعة.
-                                    اليوم أعمل كمهندس في كبرى شركات التكنولوجيا."
+                                    "{{ $story->content_ar }}"
                                 </blockquote>
+                                @endif
                                 <div class="flex flex-col items-center">
-                                    <div
-                                        class="w-20 h-20 rounded-full border-4 border-white/30 overflow-hidden mb-4 shadow-xl">
-                                        <img alt="Graduate Portrait" class="w-full h-full object-cover"
-                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDkzatml77qca_VfxhewphZL3fjRhGSlQb54nyYRw59exbtzScoLKwBNj38muJv_EgYGzBDfLmgKsXlihhpUai2z5gbLXrGz_SUDe3X7mfNWca5aOy9aVZp11APEyzdVFQZdBGiGDjs6ZD1BlypgNPCBwgkMQdiPlu38q6yx3pidn25VTy1NC_-bo2pYhv02lHmunNOPv00uC2M9RMXiNar4lkS70L9mlLQIltwv4aQYNPf9-G8zGbhK9CIKJb8LfCso5q61pdE-Y" />
+                                    <div class="w-20 h-20 rounded-full border-4 border-white/30 overflow-hidden mb-4 shadow-xl bg-white/10">
+                                        @if($story->image_path)
+                                        <img alt="{{ $story->title_ar }}" class="w-full h-full object-cover"
+                                            src="{{ asset('storage/' . $story->image_path) }}" />
+                                        @else
+                                        <div class="w-full h-full flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-4xl text-white/50">person</span>
+                                        </div>
+                                        @endif
                                     </div>
-                                    <h4 class="text-xl font-bold">أحمد محمود</h4>
-                                    <p class="text-white/90">خريج هندسة حاسوب - دفعة 2023</p>
+                                    <h4 class="text-xl font-bold">{{ $story->title_ar }}</h4>
+                                    @if($story->title_en)
+                                    <p class="text-white/90">{{ $story->title_en }}</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
-
+                        @empty
+                        <div class="swiper-slide">
+                            <div class="main-container text-center relative z-10">
+                                <div class="inline-block bg-white/20 px-4 py-1 rounded-full text-sm font-bold mb-8">
+                                    إشادة من طلبتنا
+                                </div>
+                                <p class="text-2xl font-bold max-w-2xl mx-auto text-white/90">قصص طلبتنا ستظهر هنا. أضف قصص نجاح من لوحة التحكم وعلّمها «إبراز في الرئيسية».</p>
+                            </div>
+                        </div>
+                        @endforelse
                     </div>
 
                     <div class="swiper-pagination"></div>
                     <div class="flex justify-center gap-4 mt-8">
                         <div
-                            class="swiper-button-prev-custom cursor-pointer w-10 h-10 rounded-full  flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                            class="swiper-button-prev-custom cursor-pointer w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all">
                             <span class="material-symbols-outlined">arrow_forward</span>
                         </div>
                         <div
-                            class="swiper-button-next-custom cursor-pointer w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                            class="swiper-button-next-custom cursor-pointer w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all">
                             <span class="material-symbols-outlined">arrow_back</span>
                         </div>
                     </div>

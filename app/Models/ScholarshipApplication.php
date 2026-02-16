@@ -12,8 +12,13 @@ class ScholarshipApplication extends Model
         'applicant_name',
         'applicant_id_number',
         'file_path',
+        'extra_attachments',
         'status',
         'admin_notes',
+    ];
+
+    protected $casts = [
+        'extra_attachments' => 'array',
     ];
 
     public function scholarship(): BelongsTo

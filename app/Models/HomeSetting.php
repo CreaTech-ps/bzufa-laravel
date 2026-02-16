@@ -18,6 +18,7 @@ class HomeSetting extends Model
         'cta_text_ar',
         'cta_text_en',
         'cta_url',
+        'annual_report_pdf_path',
     ];
 
     public static function get(): self

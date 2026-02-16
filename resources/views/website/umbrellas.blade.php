@@ -72,69 +72,26 @@
                     <h2 class="text-3xl md:text-4xl font-extrabold mb-4 dark:text-white">{{ $settings->section_title_ar ?? 'المساحات المتاحة في الحرم الجامعي' }}</h2>
                     <div class="flex items-center gap-2 text-gray-500 dark:text-gray-400 font-medium">
                         <span class="material-symbols-outlined text-primary">filter_list</span>
-                        <span>{{ $totalSpaces }} مساحة معروضة حالياً</span>
+                        <span id="parasols-count-text">{{ $totalSpaces }} مساحة معروضة حالياً</span>
                     </div>
                 </div>
                 @if($regions->isNotEmpty())
                 <div
-                    class="flex flex-wrap items-center gap-2 p-1.5 bg-gray-100 dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-800">
-                    <a href="{{ route('parasols.index') }}"
-                        class="px-7 py-2.5 rounded-lg {{ !request('region') ? 'bg-primary text-white font-bold shadow-md' : 'hover:bg-gray-200 dark:hover:bg-gray-800 transition-all font-semibold dark:text-gray-300' }}">الكل</a>
+                    class="flex flex-wrap items-center gap-2 p-1.5 bg-gray-100 dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-800"
+                    id="parasols-filter">
+                    @php $currentRegion = request('region') ? (int)request('region') : null; @endphp
+                    <button type="button" class="parasols-filter-btn px-7 py-2.5 rounded-lg font-semibold dark:text-gray-300 transition-all hover:bg-gray-200 dark:hover:bg-gray-800 {{ !$currentRegion ? 'bg-primary text-white font-bold shadow-md' : '' }}"
+                        data-region="">الكل</button>
                     @foreach($regions as $region)
-                    <a href="{{ route('parasols.index', ['region' => $region->id]) }}"
-                        class="px-7 py-2.5 rounded-lg {{ request('region') == $region->id ? 'bg-primary text-white font-bold shadow-md' : 'hover:bg-gray-200 dark:hover:bg-gray-800 transition-all font-semibold dark:text-gray-300' }}">{{ $region->name_ar }}</a>
+                    <button type="button" class="parasols-filter-btn px-7 py-2.5 rounded-lg font-semibold dark:text-gray-300 transition-all hover:bg-gray-200 dark:hover:bg-gray-800 {{ $currentRegion === (int)$region->id ? 'bg-primary text-white font-bold shadow-md' : '' }}"
+                        data-region="{{ $region->id }}">{{ $region->name_ar }}</button>
                     @endforeach
                 </div>
                 @endif
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                @forelse($images as $item)
-                <div
-                    class="bg-white dark:bg-surface-dark rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800/50 group transition-all hover:shadow-2xl">
-                    <div class="relative h-64 overflow-hidden">
-                        <img alt="{{ $item->title_ar }}"
-                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                            src="{{ $item->image_path ? asset('storage/' . $item->image_path) : asset('assets/img/logo-l.svg') }}" />
-                        <div class="absolute top-4 right-4">
-                            @if($item->status === 'ending_soon')
-                            <span
-                                class="bg-orange-500 text-white text-[10px] font-black px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg">
-                                <span class="material-symbols-outlined text-xs">timer</span>
-                                ينتهي قريباً
-                            </span>
-                            @else
-                            <span
-                                class="bg-green-500 text-white text-[10px] font-black px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg">
-                                <span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
-                                متاح حالياً
-                            </span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="p-8">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-xl font-bold group-hover:text-primary transition-colors dark:text-white">{{ $item->title_ar }}</h3>
-                            <p class="text-primary font-black text-xl">${{ $item->price ?? '—' }}<span class="text-xs text-gray-500 font-normal">/شهر</span></p>
-                        </div>
-                        @if($item->location_ar)
-                        <div class="flex items-center gap-2 text-gray-500 dark:text-gray-400 text-sm mb-7">
-                            <span class="material-symbols-outlined text-sm">location_on</span>
-                            <span>{{ $item->location_ar }}</span>
-                        </div>
-                        @endif
-                    </div>
-                </div>
-                @empty
-                <div class="col-span-full text-center py-16 text-slate-500 dark:text-slate-400">
-                    لا توجد مساحات معروضة حالياً
-                </div>
-                @endforelse
+            <div id="parasols-grid-wrap">
+                @include('website.partials.parasols_spaces', ['images' => $images, 'totalSpaces' => $totalSpaces])
             </div>
-            @if($images->hasPages())
-            <div class="mt-16 text-center">
-                {{ $images->links('pagination::tailwind') }}
-            </div>
-            @endif
         </div>
     </section>
     <section class="pb-32">
@@ -165,4 +122,42 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('scripts')
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+(function() {
+    var spacesUrl = @json(route('parasols.spaces'));
+    var $wrap = $('#parasols-grid-wrap');
+    var $countText = $('#parasols-count-text');
+    var $filterBtns = $('.parasols-filter-btn');
+
+    function setActiveBtn(regionId) {
+        $filterBtns.removeClass('bg-primary text-white font-bold shadow-md').addClass('hover:bg-gray-200 dark:hover:bg-gray-800');
+        $filterBtns.filter(function() {
+            return $(this).data('region') === regionId || ($(this).data('region') === '' && !regionId);
+        }).addClass('bg-primary text-white font-bold shadow-md').removeClass('hover:bg-gray-200 dark:hover:bg-gray-800');
+    }
+
+    $filterBtns.on('click', function() {
+        var regionId = $(this).data('region');
+        setActiveBtn(regionId === '' ? null : regionId);
+        $wrap.addClass('opacity-60 pointer-events-none');
+        $.ajax({
+            url: spacesUrl,
+            type: 'GET',
+            data: { region: regionId || undefined },
+            dataType: 'json',
+            success: function(data) {
+                $wrap.html(data.html).removeClass('opacity-60 pointer-events-none');
+                if ($countText.length) $countText.text(data.total + ' مساحة معروضة حالياً');
+            },
+            error: function() {
+                $wrap.removeClass('opacity-60 pointer-events-none');
+            }
+        });
+    });
+})();
+</script>
 @endsection

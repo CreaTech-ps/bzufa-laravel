@@ -63,22 +63,23 @@
                     </div>
                     <div
                         class="bg-slate-100 dark:bg-card-dark p-1.5 rounded-full flex border border-slate-200 dark:border-white/5 transition-colors duration-300">
-                        <a href="{{ route('partners.index', ['type' => 'company']) }}"
-                            class="px-8 py-2.5 rounded-full {{ ($type ?? 'company') === 'company' ? 'bg-primary text-white font-bold' : 'text-slate-500 dark:text-slate-400 hover:text-primary' }} shadow-md transition-all text-sm">شركاء
-                            الشركات</a>
-                        <a href="{{ route('partners.index', ['type' => 'individual']) }}"
-                            class="px-8 py-2.5 rounded-full {{ ($type ?? 'company') === 'individual' ? 'bg-primary text-white font-bold' : 'text-slate-500 dark:text-slate-400 hover:text-primary' }} transition-all text-sm">الداعمون
-                            الأفراد</a>
+                        <button type="button" data-partner-filter="company"
+                            class="partners-filter-btn px-8 py-2.5 rounded-full {{ ($type ?? 'company') === 'company' ? 'bg-primary text-white font-bold' : 'text-slate-500 dark:text-slate-400 hover:text-primary' }} shadow-md transition-all text-sm">شركاء
+                            الشركات</button>
+                        <button type="button" data-partner-filter="individual"
+                            class="partners-filter-btn px-8 py-2.5 rounded-full {{ ($type ?? 'company') === 'individual' ? 'bg-primary text-white font-bold' : 'text-slate-500 dark:text-slate-400 hover:text-primary' }} transition-all text-sm">الداعمون
+                            الأفراد</button>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="partners-grid">
                     @forelse($partners as $partner)
+                    <div class="partner-card transition-opacity duration-300" data-type="{{ $partner->type }}">
                     @if($partner->link)
                     <a href="{{ $partner->link }}" target="_blank" rel="noopener"
-                        class="group bg-white dark:bg-card-dark p-10 rounded-2xl border border-slate-100 dark:border-white/5 hover:border-primary/50 transition-all duration-300 flex flex-col items-center text-center shadow-sm hover:shadow-lg block">
+                        class="group bg-white dark:bg-card-dark p-10 rounded-2xl border border-slate-100 dark:border-white/5 hover:border-primary/50 transition-all duration-300 flex flex-col items-center text-center shadow-sm hover:shadow-lg block h-full">
                     @else
                     <div
-                        class="group bg-white dark:bg-card-dark p-10 rounded-2xl border border-slate-100 dark:border-white/5 hover:border-primary/50 transition-all duration-300 flex flex-col items-center text-center shadow-sm hover:shadow-lg cursor-default">
+                        class="group bg-white dark:bg-card-dark p-10 rounded-2xl border border-slate-100 dark:border-white/5 hover:border-primary/50 transition-all duration-300 flex flex-col items-center text-center shadow-sm hover:shadow-lg cursor-default h-full">
                     @endif
                         <div
                             class="w-24 h-24 mb-6 grayscale group-hover:grayscale-0 transition-all duration-300 flex items-center justify-center opacity-80 group-hover:opacity-100">
@@ -94,17 +95,16 @@
                     @else
                     </div>
                     @endif
+                    </div>
                     @empty
                     <div class="col-span-full text-center py-16 text-slate-500 dark:text-slate-400">
-                        لا يوجد شركاء في هذه الفئة حالياً
+                        لا يوجد شركاء حالياً
                     </div>
                     @endforelse
                 </div>
-                @if($partners->hasPages())
-                <div class="mt-20 flex items-center justify-center">
-                    {{ $partners->links('pagination::tailwind') }}
+                <div id="partners-empty-msg" class="hidden text-center py-16 text-slate-500 dark:text-slate-400 col-span-full">
+                    لا يوجد شركاء في هذه الفئة حالياً
                 </div>
-                @endif
             </div>
         </section>
         <section class="bg-slate-50 dark:bg-[#1a1a1a] py-24 transition-colors duration-300">
@@ -131,4 +131,56 @@
                 </div>
             </div>
         </section>
+@endsection
+
+@section('scripts')
+<script>
+(function() {
+    var grid = document.getElementById('partners-grid');
+    var emptyMsg = document.getElementById('partners-empty-msg');
+    var cards = grid ? grid.querySelectorAll('.partner-card') : [];
+    var btns = document.querySelectorAll('.partners-filter-btn');
+    var currentFilter = '{{ $type ?? "company" }}';
+
+    function setActiveBtn(type) {
+        btns.forEach(function(btn) {
+            var t = btn.getAttribute('data-partner-filter');
+            if (t === type) {
+                btn.classList.add('bg-primary', 'text-white', 'font-bold');
+                btn.classList.remove('text-slate-500', 'dark:text-slate-400');
+            } else {
+                btn.classList.remove('bg-primary', 'text-white', 'font-bold');
+                btn.classList.add('text-slate-500', 'dark:text-slate-400');
+            }
+        });
+    }
+
+    function filterPartners(type) {
+        currentFilter = type;
+        setActiveBtn(type);
+        var visible = 0;
+        cards.forEach(function(card) {
+            var show = card.getAttribute('data-type') === type;
+            card.style.display = show ? '' : 'none';
+            card.style.opacity = show ? '1' : '0';
+            if (show) visible++;
+        });
+        if (emptyMsg) {
+            emptyMsg.classList.toggle('hidden', visible > 0);
+            if (visible === 0 && grid) {
+                emptyMsg.classList.remove('hidden');
+                grid.appendChild(emptyMsg);
+            }
+        }
+    }
+
+    btns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            filterPartners(btn.getAttribute('data-partner-filter'));
+        });
+    });
+    setActiveBtn(currentFilter);
+    filterPartners(currentFilter);
+})();
+</script>
 @endsection

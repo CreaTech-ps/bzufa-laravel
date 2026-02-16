@@ -72,6 +72,8 @@ class ScholarshipController extends Controller
             'applicant_id_number' => ['required', 'string', 'max:50'],
             'filled_form' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'], // 10MB
             'consent' => ['required', 'accepted'],
+            'additional_files' => ['nullable', 'array', 'max:10'],
+            'additional_files.*' => ['file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
         ], [
             'applicant_name.required' => 'يرجى إدخال الاسم الكامل.',
             'applicant_id_number.required' => 'يرجى إدخال رقم الهوية الوطنية أو الإقامة.',
@@ -81,15 +83,27 @@ class ScholarshipController extends Controller
             'filled_form.max' => 'حجم الملف يجب أن لا يتجاوز 10 ميجابايت.',
             'consent.required' => 'يجب الموافقة على الشروط لإرسال الطلب.',
             'consent.accepted' => 'يجب الموافقة على الشروط لإرسال الطلب.',
+            'additional_files.*.mimes' => 'الملفات الإضافية يجب أن تكون PDF أو JPG أو PNG.',
+            'additional_files.*.max' => 'كل ملف إضافي يجب أن لا يتجاوز 10 ميجابايت.',
         ]);
 
         $filePath = $request->file('filled_form')->store('scholarship-applications/' . $scholarship->id, 'public');
+
+        $extraPaths = [];
+        if ($request->hasFile('additional_files')) {
+            foreach ($request->file('additional_files') as $file) {
+                if ($file->isValid()) {
+                    $extraPaths[] = $file->store('scholarship-applications/' . $scholarship->id . '/attachments', 'public');
+                }
+            }
+        }
 
         $application = ScholarshipApplication::create([
             'scholarship_id' => $scholarship->id,
             'applicant_name' => $validated['applicant_name'],
             'applicant_id_number' => $validated['applicant_id_number'],
             'file_path' => $filePath,
+            'extra_attachments' => $extraPaths ?: null,
             'status' => 'pending',
         ]);
 

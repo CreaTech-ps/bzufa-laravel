@@ -9,21 +9,16 @@ class PartnerController extends Controller
 {
     public function index()
     {
-        $type = request('type', 'company'); // company | individual
-
+        $type = request('type', 'company');
         if (!in_array($type, ['company', 'individual'])) {
             $type = 'company';
         }
 
-        $partners = Partner::where('type', $type)
-            ->orderBy('sort_order')
-            ->orderBy('id')
-            ->paginate(12)
-            ->withQueryString();
-
-        $totalPartners = Partner::count();
-        $companyCount = Partner::where('type', 'company')->count();
-        $individualCount = Partner::where('type', 'individual')->count();
+        // جلب الجميع للفلترة عبر JS (بدون pagination) أو استخدام النوع المطلوب مع pagination
+        $partners = Partner::orderBy('sort_order')->orderBy('id')->get();
+        $totalPartners = $partners->count();
+        $companyCount = $partners->where('type', 'company')->count();
+        $individualCount = $partners->where('type', 'individual')->count();
 
         return view('website.success_partners', compact('partners', 'totalPartners', 'companyCount', 'individualCount', 'type'));
     }

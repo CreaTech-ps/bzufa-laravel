@@ -88,13 +88,44 @@ class SuccessStoryController extends Controller
     private function validateStory(Request $request): array
     {
         $validated = $request->validate([
-            'title_ar' => ['required', 'string', 'max:255'],
-            'title_en' => ['nullable', 'string', 'max:255'],
-            'content_ar' => ['nullable', 'string'],
-            'content_en' => ['nullable', 'string'],
+            'title_ar' => [
+                'required',
+                'string',
+                'max:80',
+            ],
+            'title_en' => [
+                'nullable',
+                'string',
+                'max:120',
+            ],
+            'content_ar' => [
+                'required',
+                'string',
+                'max:350',
+                function (string $attribute, mixed $value, \Closure $fail) {
+                    $words = count(preg_split('/\s+/u', trim($value), -1, PREG_SPLIT_NO_EMPTY));
+                    if ($words > 50) {
+                        $fail('نص الإشادة (عربي) يجب أن لا يتجاوز 50 كلمة (الحالية: ' . $words . ').');
+                    }
+                },
+            ],
+            'content_en' => [
+                'nullable',
+                'string',
+                'max:350',
+            ],
             'image' => ['nullable', 'image', 'max:2048'],
-            'sort_order' => ['nullable', 'integer'],
+            'sort_order' => ['nullable', 'integer', 'min:0'],
             'is_featured' => ['nullable', 'boolean'],
+        ], [
+            'title_ar.required' => 'حقل اسم صاحب القصة (عربي) مطلوب.',
+            'title_ar.max' => 'اسم صاحب القصة يجب أن لا يتجاوز 80 حرفاً.',
+            'title_en.max' => 'الوصف التحتي (إنجليزي) يجب أن لا يتجاوز 120 حرفاً.',
+            'content_ar.required' => 'نص الإشادة (عربي) مطلوب للعرض في الصفحة الرئيسية.',
+            'content_ar.max' => 'نص الإشادة يجب أن لا يتجاوز 350 حرفاً ليكون مناسباً لعرض السلايدر.',
+            'content_en.max' => 'نص الإشادة (إنجليزي) يجب أن لا يتجاوز 350 حرفاً.',
+            'image.image' => 'يجب رفع ملف صورة صالح.',
+            'image.max' => 'حجم الصورة يجب أن لا يتجاوز 2 ميجابايت.',
         ]);
         $validated['is_featured'] = $request->boolean('is_featured');
         $validated['sort_order'] = (int) ($request->sort_order ?? 0);

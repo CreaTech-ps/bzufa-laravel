@@ -88,9 +88,15 @@
                             <p class="px-3 py-1.5 text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">المشاريع</p>
                         </li>
                         <li>
-                            <a href="{{ route('cp.kanani.edit') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.kanani.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
+                            <a href="{{ route('cp.kanani.edit') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.kanani.edit') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
                                 <span class="material-symbols-outlined text-xl">storefront</span>
                                 <span>كنعاني</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('cp.kanani.gallery.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.kanani.gallery.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
+                                <span class="material-symbols-outlined text-xl">inventory_2</span>
+                                <span>منتجات المتجر</span>
                             </a>
                         </li>
                         <li>
@@ -136,12 +142,18 @@
                             </a>
                         </li>
                         <li class="pt-2 mt-2 border-t border-slate-200 dark:border-slate-700">
-                            <p class="px-3 py-1.5 text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">الطلبات</p>
+                            <p class="px-3 py-1.5 text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">الطلبات والنماذج</p>
                         </li>
                         <li>
-                            <a href="{{ route('cp.dashboard') }}#requests" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors">
-                                <span class="material-symbols-outlined text-xl">inbox</span>
-                                <span>الطلبات والنماذج</span>
+                            <a href="{{ route('cp.scholarship-applications.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.scholarship-applications.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
+                                <span class="material-symbols-outlined text-xl">school</span>
+                                <span>طلبات المنح</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('cp.empowerment-requests.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.empowerment-requests.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
+                                <span class="material-symbols-outlined text-xl">person_add</span>
+                                <span>طلبات تمكين</span>
                             </a>
                         </li>
                     </ul>

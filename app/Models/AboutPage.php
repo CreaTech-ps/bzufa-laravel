@@ -8,7 +8,7 @@ class AboutPage extends Model
 {
     protected $table = 'about_page';
 
-    protected $fillable = ['story_video_url'];
+    protected $fillable = ['story_video_url', 'team_video_url'];
 
     public static function get(): self
     {

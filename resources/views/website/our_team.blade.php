@@ -4,13 +4,31 @@
 
 @section('content')
 <div class="max-w-6xl mx-auto px-8 lg:px-16 py-20">
-        <header class="mb-24">
+        <header class="mb-16">
             <h1 class="text-5xl md:text-6xl font-black mb-8">فريقنا</h1>
             <p class="text-xl text-slate-600 dark:text-slate-400 max-w-3xl leading-relaxed">
                 نحن في جمعية أصدقاء جامعة بيرزيت نؤمن بأن التعليم هو حجر الأساس لمستقبل فلسطين. يضم فريقنا نخبة من
                 الكفاءات الوطنية الملتزمة بدعم المسيرة الأكاديمية وتمكين الطلبة.
             </p>
         </header>
+        @if(!empty($aboutPage->team_video_url))
+        <section class="mb-24">
+            <div class="relative rounded-[32px] overflow-hidden aspect-video bg-black shadow-2xl border border-slate-200 dark:border-slate-800 group">
+                @php
+                    $teamVideoUrl = $aboutPage->team_video_url;
+                    $isYoutube = preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $teamVideoUrl, $ym);
+                    $isVimeo = preg_match('/vimeo\.com\/(?:video\/)?(\d+)/', $teamVideoUrl, $vm);
+                @endphp
+                @if($isYoutube)
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/{{ $ym[1] }}?rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                @elseif($isVimeo)
+                    <iframe class="w-full h-full" src="https://player.vimeo.com/video/{{ $vm[1] }}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                @else
+                    <video class="w-full h-full object-cover" controls src="{{ $teamVideoUrl }}"></video>
+                @endif
+            </div>
+        </section>
+        @endif
         <section class="mb-32">
             <div class="flex items-center gap-4 mb-16">
                 <div class="w-2 h-10 bg-primary rounded-full"></div>

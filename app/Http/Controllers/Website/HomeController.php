@@ -7,6 +7,7 @@ use App\Models\HomeSetting;
 use App\Models\HomeStatistic;
 use App\Models\News;
 use App\Models\Partner;
+use App\Models\SuccessStory;
 
 class HomeController extends Controller
 {
@@ -20,7 +21,12 @@ class HomeController extends Controller
             ->orderByDesc('created_at')
             ->limit(4)
             ->get();
+        $successStories = SuccessStory::where('is_featured', true)
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->limit(10)
+            ->get();
 
-        return view('website.home', compact('homeSetting', 'statistics', 'partners', 'newsItems'));
+        return view('website.home', compact('homeSetting', 'statistics', 'partners', 'newsItems', 'successStories'));
     }
 }
