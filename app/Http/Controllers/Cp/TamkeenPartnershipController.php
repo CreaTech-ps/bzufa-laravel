@@ -75,6 +75,7 @@ class TamkeenPartnershipController extends Controller
         $validated = $request->validate([
             'supporter_name_ar' => ['required', 'string', 'max:255'],
             'supporter_name_en' => ['nullable', 'string', 'max:255'],
+            'sector' => ['nullable', 'string', 'max:100'],
             'start_date' => ['nullable', 'date'],
             'beneficiaries_count' => ['nullable', 'integer', 'min:0'],
             'logo' => ['nullable', 'image', 'max:2048'],

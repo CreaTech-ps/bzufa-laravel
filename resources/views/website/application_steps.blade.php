@@ -1,25 +1,25 @@
 @extends('website.layout')
-@section('title', 'بوابة التقديم: ' . $scholarship->title_ar)
+@section('title', __('ui.apply_portal') . ': ' . localized($scholarship, 'title'))
 
 @section('content')
-<main class="max-w-6xl mx-auto px-6 lg:px-8 py-12">
+<main class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <section class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
             <nav class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-4">
-                <a class="hover:underline" href="{{ route('home') }}">الرئيسية</a>
-                <span class="material-symbols-outlined text-xs">chevron_left</span>
-                <a class="hover:underline" href="{{ route('grants.index') }}">المنح الدراسية</a>
-                <span class="material-symbols-outlined text-xs">chevron_left</span>
-                <a class="hover:underline" href="{{ route('grants.show', $scholarship->slug_ar ?: $scholarship->id) }}">{{ $scholarship->title_ar }}</a>
-                <span class="material-symbols-outlined text-xs">chevron_left</span>
-                <span class="text-primary">بوابة التقديم</span>
+                <a class="hover:underline" href="{{ localized_route('home') }}">{{ __('ui.nav_home') }}</a>
+                <span class="material-symbols-outlined text-xs rtl:rotate-180">chevron_left</span>
+                <a class="hover:underline" href="{{ localized_route('grants.index') }}">{{ __('ui.nav_grants') }}</a>
+                <span class="material-symbols-outlined text-xs rtl:rotate-180">chevron_left</span>
+                <a class="hover:underline" href="{{ localized_route('grants.show', ['slug' => current_slug($scholarship)]) }}">{{ localized($scholarship, 'title') }}</a>
+                <span class="material-symbols-outlined text-xs rtl:rotate-180">chevron_left</span>
+                <span class="text-primary">{{ __('ui.apply_portal') }}</span>
             </nav>
             <div class="flex items-center gap-3 mb-2">
-                <span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">طلب تقديم نشط</span>
+                <span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">{{ __('ui.open_for_apply') }}</span>
             </div>
-            <h1 class="text-4xl font-bold dark:text-white">بوابة التقديم: {{ $scholarship->title_ar }}</h1>
+            <h1 class="text-4xl font-bold dark:text-white">{{ __('ui.apply_portal') }}: {{ localized($scholarship, 'title') }}</h1>
             <p class="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed">
-                يرجى اتباع الخطوات الأربع التالية لضمان اكتمال طلبك. نظامنا الرقمي يسهل عليك عملية رفع الوثائق وتتبع حالة طلبك في أي وقت.
+                {{ __('ui.apply_portal_intro') }}
             </p>
         </div>
         @if($scholarship->application_end_date)
@@ -28,8 +28,8 @@
                 <span class="material-symbols-outlined">history_toggle_off</span>
             </div>
             <div>
-                <p class="text-xs text-red-600/80 font-medium">الموعد النهائي</p>
-                <p class="text-xl font-bold text-red-600">{{ $scholarship->application_end_date->translatedFormat('d F Y') }}</p>
+                <p class="text-xs text-red-600/80 font-medium">{{ __('ui.deadline') }}</p>
+                <p class="text-xl font-bold text-red-600">{{ $scholarship->application_end_date->locale(app()->getLocale())->translatedFormat('d F Y') }}</p>
             </div>
         </div>
         @endif
@@ -46,7 +46,7 @@
         <p class="text-red-800 dark:text-red-200 font-medium">{{ session('error') }}</p>
     </div>
     @endif
-    <form action="{{ route('grants.apply.store', $scholarship->slug_ar ?: $scholarship->id) }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <form action="{{ localized_route('grants.apply.store', ['slug' => current_slug($scholarship)]) }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         @csrf
         <div class="lg:col-span-8 space-y-8">
             <section id="form-step-1" class="bg-white dark:bg-card-dark border border-gray-200 dark:border-white/10 rounded-2xl p-6 relative overflow-hidden group">

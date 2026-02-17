@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Website;
 use App\Http\Controllers\Controller;
 use App\Models\Scholarship;
 use App\Models\ScholarshipApplication;
+use App\Models\HomeSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -18,9 +19,16 @@ class ScholarshipController extends Controller
             ->paginate(9)
             ->withQueryString();
 
-        $totalActive = Scholarship::where('is_active', true)->count();
+        // Cache count query
+        $totalActive = cache()->remember('scholarships_total_active', 3600, function () {
+            return Scholarship::where('is_active', true)->count();
+        });
+        
+        $homeSetting = cache()->remember('home_setting', 3600, function () {
+            return HomeSetting::get();
+        });
 
-        return view('website.grants', compact('scholarships', 'totalActive'));
+        return view('website.grants', compact('scholarships', 'totalActive', 'homeSetting'));
     }
 
     public function show(string $slug)
@@ -107,7 +115,7 @@ class ScholarshipController extends Controller
             'status' => 'pending',
         ]);
 
-        return redirect()->route('grants.apply', $scholarship->slug_ar ?: $scholarship->id)
-            ->with('success', 'تم استلام طلبك بنجاح. رقم الطلب: #' . $application->id . '. سنتواصل معك قريباً.');
+        return redirect()->route('grants.apply', ['slug' => current_slug($scholarship)])
+            ->with('success', __('ui.application_received', ['id' => $application->id]));
     }
 }

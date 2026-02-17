@@ -29,6 +29,7 @@ class ParasolsSetting extends Model
         'stat3_label_ar',
         'stat4_value',
         'stat4_label_ar',
+        'whatsapp_url',
     ];
 
     public static function get(): self

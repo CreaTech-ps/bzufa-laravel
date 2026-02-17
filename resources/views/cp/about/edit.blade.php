@@ -11,6 +11,36 @@
         <section class="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
             <h2 class="text-lg font-bold text-slate-800 dark:text-white mb-4 flex items-center gap-2">
                 <span class="material-symbols-outlined text-primary">videocam</span>
+                فيديو رسالة المؤسس
+            </h2>
+            <div>
+                <label for="founder_message_video_url" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">رابط الفيديو (رسالة المؤسس)</label>
+                <input type="url" name="founder_message_video_url" id="founder_message_video_url" value="{{ old('founder_message_video_url', $aboutPage->founder_message_video_url ?? '') }}" placeholder="https://youtube.com/... أو رابط فيديو مباشر" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">سيتم تشغيل هذا الفيديو تلقائياً عند فتح صفحة من نحن</p>
+            </div>
+        </section>
+
+        <section class="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+            <h2 class="text-lg font-bold text-slate-800 dark:text-white mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">article</span>
+                الرسالة الكاملة للمؤسس
+            </h2>
+            <div class="space-y-4">
+                <div>
+                    <label for="founder_full_message_ar" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">الرسالة الكاملة (عربي)</label>
+                    <textarea name="founder_full_message_ar" id="founder_full_message_ar" rows="8" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30">{{ old('founder_full_message_ar', $aboutPage->founder_full_message_ar ?? '') }}</textarea>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">الرسالة الكاملة التي ستظهر في Lightbox عند الضغط على زر "اقرأ المزيد"</p>
+                </div>
+                <div>
+                    <label for="founder_full_message_en" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">الرسالة الكاملة (إنجليزي)</label>
+                    <textarea name="founder_full_message_en" id="founder_full_message_en" rows="8" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30">{{ old('founder_full_message_en', $aboutPage->founder_full_message_en ?? '') }}</textarea>
+                </div>
+            </div>
+        </section>
+
+        <section class="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+            <h2 class="text-lg font-bold text-slate-800 dark:text-white mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">videocam</span>
                 فيديو قصة الجمعية
             </h2>
             <div>

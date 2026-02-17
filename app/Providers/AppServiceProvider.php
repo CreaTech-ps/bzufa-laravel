@@ -14,7 +14,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $helpers = base_path('app/Helpers/helpers.php');
+        if (file_exists($helpers)) {
+            require_once $helpers;
+        }
     }
 
     /**

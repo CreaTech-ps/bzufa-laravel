@@ -20,6 +20,9 @@ class KananiController extends Controller
             'intro_video_url' => ['nullable', 'string', 'max:500'],
             'intro_text_ar' => ['nullable', 'string'],
             'intro_text_en' => ['nullable', 'string'],
+            'discover_more_text_ar' => ['nullable', 'string'],
+            'discover_more_text_en' => ['nullable', 'string'],
+            'hero_video_url' => ['nullable', 'string', 'max:500'],
             'store_url' => ['nullable', 'string', 'max:500'],
         ]);
 
@@ -27,6 +30,9 @@ class KananiController extends Controller
             'intro_video_url' => $request->intro_video_url,
             'intro_text_ar' => $request->intro_text_ar,
             'intro_text_en' => $request->intro_text_en,
+            'discover_more_text_ar' => $request->discover_more_text_ar,
+            'discover_more_text_en' => $request->discover_more_text_en,
+            'hero_video_url' => $request->hero_video_url,
             'store_url' => $request->store_url,
         ]);
 

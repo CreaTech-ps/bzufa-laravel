@@ -11,6 +11,7 @@ class TamkeenPartnership extends Model
     protected $fillable = [
         'supporter_name_ar',
         'supporter_name_en',
+        'sector',
         'start_date',
         'beneficiaries_count',
         'logo_path',

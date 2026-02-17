@@ -1,15 +1,21 @@
 @extends('website.layout')
 
 @section('title', $news->title_ar)
+
+@push('styles')
+@if(!empty($news->image_path))
+<meta property="og:image" content="{{ asset('storage/' . $news->image_path) }}" />
+@endif
+@endpush
     
 @section('content')
-<main class="max-w-7xl mx-auto px-6 lg:px-12 xl:px-16 pt-8 pb-20">
+<main class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 md:pb-20">
     {{-- Breadcrumb --}}
     <nav class="flex items-center text-xs gap-2 text-slate-500 dark:text-slate-400 mb-8">
-        <a class="hover:text-primary transition-colors" href="{{ route('home') }}">الرئيسية</a>
-        <span class="material-symbols-outlined text-[14px]">chevron_left</span>
-        <a class="hover:text-primary transition-colors" href="{{ route('news.index') }}">أرشيف الأخبار</a>
-        <span class="material-symbols-outlined text-[14px]">chevron_left</span>
+        <a class="hover:text-primary transition-colors" href="{{ localized_route('home') }}">الرئيسية</a>
+        <span class="material-symbols-outlined text-[14px] rtl:rotate-180">chevron_left</span>
+        <a class="hover:text-primary transition-colors" href="{{ localized_route('news.index') }}">أرشيف الأخبار</a>
+        <span class="material-symbols-outlined text-[14px] rtl:rotate-180">chevron_left</span>
         <span class="text-text-dark-gray dark:text-white font-semibold line-clamp-1">{{ $news->title_ar }}</span>
     </nav>
 
@@ -24,28 +30,11 @@
         <h1 class="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-8 leading-tight">
             {{ $news->title_ar }}
         </h1>
-        <div class="flex items-center justify-center gap-4 flex-wrap">
+        <div class="flex items-center justify-center">
             <button type="button" id="news-share-btn"
                 class="w-10 h-10 rounded-full bg-slate-100 dark:bg-bg-dark-card flex items-center justify-center hover:bg-primary hover:text-white transition-all text-slate-500"
                 title="مشاركة">
                 <span class="material-symbols-outlined text-lg">share</span>
-            </button>
-            <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->url()) }}&text={{ urlencode($news->title_ar) }}"
-                target="_blank" rel="noopener"
-                class="w-10 h-10 rounded-full bg-slate-100 dark:bg-bg-dark-card flex items-center justify-center hover:bg-[#1DA1F2] hover:text-white transition-all text-slate-500"
-                title="تغريد">
-                <span class="material-symbols-outlined text-lg">public</span>
-            </a>
-            <a href="https://wa.me/?text={{ urlencode($news->title_ar . ' ' . request()->url()) }}"
-                target="_blank" rel="noopener"
-                class="w-10 h-10 rounded-full bg-slate-100 dark:bg-bg-dark-card flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-all text-slate-500"
-                title="واتساب">
-                <span class="material-symbols-outlined text-lg">chat</span>
-            </a>
-            <button type="button" onclick="navigator.clipboard.writeText(window.location.href); this.title='تم النسخ!';"
-                class="w-10 h-10 rounded-full bg-slate-100 dark:bg-bg-dark-card flex items-center justify-center hover:bg-[#0A66C2] hover:text-white transition-all text-slate-500"
-                title="نسخ الرابط">
-                <span class="material-symbols-outlined text-lg">link</span>
             </button>
         </div>
         <script>
@@ -67,9 +56,9 @@
     {{-- Featured Image --}}
     @if($news->image_path)
     <div
-        class="w-full h-[300px] md:h-[500px] rounded-[2rem] overflow-hidden mb-12 shadow-2xl border border-slate-200 dark:border-slate-800">
+        class="w-full h-[300px] md:h-[500px] rounded-[2rem] overflow-hidden mb-12 border border-slate-200 dark:border-slate-800">
         <img alt="{{ $news->title_ar }}" class="w-full h-full object-cover"
-            src="{{ asset('storage/' . $news->image_path) }}" />
+            src="{{ asset('storage/' . $news->image_path) }}" loading="eager" width="1200" height="600" />
     </div>
     @endif
 
@@ -92,20 +81,21 @@
         <div class="flex items-center justify-between mb-8">
             <h2 class="text-2xl font-bold text-slate-900 dark:text-white">أخبار ذات صلة</h2>
             <a class="text-primary font-bold text-sm flex items-center gap-1 hover:gap-2 transition-all"
-                href="{{ route('news.index') }}">
+                href="{{ localized_route('news.index') }}">
                 كل الأخبار
-                <span class="material-symbols-outlined text-sm">arrow_back</span>
+                <span class="material-symbols-outlined text-sm rtl:rotate-180">arrow_back</span>
             </a>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             @foreach($relatedNews as $item)
             <article
                 class="bg-white dark:bg-bg-dark-card rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:shadow-xl transition-all group flex flex-col">
-                <a href="{{ route('news.show', $item->slug_ar ?: $item->id) }}">
+                <a href="{{ localized_route('news.show', ['slug' => current_slug($item)]) }}">
                     <div class="relative h-44 overflow-hidden">
                         <img alt="{{ $item->title_ar }}"
                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            src="{{ $item->image_path ? asset('storage/' . $item->image_path) : 'https://via.placeholder.com/400x200?text=خبر' }}" />
+                            src="{{ $item->image_path ? asset('storage/' . $item->image_path) : 'https://via.placeholder.com/400x200?text=خبر' }}" 
+                            loading="lazy" width="400" height="200" />
                     </div>
                 </a>
                 <div class="p-5 flex-1 flex flex-col">
@@ -114,7 +104,7 @@
                         {{ $item->published_at?->locale('ar')->translatedFormat('d F Y') ?? '—' }}
                     </div>
                     <h3 class="text-base font-bold mb-3 leading-tight group-hover:text-primary transition-colors">
-                        <a href="{{ route('news.show', $item->slug_ar ?: $item->id) }}">{{ $item->title_ar }}</a>
+                        <a href="{{ localized_route('news.show', ['slug' => current_slug($item)]) }}">{{ $item->title_ar }}</a>
                     </h3>
                     <p class="text-slate-600 dark:text-slate-400 text-xs leading-relaxed line-clamp-3 mb-6">
                         {{ Str::limit($item->summary_ar ?? $item->title_ar, 100) }}
@@ -122,11 +112,11 @@
                     <div
                         class="flex items-center justify-between mt-auto border-t border-slate-100 dark:border-slate-800/50 pt-4">
                         <a class="flex items-center gap-1 text-primary font-bold text-xs hover:translate-x-[-4px] transition-transform"
-                            href="{{ route('news.show', $item->slug_ar ?: $item->id) }}">
+                            href="{{ localized_route('news.show', ['slug' => current_slug($item)]) }}">
                             اقرأ المزيد
-                            <span class="material-symbols-outlined text-sm">arrow_back</span>
+                            <span class="material-symbols-outlined text-sm rtl:rotate-180">arrow_back</span>
                         </a>
-                        <button type="button" data-url="{{ url(route('news.show', $item->slug_ar ?: $item->id)) }}"
+                        <button type="button" data-url="{{ url(localized_route('news.show', ['slug' => current_slug($item)])) }}"
                             onclick="navigator.clipboard.writeText(this.dataset.url)"
                             class="text-slate-400 hover:text-primary transition-colors" title="نسخ الرابط">
                             <span class="material-symbols-outlined text-lg">share</span>
@@ -139,4 +129,64 @@
     </section>
     @endif
 </main>
+
+@push('scripts')
+{{-- Structured Data (Schema.org) for News Article --}}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": @json($news->title_ar),
+    "description": @json(Str::limit(strip_tags($news->summary_ar ?? $news->title_ar), 200)),
+    "image": @if($news->image_path)["{{ asset('storage/' . $news->image_path) }}"]@else[]@endif,
+    "datePublished": "{{ $news->published_at?->toIso8601String() ?? $news->created_at->toIso8601String() }}",
+    "dateModified": "{{ $news->updated_at->toIso8601String() }}",
+    "author": {
+        "@type": "Organization",
+        "name": {{ json_encode(__('ui.site_name')) }}
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": {{ json_encode(__('ui.site_name')) }},
+        "logo": {
+            "@type": "ImageObject",
+            "url": "{{ asset('assets/img/logo-l-en.svg') }}"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ url()->current() }}"
+    },
+    "inLanguage": "{{ app()->getLocale() === 'ar' ? 'ar' : 'en' }}"
+}
+</script>
+
+{{-- Breadcrumb Structured Data --}}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": {{ json_encode(__('ui.home')) }},
+            "item": "{{ localized_route('home') }}"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "أرشيف الأخبار",
+            "item": "{{ localized_route('news.index') }}"
+        },
+        {
+            "@type": "ListItem",
+            "position": 3,
+            "name": @json($news->title_ar),
+            "item": "{{ url()->current() }}"
+        }
+    ]
+}
+</script>
+@endpush
 @endsection

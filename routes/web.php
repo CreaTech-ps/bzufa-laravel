@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Cp\DashboardController;
 use App\Http\Controllers\Cp\SiteSettingsController;
 use App\Http\Controllers\Cp\NewsController;
@@ -29,21 +30,47 @@ use App\Http\Controllers\Website\ScholarshipController as WebsiteScholarshipCont
 use App\Http\Controllers\Website\KananiController as WebsiteKananiController;
 use App\Http\Controllers\Website\TamkeenController as WebsiteTamkeenController;
 use App\Http\Controllers\Website\ParasolsController as WebsiteParasolsController;
+use App\Http\Controllers\Website\PageController as WebsitePageController;
+use App\Http\Controllers\Website\VolunteerController as WebsiteVolunteerController;
+use App\Http\Controllers\Cp\VolunteerDepartmentController;
+use App\Http\Controllers\Website\TamkeenPartnershipController as WebsiteTamkeenPartnershipController;
+use App\Http\Controllers\Website\SitemapController;
+use App\Http\Controllers\Website\RobotsController;
+use App\Http\Controllers\Cp\VolunteerApplicationController;
+use App\Http\Controllers\Cp\TamkeenPartnershipRequestController;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/about-us', [WebsiteAboutController::class, 'index'])->name('about.index');
-Route::get('/our-team', [WebsiteTeamController::class, 'index'])->name('team.index');
-Route::get('/success-partners', [WebsitePartnerController::class, 'index'])->name('partners.index');
-Route::get('/grants', [WebsiteScholarshipController::class, 'index'])->name('grants.index');
-Route::get('/grants/{slug}/apply', [WebsiteScholarshipController::class, 'apply'])->name('grants.apply');
-Route::post('/grants/{slug}/apply', [WebsiteScholarshipController::class, 'storeApplication'])->name('grants.apply.store');
-Route::get('/grants/{slug}', [WebsiteScholarshipController::class, 'show'])->name('grants.show');
-Route::get('/projects/kanani', [WebsiteKananiController::class, 'index'])->name('kanani.index');
-Route::get('/projects/tamkeen', [WebsiteTamkeenController::class, 'index'])->name('tamkeen.index');
-Route::get('/projects/parasols', [WebsiteParasolsController::class, 'index'])->name('parasols.index');
-Route::get('/projects/parasols/spaces', [WebsiteParasolsController::class, 'spaces'])->name('parasols.spaces');
-Route::get('/news', [WebsiteNewsController::class, 'index'])->name('news.index');
-Route::get('/news/{slug}', [WebsiteNewsController::class, 'show'])->name('news.show');
+// مسارات الموقع الأمامي: تسجيل لكل من /en و / (عربي بدون بادئة) ليعمل كلا اللغتين
+$localizedMiddleware = ['locale.from.url', 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath'];
+$registerLocalizedRoutes = function () use ($localizedMiddleware) {
+    Route::middleware($localizedMiddleware)->group(function () {
+        Route::get('/', [HomeController::class, 'index'])->name('home');
+        Route::get('/about-us', [WebsiteAboutController::class, 'index'])->name('about.index');
+        Route::get('/our-team', [WebsiteTeamController::class, 'index'])->name('team.index');
+        Route::get('/success-partners', [WebsitePartnerController::class, 'index'])->name('partners.index');
+        Route::get('/grants', [WebsiteScholarshipController::class, 'index'])->name('grants.index');
+        Route::get('/grants/{slug}/apply', [WebsiteScholarshipController::class, 'apply'])->name('grants.apply');
+        Route::post('/grants/{slug}/apply', [WebsiteScholarshipController::class, 'storeApplication'])->name('grants.apply.store');
+        Route::get('/grants/{slug}', [WebsiteScholarshipController::class, 'show'])->name('grants.show');
+        Route::get('/projects/kanani', [WebsiteKananiController::class, 'index'])->name('kanani.index');
+        Route::get('/projects/tamkeen', [WebsiteTamkeenController::class, 'index'])->name('tamkeen.index');
+        Route::get('/projects/parasols', [WebsiteParasolsController::class, 'index'])->name('parasols.index');
+        Route::get('/projects/parasols/spaces', [WebsiteParasolsController::class, 'spaces'])->name('parasols.spaces');
+        Route::get('/news', [WebsiteNewsController::class, 'index'])->name('news.index');
+        Route::get('/news/{slug}', [WebsiteNewsController::class, 'show'])->name('news.show');
+        Route::get('/privacy-policy', [WebsitePageController::class, 'privacy'])->name('privacy');
+        Route::get('/terms-of-use', [WebsitePageController::class, 'terms'])->name('terms');
+        Route::get('/volunteer/departments', [WebsiteVolunteerController::class, 'getDepartments'])->name('volunteer.departments');
+        Route::post('/volunteer', [WebsiteVolunteerController::class, 'store'])->name('volunteer.store');
+        Route::get('/tamkeen/partnerships/filter', [WebsiteTamkeenPartnershipController::class, 'filter'])->name('tamkeen.partnerships.filter');
+        Route::post('/tamkeen/partnerships', [WebsiteTamkeenPartnershipController::class, 'store'])->name('tamkeen.partnerships.store');
+        Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+        Route::get('/robots.txt', [RobotsController::class, 'index'])->name('robots');
+    });
+};
+Route::prefix('en')->group($registerLocalizedRoutes);
+// تسجيل /ar أيضاً ثم الحزمة توجّه تلقائياً إلى / (لأن hideDefaultLocaleInURL = true)
+Route::prefix('ar')->group($registerLocalizedRoutes);
+Route::prefix('')->group($registerLocalizedRoutes);
 
 Route::prefix('cp')->name('cp.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -80,9 +107,14 @@ Route::prefix('cp')->name('cp.')->group(function () {
         Route::resource('regions', ParasolsRegionController::class)->names('regions');
         Route::resource('regions.images', ParasolsImageController::class)->names('regions.images')->scoped();
     });
+    Route::resource('volunteer-departments', VolunteerDepartmentController::class)->names('volunteer-departments');
+    Route::get('/volunteer-applications', [VolunteerApplicationController::class, 'index'])->name('volunteer-applications.index');
+    Route::get('/volunteer-applications/{volunteer_application}/edit', [VolunteerApplicationController::class, 'edit'])->name('volunteer-applications.edit');
+    Route::put('/volunteer-applications/{volunteer_application}', [VolunteerApplicationController::class, 'update'])->name('volunteer-applications.update');
+    Route::get('/tamkeen/partnership-requests', [TamkeenPartnershipRequestController::class, 'index'])->name('tamkeen.partnership-requests.index');
+    Route::get('/tamkeen/partnership-requests/{tamkeen_partnership_request}/edit', [TamkeenPartnershipRequestController::class, 'edit'])->name('tamkeen.partnership-requests.edit');
+    Route::put('/tamkeen/partnership-requests/{tamkeen_partnership_request}', [TamkeenPartnershipRequestController::class, 'update'])->name('tamkeen.partnership-requests.update');
 });
-
-
 
 Route::get('storage/{file}', function ($file) {
     $path = storage_path('app/public/' . $file);

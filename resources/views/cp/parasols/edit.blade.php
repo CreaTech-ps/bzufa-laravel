@@ -68,6 +68,20 @@
             </div>
         </section>
 
+        {{-- زر التواصل --}}
+        <section class="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+            <h2 class="text-lg font-bold text-slate-800 dark:text-white mb-1 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">chat</span>
+                زر التواصل
+            </h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">رابط واتساب لزر "تواصل معنا الآن" في القسم الأخير من صفحة المظلات.</p>
+            <div>
+                <label for="whatsapp_url" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">رابط واتساب</label>
+                <input type="url" name="whatsapp_url" id="whatsapp_url" value="{{ old('whatsapp_url', $settings->whatsapp_url) }}" placeholder="https://wa.me/970599999999" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
+                <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">مثال: https://wa.me/970599999999 أو https://wa.me/970599999999?text=مرحباً</p>
+            </div>
+        </section>
+
         {{-- إحصائيات المشروع (4 بطاقات) --}}
         <section class="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
             <h2 class="text-lg font-bold text-slate-800 dark:text-white mb-1 flex items-center gap-2">

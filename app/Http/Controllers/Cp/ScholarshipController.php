@@ -122,6 +122,7 @@ class ScholarshipController extends Controller
             'required_documents_ar' => ['nullable', 'string'],
             'required_documents_en' => ['nullable', 'string'],
             'application_form_pdf' => ['nullable', 'file', 'mimes:pdf', 'max:5120'],
+            'coverage_percentage' => ['nullable', 'integer', 'min:0', 'max:100'],
             'is_active' => ['nullable', 'boolean'],
             'sort_order' => ['nullable', 'integer'],
         ]);

@@ -37,6 +37,7 @@ class ParasolsController extends Controller
             'stat3_label_ar' => ['nullable', 'string', 'max:255'],
             'stat4_value' => ['nullable', 'string', 'max:50'],
             'stat4_label_ar' => ['nullable', 'string', 'max:255'],
+            'whatsapp_url' => ['nullable', 'string', 'max:500'],
         ]);
 
         ParasolsSetting::get()->update($request->only([
@@ -45,6 +46,7 @@ class ParasolsController extends Controller
             'section_title_ar', 'section_title_en', 'description_ar', 'description_en',
             'stat1_value', 'stat1_label_ar', 'stat2_value', 'stat2_label_ar',
             'stat3_value', 'stat3_label_ar', 'stat4_value', 'stat4_label_ar',
+            'whatsapp_url',
         ]));
 
         return redirect()->route('cp.parasols.edit')->with('success', 'تم حفظ إعدادات المظلات بنجاح.');

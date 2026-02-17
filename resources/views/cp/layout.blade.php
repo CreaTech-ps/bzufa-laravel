@@ -156,6 +156,24 @@
                                 <span>طلبات تمكين</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('cp.volunteer-departments.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.volunteer-departments.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
+                                <span class="material-symbols-outlined text-xl">volunteer_activism</span>
+                                <span>أقسام التطوع</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('cp.volunteer-applications.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.volunteer-applications.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
+                                <span class="material-symbols-outlined text-xl">person_add</span>
+                                <span>طلبات التطوع</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('cp.tamkeen.partnership-requests.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.tamkeen.partnership-requests.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
+                                <span class="material-symbols-outlined text-xl">handshake</span>
+                                <span>طلبات شراكة تمكين</span>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <div class="p-3 border-t border-slate-200 dark:border-slate-700">

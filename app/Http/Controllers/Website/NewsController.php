@@ -29,13 +29,22 @@ class NewsController extends Controller
 
         $news = $query->paginate(9)->withQueryString();
 
-        // السنوات المتاحة للتصفية (من الأخبار المنشورة)
-        $availableYears = News::where('is_published', true)
-            ->whereNotNull('published_at')
-            ->selectRaw('YEAR(published_at) as year')
-            ->distinct()
-            ->orderByDesc('year')
-            ->pluck('year');
+        // السنوات المتاحة للتصفية (من الأخبار المنشورة) - cached
+        $availableYears = cache()->remember('news_available_years', 3600, function () {
+            return News::where('is_published', true)
+                ->whereNotNull('published_at')
+                ->selectRaw('YEAR(published_at) as year')
+                ->distinct()
+                ->orderByDesc('year')
+                ->pluck('year');
+        });
+
+        // إرجاع HTML جزئي عند الطلبات عبر AJAX
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'html' => view('website.partials.news-list', compact('news'))->render(),
+            ]);
+        }
 
         return view('website.news', compact('news', 'availableYears'));
     }
@@ -47,7 +56,7 @@ class NewsController extends Controller
     {
         $news = News::where('is_published', true)
             ->where(function ($q) use ($slug) {
-                $q->where('slug_ar', $slug)->orWhere('id', $slug);
+                $q->where('slug_ar', $slug)->orWhere('slug_en', $slug)->orWhere('id', $slug);
             })
             ->firstOrFail();
 

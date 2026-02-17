@@ -13,6 +13,9 @@ tailwind.config = {
           "100%": { transform: "translateX(calc(50% + 2rem))" },
         },
       },
+      boxShadow: {
+        "card": "0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.05)",
+      },
       colors: {
         primary: "#0BA66D",
         secondary: "#088A5B",
@@ -108,7 +111,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   counters.forEach((counter) => observer.observe(counter));
 
-  // ج: استعادة الثيم المفضل عند إعادة تحميل الصفحة
+  // ج: قائمة الجوال (Mobile Menu Toggle)
+  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const menuIcon = document.getElementById("menu-icon");
+  if (mobileMenuBtn && mobileMenu && menuIcon) {
+    mobileMenuBtn.addEventListener("click", function () {
+      mobileMenu.classList.toggle("hidden");
+      menuIcon.innerText = mobileMenu.classList.contains("hidden") ? "menu" : "close";
+    });
+  }
+
+  // د: استعادة الثيم المفضل عند إعادة تحميل الصفحة
   if (localStorage.getItem("theme") === "dark") {
     document.documentElement.classList.add("dark");
     const themeIcon = document.getElementById("theme-icon");

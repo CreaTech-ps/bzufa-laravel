@@ -66,7 +66,8 @@
             <div class="space-y-4">
                 <div>
                     <label for="contact_email" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">البريد الإلكتروني</label>
-                    <input type="email" name="contact_email" id="contact_email" value="{{ old('contact_email', $settings->contact_email) }}" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30 focus:border-primary" />
+                    <input type="email" name="contact_email" id="contact_email" value="{{ old('contact_email', $settings->contact_email) }}" placeholder="info@bzufa.ps" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30 focus:border-primary" />
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">البريد الإلكتروني الرسمي للجمعية. في حالة عدم إدخال بريد، سيتم استخدام eltrukk@gmail.com كبريد افتراضي لاستقبال طلبات التطوع وطلبات الشراكة.</p>
                 </div>
                 <div>
                     <label for="contact_phone" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">رقم الهاتف</label>

@@ -1,36 +1,90 @@
-/* style.css - نسخة للاستخدام مع layout.blade.php */
+/* style.css - نظام تصميم موحد للمشروع */
 
-/* 1. تعريف الألوان والخطوط (Root) */
+/* ========== 1. تصميم المواصفات (Design Tokens) ========== */
 :root {
   --primary: #0ba66d;
   --primary-glow: rgba(11, 166, 109, 0.3);
   --bg-dark: #121212;
   --bg-light: #f8fafc;
   --card-dark: #1e1e1e;
+
+  /* توحيد أحجام الخطوط (مقياس عالمي متوسط) */
+  --text-xs: 0.75rem;      /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg: 1.125rem;    /* 18px */
+  --text-xl: 1.25rem;     /* 20px */
+  --text-2xl: 1.5rem;     /* 24px */
+  --text-3xl: 1.875rem;   /* 30px */
+  --text-4xl: 2.25rem;    /* 36px */
+  --text-5xl: 3rem;       /* 48px */
+
+  /* توحيد المسافات (أقسام وصفحات) */
+  --section-padding-y: 4rem;   /* 64px - py-16 */
+  --section-padding-y-md: 5rem;
+  --section-padding-y-lg: 6rem;
+  --container-padding-x: 1.5rem;
+  --container-padding-x-md: 2rem;
+  --container-padding-x-lg: 2.5rem;
+  --container-max: 1280px;
+  --section-gap: 4rem;
 }
 
-/* 2. التنسيق العام للجسم */
+/* 2. التنسيق العام للجسم (خط أساسي موحد) */
 body {
   margin: 0;
   padding: 0;
   font-family: "Cairo", "Tajawal", sans-serif;
+  font-size: var(--text-base);
   scroll-behavior: smooth;
   line-height: 1.6;
   overflow-x: hidden;
 }
 
-/* 3. الحاويات الموحدة */
+/* 3. الحاويات والمسافات الموحدة */
 .main-container,
 .container-custom,
 .custom-container,
 .page-container {
-  max-width: 1280px;
+  max-width: var(--container-max);
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: var(--container-padding-x);
+  padding-right: var(--container-padding-x);
   width: 100%;
 }
+@media (min-width: 768px) {
+  .main-container, .container-custom, .custom-container, .page-container {
+    padding-left: var(--container-padding-x-md);
+    padding-right: var(--container-padding-x-md);
+  }
+}
+@media (min-width: 1024px) {
+  .main-container, .container-custom, .custom-container, .page-container {
+    padding-left: var(--container-padding-x-lg);
+    padding-right: var(--container-padding-x-lg);
+  }
+}
+
+/* مسافات الأقسام الموحدة (أعلى/أسفل) */
+.section-padding {
+  padding-top: var(--section-padding-y);
+  padding-bottom: var(--section-padding-y);
+}
+@media (min-width: 768px) {
+  .section-padding { padding-top: var(--section-padding-y-md); padding-bottom: var(--section-padding-y-md); }
+}
+@media (min-width: 1024px) {
+  .section-padding { padding-top: var(--section-padding-y-lg); padding-bottom: var(--section-padding-y-lg); }
+}
+
+/* الألوان الموحدة للنص والحدود (وضع نهاري/ليلي) - استخدم في Tailwind: text-slate-800 dark:text-slate-200 للنص الأساسي، text-slate-600 dark:text-slate-400 للنص الثانوي، border-slate-200 dark:border-white/10 للحدود */
+.text-body { color: #334155; }
+.dark .text-body { color: #e2e8f0; }
+.text-muted { color: #64748b; }
+.dark .text-muted { color: #94a3b8; }
+.border-standard { border-color: #e2e8f0; }
+.dark .border-standard { border-color: rgba(255,255,255,0.1); }
 
 .layout-container {
   max-width: 1140px;
@@ -253,6 +307,15 @@ body {
 .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
   vertical-align: middle;
+}
+
+/* أسهم وأيقونات اتجاهية: انعكاس صحيح في RTL (عربي) و LTR (إنجليزي) */
+[dir="rtl"] .icon-directional,
+.icon-directional.rtl-flip {
+  transform: rotate(180deg);
+}
+[dir="rtl"] .icon-directional.inline {
+  display: inline-block;
 }
 
 /* news */

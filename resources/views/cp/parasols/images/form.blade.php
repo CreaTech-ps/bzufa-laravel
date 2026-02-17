@@ -79,6 +79,16 @@
                     <input type="text" name="location_en" id="location_en" value="{{ old('location_en', $item->location_en) }}" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
                 </div>
             </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div>
+                    <label for="detailed_location_ar" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">الموقع بالتفصيل (عربي)</label>
+                    <textarea name="detailed_location_ar" id="detailed_location_ar" rows="2" placeholder="وصف تفصيلي للموقع..." class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30">{{ old('detailed_location_ar', $item->detailed_location_ar) }}</textarea>
+                </div>
+                <div>
+                    <label for="detailed_location_en" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">الموقع بالتفصيل (إنجليزي)</label>
+                    <textarea name="detailed_location_en" id="detailed_location_en" rows="2" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30">{{ old('detailed_location_en', $item->detailed_location_en) }}</textarea>
+                </div>
+            </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label for="price" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">السعر (يظهر كـ $320/شهر)</label>
@@ -87,15 +97,56 @@
                 <div>
                     <label for="status" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">الحالة (في البطاقة)</label>
                     <select name="status" id="status" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30">
-                        <option value="available" {{ old('status', $item->status) === 'available' || old('status', $item->status) === null ? 'selected' : '' }}>متاح حالياً</option>
-                        <option value="ending_soon" {{ old('status', $item->status) === 'ending_soon' ? 'selected' : '' }}>ينتهي قريباً</option>
-                        <option value="ended" {{ old('status', $item->status) === 'ended' ? 'selected' : '' }}>منتهية</option>
+                        <option value="available" {{ old('status', $item->status) === 'available' || old('status', $item->status) === null ? 'selected' : '' }}>متاحة للحجز</option>
+                        <option value="newly_booked" {{ old('status', $item->status) === 'newly_booked' ? 'selected' : '' }}>جديدة (محجوزة حديثاً)</option>
+                        <option value="ending_soon" {{ old('status', $item->status) === 'ending_soon' ? 'selected' : '' }}>تنتهي قريباً (ستكون متاحة للحجز قريباً)</option>
                     </select>
                 </div>
             </div>
             <div>
                 <label for="sort_order" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">ترتيب العرض</label>
                 <input type="number" name="sort_order" id="sort_order" value="{{ old('sort_order', $item->sort_order) }}" min="0" class="cp-input w-32 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
+            </div>
+        </section>
+
+        <section class="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 shadow-sm space-y-4">
+            <h2 class="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">business</span>
+                الجهة المعلنة (تظهر فقط عند الحالة "منتهية")
+            </h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">عندما تكون حالة المساحة "منتهية"، يمكنك إضافة معلومات الجهة المعلنة التي حجزت المساحة.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div>
+                    <label for="advertiser_name_ar" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">اسم الجهة المعلنة (عربي)</label>
+                    <input type="text" name="advertiser_name_ar" id="advertiser_name_ar" value="{{ old('advertiser_name_ar', $item->advertiser_name_ar) }}" placeholder="اسم الشركة أو المؤسسة" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
+                </div>
+                <div>
+                    <label for="advertiser_name_en" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">اسم الجهة المعلنة (إنجليزي)</label>
+                    <input type="text" name="advertiser_name_en" id="advertiser_name_en" value="{{ old('advertiser_name_en', $item->advertiser_name_en) }}" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
+                </div>
+            </div>
+            <div>
+                <label class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">شعار الجهة المعلنة</label>
+                <div class="min-h-[150px] rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/50 p-4 flex flex-col items-center justify-center gap-3 transition-colors hover:border-primary/50 dark:hover:border-primary/50">
+                    @if($item->advertiser_logo_path ?? null)
+                    <div id="advertiser-current-wrap">
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-2">الشعار الحالي</p>
+                        <img id="advertiser-current-img" src="{{ asset('storage/' . $item->advertiser_logo_path) }}" alt="" class="max-h-32 w-auto max-w-full object-contain rounded-lg shadow border border-slate-200 dark:border-slate-600" />
+                    </div>
+                    @else
+                    <div id="advertiser-current-wrap" class="hidden"></div>
+                    @endif
+                    <div id="advertiser-new-preview" class="hidden">
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-2">معاينة الشعار الجديد</p>
+                        <img id="advertiser-new-preview-img" src="" alt="" class="max-h-32 w-auto max-w-full object-contain rounded-lg shadow border border-slate-200 dark:border-slate-600" />
+                    </div>
+                    <div id="advertiser-no-image" class="{{ ($item->advertiser_logo_path ?? null) ? 'hidden' : '' }} text-center text-slate-400 dark:text-slate-500">
+                        <span class="material-symbols-outlined text-3xl mb-1 block">image</span>
+                        <span class="text-sm">اختر شعار أو اسحبه هنا</span>
+                    </div>
+                    <input type="file" name="advertiser_logo" id="advertiser-logo-input" accept="image/*" class="cp-input w-full max-w-xs rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 file:mr-4 file:py-2 file:rounded-lg file:border-0 file:bg-primary/10 file:text-primary text-sm" />
+                </div>
+                @error('advertiser_logo')<p class="mt-1 text-sm text-red-500">{{ $message }}</p>@enderror
             </div>
         </section>
 
@@ -133,6 +184,31 @@ document.addEventListener('DOMContentLoaded', function() {
     imageInput.addEventListener('change', function() {
         showNewPreview(this.files[0]);
     });
+
+    // Advertiser logo preview
+    var advertiserInput = document.getElementById('advertiser-logo-input');
+    var advertiserCurrentWrap = document.getElementById('advertiser-current-wrap');
+    var advertiserNewPreview = document.getElementById('advertiser-new-preview');
+    var advertiserNewPreviewImg = document.getElementById('advertiser-new-preview-img');
+    var advertiserNoImage = document.getElementById('advertiser-no-image');
+
+    function showAdvertiserPreview(file) {
+        if (!file || !file.type.startsWith('image/')) return;
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            advertiserNewPreviewImg.src = e.target.result;
+            advertiserNewPreview.classList.remove('hidden');
+            if (advertiserCurrentWrap) advertiserCurrentWrap.classList.add('hidden');
+            advertiserNoImage.classList.add('hidden');
+        };
+        reader.readAsDataURL(file);
+    }
+
+    if (advertiserInput) {
+        advertiserInput.addEventListener('change', function() {
+            showAdvertiserPreview(this.files[0]);
+        });
+    }
 
     var dropZone = document.getElementById('parasols-image-drop-zone');
     if (dropZone) {

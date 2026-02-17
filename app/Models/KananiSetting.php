@@ -12,6 +12,9 @@ class KananiSetting extends Model
         'intro_video_url',
         'intro_text_ar',
         'intro_text_en',
+        'discover_more_text_ar',
+        'discover_more_text_en',
+        'hero_video_url',
         'store_url',
     ];
 

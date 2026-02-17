@@ -20,6 +20,9 @@ class AboutController extends Controller
     public function update(Request $request)
     {
         $request->validate([
+            'founder_message_video_url' => ['nullable', 'string', 'max:500'],
+            'founder_full_message_ar' => ['nullable', 'string'],
+            'founder_full_message_en' => ['nullable', 'string'],
             'story_video_url' => ['nullable', 'string', 'max:500'],
             'team_video_url' => ['nullable', 'string', 'max:500'],
             'sections' => ['nullable', 'array'],
@@ -31,6 +34,9 @@ class AboutController extends Controller
         ]);
 
         AboutPage::get()->update([
+            'founder_message_video_url' => $request->founder_message_video_url,
+            'founder_full_message_ar' => $request->founder_full_message_ar,
+            'founder_full_message_en' => $request->founder_full_message_en,
             'story_video_url' => $request->story_video_url,
             'team_video_url' => $request->team_video_url,
         ]);

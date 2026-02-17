@@ -53,6 +53,11 @@ class ParasolsImageController extends Controller
             }
             $validated['image_path'] = $request->file('image')->store('cp/parasols/' . $region->id, 'public');
         }
+        if ($request->hasFile('advertiser_logo')) {
+            if ($image->advertiser_logo_path) {
+                Storage::disk('public')->delete($image->advertiser_logo_path);
+            }
+        }
         $image->update($validated);
         return redirect()->route('cp.parasols.regions.images.index', $region)->with('success', 'تم تحديث الصورة بنجاح.');
     }
@@ -73,11 +78,22 @@ class ParasolsImageController extends Controller
             'title_en' => ['nullable', 'string', 'max:255'],
             'location_ar' => ['nullable', 'string', 'max:500'],
             'location_en' => ['nullable', 'string', 'max:500'],
+            'detailed_location_ar' => ['nullable', 'string'],
+            'detailed_location_en' => ['nullable', 'string'],
             'price' => ['nullable', 'string', 'max:50'],
-            'status' => ['nullable', 'string', 'in:available,ending_soon'],
+            'status' => ['nullable', 'string', 'in:available,newly_booked,ending_soon'],
+            'advertiser_name_ar' => ['nullable', 'string', 'max:255'],
+            'advertiser_name_en' => ['nullable', 'string', 'max:255'],
+            'advertiser_logo' => ['nullable', 'image', 'max:2048'],
             'sort_order' => ['nullable', 'integer'],
         ]);
+        
         $validated['sort_order'] = (int) ($request->sort_order ?? 0);
+        
+        if ($request->hasFile('advertiser_logo')) {
+            $validated['advertiser_logo_path'] = $request->file('advertiser_logo')->store('cp/parasols/advertisers', 'public');
+        }
+        
         return $validated;
     }
 }
