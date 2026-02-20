@@ -1,13 +1,13 @@
 @extends('website.layout')
 
-@section('title', 'أرشيف الأخبار والتقارير')
+@section('title', __('ui.news_archive_title'))
 
 @section('content')
 <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 md:pb-20">
     <nav class="flex items-center text-xs gap-2 text-slate-500 dark:text-slate-400 mb-6">
-        <a class="hover:text-primary transition-colors" href="{{ localized_route('home') }}">الرئيسية</a>
+        <a class="hover:text-primary transition-colors" href="{{ localized_route('home') }}">{{ __('ui.nav_home') }}</a>
         <span class="material-symbols-outlined text-[14px]">chevron_left</span>
-        <span class="text-text-dark-gray dark:text-white font-semibold">أرشيف الأخبار والتقارير</span>
+        <span class="text-text-dark-gray dark:text-white font-semibold">{{ __('ui.news_archive_title') }}</span>
     </nav>
 
     <section class="py-16 md:py-20 relative overflow-hidden bg-white dark:bg-[#0C0C0C] transition-colors duration-500 mb-12">
@@ -17,15 +17,15 @@
             <div class="text-center relative z-10">
                 <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-primary/10 text-primary border border-primary/20 mb-8 backdrop-blur-sm">
                     <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                    <span class="text-xs font-bold uppercase tracking-widest">أرشيف الأخبار</span>
+                    <span class="text-xs font-bold uppercase tracking-widest">{{ __('ui.news_archive_badge') }}</span>
                 </div>
 
                 <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white mb-8 leading-[1.2] tracking-tight">
-                    أرشيف الأخبار <span class="text-primary">والتقارير</span>
+                    {{ __('ui.news_archive_title') }}
                 </h1>
 
                 <p class="text-slate-600 dark:text-slate-300 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed opacity-90">
-                    تصفح سجل نشاطاتنا، إنجازاتنا، وتقارير الشفافية التي توثق أثر تبرعاتكم منذ التأسيس ودورنا في دعم مسيرة التعليم.
+                    {{ __('ui.news_archive_subtitle') }}
                 </p>
             </div>
         </div>
@@ -45,25 +45,41 @@
                 class="bg-white dark:bg-bg-dark-card p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
                 <div class="flex items-center gap-2 mb-6 text-primary">
                     <span class="material-symbols-outlined">filter_list</span>
-                    <h2 class="text-lg font-bold">تصفية النتائج</h2>
+                    <h2 class="text-lg font-bold">{{ __('ui.filter_results') }}</h2>
                 </div>
                 <form id="news-filter-form" method="GET" action="{{ localized_route('news.index') }}" class="space-y-6" data-news-url="{{ url(localized_route('news.index')) }}">
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-600 dark:text-slate-400">اختر العام</label>
+                        <label class="block text-sm font-medium mb-2 text-slate-600 dark:text-slate-400">{{ __('ui.select_year') }}</label>
                         <select name="year"
                             class="w-full bg-slate-50 dark:bg-bg-dark-main border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:ring-primary focus:border-primary transition-all cursor-pointer text-sm dark:text-slate-300">
-                            <option value="">كل الأعوام</option>
+                            <option value="">{{ __('ui.all_years') }}</option>
                             @foreach($availableYears as $year)
                             <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>{{ $year }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-600 dark:text-slate-400">الشهر</label>
+                        <label class="block text-sm font-medium mb-2 text-slate-600 dark:text-slate-400">{{ __('ui.month') }}</label>
                         <select name="month"
                             class="w-full bg-slate-50 dark:bg-bg-dark-main border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:ring-primary focus:border-primary transition-all cursor-pointer text-sm dark:text-slate-300">
-                            <option value="">كل الأشهر</option>
-                            @foreach(['01' => 'يناير', '02' => 'فبراير', '03' => 'مارس', '04' => 'أبريل', '05' => 'مايو', '06' => 'يونيو', '07' => 'يوليو', '08' => 'أغسطس', '09' => 'سبتمبر', '10' => 'أكتوبر', '11' => 'نوفمبر', '12' => 'ديسمبر'] as $num => $name)
+                            <option value="">{{ __('ui.all_months') }}</option>
+                            @php
+                                $months = [
+                                    '01' => __('ui.month_january'),
+                                    '02' => __('ui.month_february'),
+                                    '03' => __('ui.month_march'),
+                                    '04' => __('ui.month_april'),
+                                    '05' => __('ui.month_may'),
+                                    '06' => __('ui.month_june'),
+                                    '07' => __('ui.month_july'),
+                                    '08' => __('ui.month_august'),
+                                    '09' => __('ui.month_september'),
+                                    '10' => __('ui.month_october'),
+                                    '11' => __('ui.month_november'),
+                                    '12' => __('ui.month_december'),
+                                ];
+                            @endphp
+                            @foreach($months as $num => $name)
                             <option value="{{ $num }}" {{ request('month') == $num ? 'selected' : '' }}>{{ $name }}</option>
                             @endforeach
                         </select>
@@ -71,12 +87,12 @@
                     <div class="flex gap-2">
                         <button type="submit" id="news-filter-submit"
                             class="flex-1 bg-primary hover:brightness-110 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
-                            <span class="btn-text">تطبيق الفلاتر</span>
+                            <span class="btn-text">{{ __('ui.apply_filters') }}</span>
                         </button>
                         <span id="news-filter-clear-wrap" class="{{ request()->hasAny(['year', 'month']) ? '' : 'hidden' }}">
                             <a href="{{ localized_route('news.index') }}" id="news-filter-clear"
                                 class="news-clear-link px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors inline-flex items-center justify-center"
-                                title="مسح الكل">✕</a>
+                                title="{{ __('ui.clear_all') }}">✕</a>
                         </span>
                     </div>
                 </form>

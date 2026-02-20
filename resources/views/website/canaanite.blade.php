@@ -146,21 +146,17 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             @forelse($items as $item)
-            <a href="{{ $settings->store_url ?? '#' }}" target="_blank" rel="noopener" class="related-card bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col cursor-pointer group transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
+            <a href="{{ rtrim($settings->store_url ?? 'https://kanani.bzufa.com', '/') }}/product/{{ current_slug($item) }}" target="_blank" rel="noopener" class="related-card bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col cursor-pointer group transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
                 <div class="aspect-square bg-cover bg-center relative overflow-hidden">
-                    <img alt="{{ localized($item, 'title') }}"
+                    <img alt="{{ localized($item, 'name') }}"
                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         src="{{ $item->image_path ? asset('storage/' . $item->image_path) : 'https://lh3.googleusercontent.com/aida-public/AB6AXuANZF-6S6nF0Pq4IhQtgym1L1s7hIXafpt-5FvPa_jhB9iPwxjNljF6zNY4R94UfRpu4xiIXUMLKiS2FS-nt_N0Q4GnBY0UX3rHGSNuTWk3fY_v8qIAWbbstAqLiYyRo8mI445n8u_tXAm-BnCsnwy3Iaz4sTLo1IQFnWxZeImdaLnI7wKQ6CCndw6ZerNztl--SWaTPrw9f6zMmvtztHb7TxRstCysPN7UvM_pGto8W6d7K85hWMkQkyguDBEscE6ubr0llRb4q8c' }}" />
 
+                    @if($item->discount_percent && $item->discount_percent > 0)
                     <div class="absolute top-3 end-3 z-10 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md">
-                        @if($item->badge === 'bestseller')
-                            {{ __('kanani.bestseller') }}
-                        @elseif($item->badge === 'handcrafted')
-                            {{ __('kanani.handcrafted') }}
-                        @else
-                            {{ __('kanani.discount_badge_5') }}
-                        @endif
+                        {{ __('kanani.discount_percent', ['percent' => $item->discount_percent]) }}
                     </div>
+                    @endif
 
                     <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                         <span class="bg-white text-slate-900 px-6 py-2.5 rounded-full font-bold text-sm shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">{{ __('kanani.product_details') }}</span>
@@ -169,10 +165,10 @@
 
                 <div class="p-4 flex flex-col gap-2">
                     <div class="flex items-center justify-between">
-                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors duration-300">{{ localized($item, 'title') }}</h3>
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors duration-300">{{ localized($item, 'name') }}</h3>
                         <span class="text-primary font-bold">{{ $item->price ? $item->price . ' ₪' : '—' }}</span>
                     </div>
-                    <span class="text-xs px-1 text-slate-400">{{ localized($item, 'location') ?? __('kanani.category_textiles') }}</span>
+                    <span class="text-xs px-1 text-slate-400">{{ __('kanani.category_textiles') }}</span>
                 </div>
             </a>
             @empty

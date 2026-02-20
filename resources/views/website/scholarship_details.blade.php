@@ -148,7 +148,7 @@
     "@context": "https://schema.org",
     "@type": "Scholarship",
     "name": @json(localized($scholarship, 'title')),
-    "description": @json(Str::limit(strip_tags(localized($scholarship, 'summary') ?? localized($scholarship, 'title')), 200)),
+    "description": {{ json_encode(Str::limit(strip_tags(localized($scholarship, 'summary') ?? localized($scholarship, 'title')), 200)) }},
     "provider": {
         "@type": "Organization",
         "name": {{ json_encode(__('ui.site_name')) }},

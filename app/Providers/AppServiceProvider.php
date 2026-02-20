@@ -3,10 +3,10 @@
 namespace App\Providers;
 
 use App\Models\SeoSetting;
+use App\Models\SiteSetting;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
-
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -26,7 +26,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
-
+        View::composer('website.partials.social-bar', function ($view) {
+            $view->with('settings', SiteSetting::get());
+        });
         // مشاركة إعدادات SEO مع layout الموقع الأمامي
         View::composer('website.layout', function ($view) {
             $view->with('seo', SeoSetting::get());

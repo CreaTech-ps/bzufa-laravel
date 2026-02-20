@@ -22,6 +22,7 @@ return [
     'no_products' => 'No products in the gallery at the moment',
     'discount_badge' => '20% Off',
     'discount_badge_5' => '5% Off',
+    'discount_percent' => ':percent% Off',
     'size_label' => 'Size',
     'nis' => 'NIS',
     'product_details' => 'Product Details',

@@ -22,6 +22,7 @@ return [
     'no_products' => 'لا توجد منتجات في المعرض حالياً',
     'discount_badge' => 'خصم ٢٠٪',
     'discount_badge_5' => '5% خصم',
+    'discount_percent' => ':percent% خصم',
     'size_label' => 'مقاس',
     'nis' => 'NIS',
     'product_details' => 'تفاصيل المنتج',

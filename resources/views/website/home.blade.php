@@ -241,7 +241,7 @@
                                     <span>{{ __('ui.scholarships_count') }}</span>
                                 </div>
                             </div>
-                            <a href="{{ localized_route('kanani.index') }}"
+                            <a href="https://kanani.bzufa.com/" target="_blank" rel="noopener noreferrer"
                                 class="w-full mt-auto bg-primary/10 text-primary dark:bg-primary/20 hover:bg-primary hover:text-white font-bold py-3 rounded-xl transition-all border border-primary/20 text-center">{{ __('ui.visit_store') }}</a>
 
                         </div>

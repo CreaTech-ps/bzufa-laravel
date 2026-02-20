@@ -53,25 +53,25 @@
                 <div class="absolute top-0 right-0 w-1 h-full bg-primary"></div>
                 <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                     <div class="flex items-start gap-4">
-                        <div class="bg-primary/10 text-primary px-3 py-1 rounded-md text-xs font-bold whitespace-nowrap">خطوة 1</div>
+                        <div class="bg-primary/10 text-primary px-3 py-1 rounded-md text-xs font-bold whitespace-nowrap">{{ __('ui.step_1') }}</div>
                         <div>
-                            <h3 class="text-xl font-bold mb-1">نموذج الطلب الرسمي</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">تحميل المستند الأساسي للمنحة (PDF) للبدء في الإجراءات.</p>
+                            <h3 class="text-xl font-bold mb-1">{{ __('ui.step_1_title') }}</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('ui.step_1_desc') }}</p>
                         </div>
                     </div>
                     @if($scholarship->application_form_pdf_path)
                     <a href="{{ asset('storage/' . $scholarship->application_form_pdf_path) }}" target="_blank" rel="noopener"
                         class="w-full md:w-auto flex items-center justify-center gap-2 border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all px-8 py-3 rounded-lg font-bold">
                         <span class="material-symbols-outlined">download</span>
-                        تحميل نموذج المنحة PDF
+                        {{ __('ui.download_grant_form_pdf') }}
                     </a>
                     @endif
                 </div>
             </section>
             <section id="form-step-2" class="bg-white dark:bg-card-dark border border-gray-200 dark:border-white/10 rounded-2xl p-8">
                 <div class="flex items-center gap-3 mb-6">
-                    <span class="bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 px-3 py-1 rounded-md text-xs font-bold">خطوة 2</span>
-                    <h3 class="text-xl font-bold">رفع النموذج المعبأ</h3>
+                    <span class="bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 px-3 py-1 rounded-md text-xs font-bold">{{ __('ui.step_2') }}</span>
+                    <h3 class="text-xl font-bold">{{ __('ui.step_2_title') }}</h3>
                 </div>
                 <input type="file" name="filled_form" id="filled_form" required accept=".pdf,.jpg,.jpeg,.png"
                     class="hidden" />
@@ -79,8 +79,8 @@
                     <div class="w-16 h-16 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                         <span class="material-symbols-outlined text-3xl text-gray-400 group-hover:text-primary">cloud_upload</span>
                     </div>
-                    <p class="text-lg font-medium mb-1">اسحب نموذج المنحة الموقع هنا</p>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">أو <span class="text-primary font-bold">تصفح ملفاتك</span> (الحد الأقصى 10MB - PDF, JPG, PNG)</p>
+                    <p class="text-lg font-medium mb-1">{{ __('ui.step_2_drag_drop') }}</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">{!! __('ui.step_2_browse') !!}</p>
                     <p id="file-name" class="text-sm text-primary font-bold mt-2 hidden"></p>
                 </label>
                 @error('filled_form')
@@ -89,41 +89,41 @@
             </section>
             <section id="form-step-3" class="bg-white dark:bg-card-dark border border-gray-200 dark:border-white/10 rounded-2xl p-8">
                 <div class="flex items-center gap-3 mb-8">
-                    <span class="bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 px-3 py-1 rounded-md text-xs font-bold">خطوة 3</span>
-                    <h3 class="text-xl font-bold">البيانات والوثائق الإضافية</h3>
+                    <span class="bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 px-3 py-1 rounded-md text-xs font-bold">{{ __('ui.step_3') }}</span>
+                    <h3 class="text-xl font-bold">{{ __('ui.step_3_title') }}</h3>
                 </div>
                 <div class="space-y-8">
                     <div class="space-y-2 max-w-md">
-                        <label for="applicant_name" class="text-sm font-medium text-gray-600 dark:text-gray-400 block">الاسم الكامل <span class="text-red-500">*</span></label>
+                        <label for="applicant_name" class="text-sm font-medium text-gray-600 dark:text-gray-400 block">{{ __('ui.full_name') }} <span class="text-red-500">*</span></label>
                         <input name="applicant_name" id="applicant_name" value="{{ old('applicant_name') }}" required
-                            class="w-full bg-gray-50 dark:bg-background-dark border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary focus:border-transparent outline-none @error('applicant_name') border-red-500 @enderror" placeholder="أدخل اسمك الكامل" type="text" />
+                            class="w-full bg-gray-50 dark:bg-background-dark border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary focus:border-transparent outline-none @error('applicant_name') border-red-500 @enderror" placeholder="{{ __('ui.full_name_placeholder') }}" type="text" />
                         @error('applicant_name')
                         <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="space-y-2 max-w-md">
-                        <label for="applicant_id_number" class="text-sm font-medium text-gray-600 dark:text-gray-400 block">رقم الهوية الوطنية / الإقامة <span class="text-red-500">*</span></label>
+                        <label for="applicant_id_number" class="text-sm font-medium text-gray-600 dark:text-gray-400 block">{{ __('ui.id_number') }} <span class="text-red-500">*</span></label>
                         <input name="applicant_id_number" id="applicant_id_number" value="{{ old('applicant_id_number') }}" required
-                            class="w-full bg-gray-50 dark:bg-background-dark border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary focus:border-transparent outline-none @error('applicant_id_number') border-red-500 @enderror" placeholder="000000000" type="text" />
+                            class="w-full bg-gray-50 dark:bg-background-dark border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary focus:border-transparent outline-none @error('applicant_id_number') border-red-500 @enderror" placeholder="{{ __('ui.id_number_placeholder') }}" type="text" />
                         @error('applicant_id_number')
                         <p class="text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="space-y-4">
-                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">إرفاق وثائق إضافية (اختياري — حتى 10 ملفات، PDF أو JPG أو PNG، كل ملف حتى 10MB)</p>
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ __('ui.attach_additional_docs') }}</p>
                         <div id="additional-files-container" class="space-y-3">
                             @for($i = 0; $i < 5; $i++)
                             <div class="flex items-center gap-3 additional-file-row">
                                 <input type="file" name="additional_files[]" accept=".pdf,.jpg,.jpeg,.png" class="hidden additional-file-input" />
-                                <label class="flex-1 border-2 border-dashed border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 text-sm text-gray-500 dark:text-gray-400 cursor-pointer hover:border-primary transition-colors additional-file-label">اختر ملفاً</label>
+                                <label class="flex-1 border-2 border-dashed border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 text-sm text-gray-500 dark:text-gray-400 cursor-pointer hover:border-primary transition-colors additional-file-label">{{ __('ui.choose_file') }}</label>
                                 <span class="additional-file-name text-sm text-primary hidden"></span>
-                                <button type="button" class="remove-additional text-slate-400 hover:text-red-500 hidden" aria-label="إزالة"><span class="material-symbols-outlined text-lg">close</span></button>
+                                <button type="button" class="remove-additional text-slate-400 hover:text-red-500 hidden" aria-label="{{ __('ui.remove') }}"><span class="material-symbols-outlined text-lg">close</span></button>
                             </div>
                             @endfor
                         </div>
                         <button type="button" id="add-more-files-btn" class="text-primary font-bold text-sm flex items-center gap-1 hover:underline">
                             <span class="material-symbols-outlined text-lg">add_circle</span>
-                            إضافة مرفق آخر
+                            {{ __('ui.add_another_attachment') }}
                         </button>
                         @error('additional_files.*')
                         <p class="text-sm text-red-500">{{ $message }}</p>
@@ -133,15 +133,15 @@
             </section>
             <section id="form-step-4" class="bg-white dark:bg-card-dark border border-gray-200 dark:border-white/10 rounded-2xl p-8">
                 <div class="flex items-center gap-3 mb-8">
-                    <span class="bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 px-3 py-1 rounded-md text-xs font-bold">خطوة 4</span>
-                    <h3 class="text-xl font-bold">تأكيد وإرسال الطلب</h3>
+                    <span class="bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 px-3 py-1 rounded-md text-xs font-bold">{{ __('ui.step_4') }}</span>
+                    <h3 class="text-xl font-bold">{{ __('ui.step_4_title') }}</h3>
                 </div>
                 <div class="bg-gray-50 dark:bg-background-dark border border-gray-100 dark:border-white/10 p-6 rounded-xl mb-8">
                     <label class="flex items-start gap-4 cursor-pointer">
                         <input name="consent" id="consent" value="1" {{ old('consent') ? 'checked' : '' }} required
                             class="mt-1 w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary @error('consent') border-red-500 @enderror" type="checkbox" />
                         <span class="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-                            أقر بأن جميع المعلومات والبيانات الواردة أعلاه وفي المرفقات صحيحة تماماً، وأتحمل المسؤولية القانونية عن أي بيانات غير دقيقة، كما أوافق على شروط سياسة الخصوصية الخاصة بمؤسسة الجمعية.
+                            {{ __('ui.consent_text') }}
                         </span>
                     </label>
                     @error('consent')
@@ -149,18 +149,18 @@
                     @enderror
                 </div>
                 <button type="submit" class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 hover:shadow-lg hover:shadow-primary/20 transition-all">
-                    إرسال الطلب النهائي
+                    {{ __('ui.submit_final_application') }}
                     <span class="material-symbols-outlined">send</span>
                 </button>
                 <div class="mt-8 flex items-center justify-center gap-6 text-gray-400">
                     <div class="flex items-center gap-2 text-xs">
                         <span class="material-symbols-outlined text-sm text-primary">verified_user</span>
-                        تشفير SSL آمن
+                        {{ __('ui.ssl_encryption') }}
                     </div>
                     <div class="w-px h-4 bg-gray-200 dark:bg-white/10"></div>
                     <div class="flex items-center gap-2 text-xs">
                         <span class="material-symbols-outlined text-sm text-primary">verified</span>
-                        معتمد رسمياً
+                        {{ __('ui.officially_certified') }}
                     </div>
                 </div>
             </section>
@@ -169,7 +169,7 @@
             <div class="bg-white dark:bg-card-dark border border-gray-200 dark:border-white/10 rounded-2xl p-8 sticky top-24">
                 <div class="flex items-center gap-2 mb-8">
                     <span class="material-symbols-outlined text-primary">fact_check</span>
-                    <h3 class="font-bold text-lg">دليل خطوات التقديم</h3>
+                    <h3 class="font-bold text-lg">{{ __('ui.application_guide_title') }}</h3>
                 </div>
                 <div class="relative timeline-line space-y-10" id="sidebar-steps">
                     <div id="sidebar-step-1" class="flex gap-4 step-node transition-all duration-300" data-step="1">
@@ -178,8 +178,8 @@
                             <span class="step-check material-symbols-outlined text-2xl hidden">check</span>
                         </div>
                         <div>
-                            <h4 class="font-bold text-primary step-title">تحميل وتعبئة النموذج</h4>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">ابدأ بتحميل ملف الـ PDF الرسمي للمنحة وقم بتعبئة كافة الحقول المطلوبة.</p>
+                            <h4 class="font-bold text-primary step-title">{{ __('ui.step_1_guide_title') }}</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">{{ __('ui.step_1_guide_desc') }}</p>
                         </div>
                     </div>
                     <div id="sidebar-step-2" class="flex gap-4 step-node opacity-60 transition-all duration-300" data-step="2">
@@ -188,8 +188,8 @@
                             <span class="step-check material-symbols-outlined text-2xl hidden">check</span>
                         </div>
                         <div>
-                            <h4 class="font-bold step-title">رفع النموذج المعبأ</h4>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">بعد التوقيع والتأكد من البيانات، أعد رفع النموذج بصيغة رقمية واضحة.</p>
+                            <h4 class="font-bold step-title">{{ __('ui.step_2_guide_title') }}</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">{{ __('ui.step_2_guide_desc') }}</p>
                         </div>
                     </div>
                     <div id="sidebar-step-3" class="flex gap-4 step-node opacity-60 transition-all duration-300" data-step="3">
@@ -198,8 +198,8 @@
                             <span class="step-check material-symbols-outlined text-2xl hidden">check</span>
                         </div>
                         <div>
-                            <h4 class="font-bold step-title">إرفاق الوثائق والهوية</h4>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">أدخل رقم هويتك الوطنية وارفع الوثائق الداعمة والمرفقات المطلوبة في قسم واحد.</p>
+                            <h4 class="font-bold step-title">{{ __('ui.step_3_guide_title') }}</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">{{ __('ui.step_3_guide_desc') }}</p>
                         </div>
                     </div>
                     <div id="sidebar-step-4" class="flex gap-4 step-node opacity-60 transition-all duration-300" data-step="4">
@@ -208,16 +208,16 @@
                             <span class="step-check material-symbols-outlined text-2xl hidden">check</span>
                         </div>
                         <div>
-                            <h4 class="font-bold step-title">إرسال الطلب</h4>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">المراجعة النهائية والضغط على زر الإرسال للحصول على رقم طلبك.</p>
+                            <h4 class="font-bold step-title">{{ __('ui.step_4_guide_title') }}</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">{{ __('ui.step_4_guide_desc') }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="mt-12 bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/20 p-5 rounded-xl flex gap-3">
                     <span class="material-symbols-outlined text-amber-600">info</span>
                     <div>
-                        <h5 class="text-sm font-bold text-amber-800 dark:text-amber-400 mb-1">ملاحظة هامة</h5>
-                        <p class="text-xs text-amber-700/80 dark:text-amber-400/80 leading-relaxed">يرجى التأكد من أن جميع الوثائق المرفوعة واضحة وبصيغة PDF أو JPG لضمان سرعة معالجة طلبك قبل لجنة الفرز.</p>
+                        <h5 class="text-sm font-bold text-amber-800 dark:text-amber-400 mb-1">{{ __('ui.important_note') }}</h5>
+                        <p class="text-xs text-amber-700/80 dark:text-amber-400/80 leading-relaxed">{{ __('ui.important_note_text') }}</p>
                     </div>
                 </div>
             </div>
@@ -278,7 +278,8 @@ function updateSidebarSteps() {
 document.getElementById('filled_form')?.addEventListener('change', function() {
     var fileName = document.getElementById('file-name');
     if (this.files && this.files.length) {
-        fileName.textContent = 'تم اختيار: ' + this.files[0].name;
+        var fileSelectedText = '{{ __('ui.file_selected', ['filename' => ':filename']) }}';
+        fileName.textContent = fileSelectedText.replace(':filename', this.files[0].name);
         fileName.classList.remove('hidden');
     } else {
         fileName.classList.add('hidden');
