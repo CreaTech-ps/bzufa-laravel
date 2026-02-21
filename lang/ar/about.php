@@ -18,4 +18,33 @@ return [
     'cta_desc' => 'انضم إلينا اليوم وساهم في تغيير حياة الكثيرين للأفضل. تبرعك أو تطوعك يصنع الفرق الحقيقي.',
     'volunteer_btn' => 'انضم إلينا كمتطوع',
     'donate_btn' => 'تبرع الآن',
+
+    // نموذج التطوع
+    'volunteer_form_title' => 'انضم إلينا كمتطوع',
+    'volunteer_form_name' => 'الاسم الكامل',
+    'volunteer_form_email' => 'البريد الإلكتروني',
+    'volunteer_form_phone' => 'رقم التواصل',
+    'volunteer_form_department' => 'القسم',
+    'volunteer_form_department_placeholder' => 'اختر القسم',
+    'volunteer_form_department_loading' => 'جاري التحميل...',
+    'volunteer_form_cv' => 'السيرة الذاتية (PDF, DOC, DOCX)',
+    'volunteer_form_cv_hint' => 'الحد الأقصى لحجم الملف: 10 ميجابايت',
+    'volunteer_form_close' => 'إغلاق',
+    'volunteer_form_cancel' => 'إلغاء',
+    'volunteer_form_submit' => 'تقديم',
+    'volunteer_form_sending' => 'جاري الإرسال...',
+    'volunteer_form_error' => 'حدث خطأ. يرجى المحاولة مرة أخرى.',
+    'volunteer_request_success' => 'تم إرسال طلب التطوع بنجاح. شكراً لاهتمامك!',
+
+    // رسائل التحقق - نموذج التطوع
+    'volunteer_validation_name' => 'يرجى إدخال الاسم الكامل.',
+    'volunteer_validation_email_required' => 'يرجى إدخال البريد الإلكتروني.',
+    'volunteer_validation_email_email' => 'يرجى إدخال بريد إلكتروني صحيح.',
+    'volunteer_validation_phone' => 'يرجى إدخال رقم التواصل.',
+    'volunteer_validation_department_required' => 'يرجى اختيار القسم.',
+    'volunteer_validation_department_exists' => 'القسم المحدد غير صحيح.',
+    'volunteer_validation_cv_required' => 'يرجى رفع السيرة الذاتية.',
+    'volunteer_validation_cv_file' => 'يرجى رفع ملف صحيح.',
+    'volunteer_validation_cv_mimes' => 'يرجى رفع ملف بصيغة PDF أو DOC أو DOCX.',
+    'volunteer_validation_cv_max' => 'حجم الملف يجب أن لا يتجاوز 10 ميجابايت.',
 ];

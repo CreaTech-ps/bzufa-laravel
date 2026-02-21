@@ -168,13 +168,15 @@
                     <div class="bg-white/80 dark:bg-white/5 backdrop-blur-2xl border border-slate-200/60 dark:border-white/10 p-10 rounded-[40px] relative group overflow-hidden">
                         <div class="absolute top-0 end-0 w-32 h-32 bg-primary/10 rounded-bl-full translate-x-8 -translate-y-8 group-hover:translate-x-4 group-hover:-translate-y-4 transition-transform"></div>
                         <span class="material-symbols-outlined text-primary text-4xl mb-4">monetization_on</span>
-                        <div class="text-5xl font-black text-slate-900 dark:text-white mb-2">2.5M</div>
+                        @php $gAnnual = stat_value('grants_stat_annual', '2.5M'); @endphp
+                        <div class="text-5xl font-black text-slate-900 dark:text-white mb-2">{{ $gAnnual ?? '2.5M' }}</div>
                         <div class="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] font-black">{{ __('ui.grants_stat_annual') }}</div>
                     </div>
                     <div class="bg-white/80 dark:bg-white/5 backdrop-blur-2xl border border-slate-200/60 dark:border-white/10 p-10 rounded-[40px] relative group overflow-hidden">
                         <div class="absolute top-0 end-0 w-32 h-32 bg-primary/10 rounded-bl-full translate-x-8 -translate-y-8 group-hover:translate-x-4 group-hover:-translate-y-4 transition-transform"></div>
                         <span class="material-symbols-outlined text-primary text-4xl mb-4">groups</span>
-                        <div class="text-5xl font-black text-slate-900 dark:text-white mb-2">{{ $totalActive ?? 0 }}+</div>
+                        @php $gActive = stat_value('grants_stat_active', null); $displayActive = $gActive !== null ? $gActive : (($totalActive ?? 0) . '+'); @endphp
+                        <div class="text-5xl font-black text-slate-900 dark:text-white mb-2">{{ $displayActive }}</div>
                         <div class="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] font-black">{{ __('ui.grants_stat_active') }}</div>
                     </div>
                 </div>

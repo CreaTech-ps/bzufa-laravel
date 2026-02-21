@@ -32,16 +32,16 @@ class VolunteerController extends Controller
             'department_id' => ['required', 'exists:volunteer_departments,id'],
             'cv' => ['required', 'file', 'mimes:pdf,doc,docx', 'max:10240'], // 10MB
         ], [
-            'name.required' => 'يرجى إدخال الاسم الكامل.',
-            'email.required' => 'يرجى إدخال البريد الإلكتروني.',
-            'email.email' => 'يرجى إدخال بريد إلكتروني صحيح.',
-            'phone.required' => 'يرجى إدخال رقم التواصل.',
-            'department_id.required' => 'يرجى اختيار القسم.',
-            'department_id.exists' => 'القسم المحدد غير صحيح.',
-            'cv.required' => 'يرجى رفع السيرة الذاتية.',
-            'cv.file' => 'يرجى رفع ملف صحيح.',
-            'cv.mimes' => 'يرجى رفع ملف بصيغة PDF أو DOC أو DOCX.',
-            'cv.max' => 'حجم الملف يجب أن لا يتجاوز 10 ميجابايت.',
+            'name.required' => __('about.volunteer_validation_name'),
+            'email.required' => __('about.volunteer_validation_email_required'),
+            'email.email' => __('about.volunteer_validation_email_email'),
+            'phone.required' => __('about.volunteer_validation_phone'),
+            'department_id.required' => __('about.volunteer_validation_department_required'),
+            'department_id.exists' => __('about.volunteer_validation_department_exists'),
+            'cv.required' => __('about.volunteer_validation_cv_required'),
+            'cv.file' => __('about.volunteer_validation_cv_file'),
+            'cv.mimes' => __('about.volunteer_validation_cv_mimes'),
+            'cv.max' => __('about.volunteer_validation_cv_max'),
         ]);
 
         $cvPath = $request->file('cv')->store('volunteer-applications', 'public');
@@ -54,10 +54,10 @@ class VolunteerController extends Controller
             'cv_path' => $cvPath,
         ]);
 
-        // Send email notification
+        // Send email notification to SiteSetting contact_email
         try {
             $siteSettings = \App\Models\SiteSetting::get();
-            $recipientEmail = $siteSettings->contact_email ?: 'eltrukk@gmail.com';
+            $recipientEmail = $siteSettings->contact_email ?: config('mail.from.address');
             
             // Check if mail is configured
             $mailDriver = config('mail.default');
@@ -83,7 +83,7 @@ class VolunteerController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'تم إرسال طلب التطوع بنجاح. شكراً لاهتمامك!',
+            'message' => __('about.volunteer_request_success'),
         ]);
     }
 }

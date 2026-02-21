@@ -24,17 +24,21 @@ class KananiController extends Controller
             'discover_more_text_en' => ['nullable', 'string'],
             'hero_video_url' => ['nullable', 'string', 'max:500'],
             'store_url' => ['nullable', 'string', 'max:500'],
+            'stat1_value' => ['nullable', 'string', 'max:50'],
+            'stat1_label_ar' => ['nullable', 'string', 'max:255'],
+            'stat2_value' => ['nullable', 'string', 'max:50'],
+            'stat2_label_ar' => ['nullable', 'string', 'max:255'],
+            'stat3_value' => ['nullable', 'string', 'max:50'],
+            'stat3_label_ar' => ['nullable', 'string', 'max:255'],
         ]);
 
-        KananiSetting::get()->update([
-            'intro_video_url' => $request->intro_video_url,
-            'intro_text_ar' => $request->intro_text_ar,
-            'intro_text_en' => $request->intro_text_en,
-            'discover_more_text_ar' => $request->discover_more_text_ar,
-            'discover_more_text_en' => $request->discover_more_text_en,
-            'hero_video_url' => $request->hero_video_url,
-            'store_url' => $request->store_url,
-        ]);
+        KananiSetting::get()->update($request->only([
+            'intro_video_url', 'intro_text_ar', 'intro_text_en',
+            'discover_more_text_ar', 'discover_more_text_en',
+            'hero_video_url', 'store_url',
+            'stat1_value', 'stat1_label_ar', 'stat2_value', 'stat2_label_ar',
+            'stat3_value', 'stat3_label_ar',
+        ]));
 
         return redirect()->route('cp.kanani.edit')->with('success', 'تم حفظ إعدادات كنعاني بنجاح.');
     }

@@ -42,7 +42,12 @@
                         <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
                             <span class="material-symbols-outlined text-2xl">handshake</span>
                         </div>
-                        <h3 class="stat-number text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1" data-target="250">+{{ $totalPartners }}</h3>
+                        @php
+                            $p1 = stat_value('partners_stat1', null);
+                            $display1 = $p1 !== null ? $p1 : ('+' . $totalPartners);
+                            $target1 = (int) preg_replace('/[^0-9]/', '', $display1) ?: $totalPartners;
+                        @endphp
+                        <h3 class="stat-number text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1" data-target="{{ $target1 }}">{{ $display1 }}</h3>
                         <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ __('partners.stat1_label') }}</p>
                     </div>
                     <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
@@ -52,7 +57,8 @@
                         <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
                             <span class="material-symbols-outlined text-2xl">groups</span>
                         </div>
-                        <h3 class="stat-number text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1" data-target="1200000">1.2M</h3>
+                        @php $p2 = stat_value('partners_stat2', '1.2M'); $target2 = (strpos((string)$p2, 'M') !== false) ? 1200000 : ((int)preg_replace('/[^0-9]/', '', (string)$p2) ?: 1200000); @endphp
+                        <h3 class="stat-number text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1" data-target="{{ $target2 }}">{{ $p2 ?? '1.2M' }}</h3>
                         <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ __('partners.stat2_label') }}</p>
                     </div>
                     <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
@@ -62,7 +68,8 @@
                         <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
                             <span class="material-symbols-outlined text-2xl">account_balance</span>
                         </div>
-                        <h3 class="stat-number text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1" data-target="85">85</h3>
+                        @php $p3 = stat_value('partners_stat3', '85'); $target3 = (int)preg_replace('/[^0-9]/', '', (string)($p3 ?? '85')) ?: 85; @endphp
+                        <h3 class="stat-number text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1" data-target="{{ $target3 }}">{{ $p3 ?? '85' }}</h3>
                         <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ __('partners.stat3_label') }}</p>
                     </div>
                     <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
@@ -72,7 +79,8 @@
                         <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
                             <span class="material-symbols-outlined text-2xl">trending_up</span>
                         </div>
-                        <h3 class="stat-number text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1" data-target="15">15%</h3>
+                        @php $p4 = stat_value('partners_stat4', '15%'); $target4 = (int)preg_replace('/[^0-9]/', '', (string)($p4 ?? '15')) ?: 15; @endphp
+                        <h3 class="stat-number text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1" data-target="{{ $target4 }}">{{ $p4 ?? '15%' }}</h3>
                         <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ __('partners.stat4_label') }}</p>
                     </div>
                     <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
@@ -124,6 +132,10 @@
                         {{ __('partners.cta_subtitle') }}
                     </p>
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+                        <button type="button" onclick="openPartnershipForm()" class="w-full sm:w-auto flex items-center justify-center gap-2 bg-slate-100 dark:bg-white/10 text-slate-800 dark:text-white border-2 border-slate-300 dark:border-white/20 hover:border-primary hover:bg-primary/10 hover:text-primary px-10 py-4 rounded-full font-bold text-lg transition-all group">
+                            <span class="material-symbols-outlined text-2xl transition-transform group-hover:scale-110">handshake</span>
+                            <span>{{ __('partners.form_submit') }}</span>
+                        </button>
                         @php
                             $policyPdf = config('app.partnership_policy_pdf');
                             $whatsappUrl = config('app.whatsapp_contact');
@@ -163,6 +175,50 @@
         </div>
     </section>
 </main>
+
+{{-- مودال تقديم طلب شراكة --}}
+<div id="partnership-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/60 backdrop-blur-md transition-all duration-300 opacity-0 px-4" aria-hidden="true">
+    <div class="bg-white dark:bg-card-dark w-full max-w-2xl rounded-[32px] p-8 sm:p-12 relative shadow-2xl scale-95 transition-transform duration-300 flex flex-col max-h-[85vh]" id="partnership-modal-content">
+        <button type="button" onclick="closePartnershipForm()" class="absolute top-6 end-6 text-slate-400 hover:text-primary transition-colors z-20" aria-label="{{ __('partners.form_close') }}">
+            <span class="material-symbols-outlined text-3xl">close</span>
+        </button>
+        <div class="overflow-y-auto custom-scrollbar">
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6 text-center">{{ __('partners.form_title') }}</h2>
+            <form id="partnership-form" class="space-y-6">
+                @csrf
+                <div>
+                    <label for="partnership-company" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">{{ __('partners.form_company') }} *</label>
+                    <input type="text" id="partnership-company" name="company_name" required class="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-3 focus:ring-2 focus:ring-primary/30 focus:border-primary">
+                </div>
+                <div>
+                    <label for="partnership-contact" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">{{ __('partners.form_contact') }} *</label>
+                    <input type="text" id="partnership-contact" name="contact_name" required class="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-3 focus:ring-2 focus:ring-primary/30 focus:border-primary">
+                </div>
+                <div>
+                    <label for="partnership-email" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">{{ __('partners.form_email') }} *</label>
+                    <input type="email" id="partnership-email" name="email" required class="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-3 focus:ring-2 focus:ring-primary/30 focus:border-primary">
+                </div>
+                <div>
+                    <label for="partnership-phone" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">{{ __('partners.form_phone') }} *</label>
+                    <input type="tel" id="partnership-phone" name="phone" required class="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-3 focus:ring-2 focus:ring-primary/30 focus:border-primary">
+                </div>
+                <div>
+                    <label for="partnership-message" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">{{ __('partners.form_message') }}</label>
+                    <textarea id="partnership-message" name="message" rows="3" class="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-3 focus:ring-2 focus:ring-primary/30 focus:border-primary"></textarea>
+                </div>
+                <div class="flex justify-end gap-4 pt-4">
+                    <button type="button" onclick="closePartnershipForm()" class="px-6 py-3 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                        {{ __('partners.form_cancel') }}
+                    </button>
+                    <button type="submit" class="px-6 py-3 rounded-xl bg-primary text-white hover:bg-primary-dark transition-colors font-medium inline-flex items-center gap-2">
+                        <span class="material-symbols-outlined">send</span>
+                        {{ __('partners.form_submit') }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('scripts')
@@ -221,6 +277,58 @@
         var match = href.match(/[?&]page=(\d+)/);
         var page = match ? parseInt(match[1], 10) : 1;
         loadPartners(currentType, page);
+    });
+
+    // Partnership request form modal (expose to global for onclick)
+    window.openPartnershipForm = function() {
+        $('#partnership-modal').removeClass('hidden').addClass('flex');
+        setTimeout(function() {
+            $('#partnership-modal').addClass('opacity-100');
+            $('#partnership-modal-content').removeClass('scale-95').addClass('scale-100');
+        }, 10);
+        $('body').css('overflow', 'hidden');
+    };
+    window.closePartnershipForm = function() {
+        $('#partnership-modal').removeClass('opacity-100');
+        $('#partnership-modal-content').removeClass('scale-100').addClass('scale-95');
+        setTimeout(function() {
+            $('#partnership-modal').addClass('hidden').removeClass('flex');
+            $('body').css('overflow', '');
+            $('#partnership-form')[0]?.reset();
+        }, 300);
+    };
+    $('#partnership-modal').on('click', function(e) {
+        if (e.target === this) window.closePartnershipForm();
+    });
+    $('#partnership-form').on('submit', function(e) {
+        e.preventDefault();
+        var $form = $(this);
+        var $btn = $form.find('button[type="submit"]');
+        var originalHtml = $btn.html();
+        $btn.prop('disabled', true).html('<span class="material-symbols-outlined animate-spin">sync</span> ' + @json(__('partners.form_sending')));
+        $.ajax({
+            url: @json(localized_route('partners.partnership-request.store')),
+            type: 'POST',
+            data: $form.serialize(),
+            headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' }
+        }).done(function(data) {
+            if (data.success) {
+                alert(data.message);
+                closePartnershipForm();
+            } else {
+                alert(data.message || @json(__('partners.form_error')));
+            }
+        }).fail(function(xhr) {
+            var msg = @json(__('partners.form_error'));
+            if (xhr.responseJSON?.message) msg = xhr.responseJSON.message;
+            else if (xhr.responseJSON?.errors) {
+                var first = Object.values(xhr.responseJSON.errors)[0];
+                msg = Array.isArray(first) ? first[0] : first;
+            }
+            alert(msg);
+        }).always(function() {
+            $btn.prop('disabled', false).html(originalHtml);
+        });
     });
 })();
 </script>

@@ -38,6 +38,9 @@ use App\Http\Controllers\Website\SitemapController;
 use App\Http\Controllers\Website\RobotsController;
 use App\Http\Controllers\Cp\VolunteerApplicationController;
 use App\Http\Controllers\Cp\TamkeenPartnershipRequestController;
+use App\Http\Controllers\Cp\PartnershipRequestController;
+use App\Http\Controllers\Cp\HomeProjectController;
+use App\Http\Controllers\Cp\SiteTextController;
 
 // مسارات الموقع الأمامي: تسجيل لكل من /en و / (عربي بدون بادئة) ليعمل كلا اللغتين
 $localizedMiddleware = ['locale.from.url', 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath'];
@@ -47,6 +50,7 @@ $registerLocalizedRoutes = function () use ($localizedMiddleware) {
         Route::get('/about-us', [WebsiteAboutController::class, 'index'])->name('about.index');
         Route::get('/our-team', [WebsiteTeamController::class, 'index'])->name('team.index');
         Route::get('/success-partners', [WebsitePartnerController::class, 'index'])->name('partners.index');
+        Route::post('/success-partners/partnership-request', [WebsitePartnerController::class, 'storePartnershipRequest'])->name('partners.partnership-request.store');
         Route::get('/grants', [WebsiteScholarshipController::class, 'index'])->name('grants.index');
         Route::get('/grants/{slug}/apply', [WebsiteScholarshipController::class, 'apply'])->name('grants.apply');
         Route::post('/grants/{slug}/apply', [WebsiteScholarshipController::class, 'storeApplication'])->name('grants.apply.store');
@@ -77,6 +81,8 @@ Route::prefix('cp')->name('cp.')->group(function () {
     Route::get('/site-settings', [SiteSettingsController::class, 'edit'])->name('site-settings.edit');
     Route::put('/site-settings', [SiteSettingsController::class, 'update'])->name('site-settings.update');
     Route::get('/seo-settings', [SeoSettingsController::class, 'edit'])->name('seo-settings.edit');
+    Route::get('/site-texts', [SiteTextController::class, 'index'])->name('site-texts.index');
+    Route::put('/site-texts', [SiteTextController::class, 'update'])->name('site-texts.update');
     Route::put('/seo-settings', [SeoSettingsController::class, 'update'])->name('seo-settings.update');
     Route::get('/home', [HomePageController::class, 'edit'])->name('home.edit');
     Route::put('/home', [HomePageController::class, 'update'])->name('home.update');
@@ -84,12 +90,16 @@ Route::prefix('cp')->name('cp.')->group(function () {
     Route::get('/home-statistics/{home_statistic}/edit', [HomeStatisticController::class, 'edit'])->name('home-statistics.edit');
     Route::put('/home-statistics/{home_statistic}', [HomeStatisticController::class, 'update'])->name('home-statistics.update');
     Route::delete('/home-statistics/{home_statistic}', [HomeStatisticController::class, 'destroy'])->name('home-statistics.destroy');
+    Route::resource('home-projects', HomeProjectController::class)->names('home-projects');
     Route::resource('news', NewsController::class)->names('news');
     Route::resource('scholarships', ScholarshipController::class)->names('scholarships');
     Route::get('/scholarship-applications', [ScholarshipApplicationController::class, 'index'])->name('scholarship-applications.index');
     Route::get('/scholarship-applications/{scholarship_application}/edit', [ScholarshipApplicationController::class, 'edit'])->name('scholarship-applications.edit');
     Route::put('/scholarship-applications/{scholarship_application}', [ScholarshipApplicationController::class, 'update'])->name('scholarship-applications.update');
     Route::resource('partners', PartnerController::class)->names('partners');
+    Route::get('/partnership-requests', [PartnershipRequestController::class, 'index'])->name('partnership-requests.index');
+    Route::get('/partnership-requests/{partnership_request}/edit', [PartnershipRequestController::class, 'edit'])->name('partnership-requests.edit');
+    Route::put('/partnership-requests/{partnership_request}', [PartnershipRequestController::class, 'update'])->name('partnership-requests.update');
     Route::get('/about', [AboutController::class, 'edit'])->name('about.edit');
     Route::put('/about', [AboutController::class, 'update'])->name('about.update');
     Route::resource('team-members', TeamMemberController::class)->names('team-members');

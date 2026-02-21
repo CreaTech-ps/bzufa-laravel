@@ -119,6 +119,7 @@
         <script type="application/ld+json">{!! $seo->organization_schema !!}</script>
     @endif
     @yield('styles')
+    @stack('styles')
 
 </head>
 

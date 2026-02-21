@@ -1,5 +1,20 @@
 @extends('website.layout')
 
+@push('styles')
+<style>
+@keyframes partner-infinite-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-partner-scroll {
+  animation: partner-infinite-scroll 120s linear infinite;
+}
+[dir="rtl"] .animate-partner-scroll {
+  animation-direction: reverse;
+}
+</style>
+@endpush
+
 @push('scripts')
 {{-- Structured Data (Schema.org) for Organization --}}
 <script type="application/ld+json">
@@ -167,121 +182,56 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-                    <div
-                        class="bg-white dark:bg-card-dark rounded-2xl overflow-hidden shadow-lg dark:shadow-card border border-slate-200 dark:border-white/5 group flex flex-col h-full">
+                    @forelse($homeProjects ?? collect() as $project)
+                    <div class="bg-white dark:bg-card-dark rounded-2xl overflow-hidden shadow-lg dark:shadow-card border border-slate-200 dark:border-white/5 group flex flex-col h-full">
                         <div class="relative h-56 overflow-hidden shrink-0">
-                            <img alt="{{ __('ui.project_tamkeen') }}"
+                            <img alt="{{ $project->title }}"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUPXODDN0v4kZRHFbTZmKaHw3iMD1kBS1QCI9FQqCTASiLUm9InU61rKi8Q-r3eIc0AwfzPP6ALeGWWyKQpa6W0Ah_bJlI_XqF0YWlOV5JSta7QRyYGtMFjvBfwkyE8mD94y2ZXYJ0-Jmk6zpOiYygCH2xYPO4Pl2OvCpQhXhD9ldBmEZwKDD_oT3V-2-zcMLyHtQfFLqywbB6EXQrS87kZBz5xW6_zBzYI4ttU2scrOq0k3jXqEDI11UpfnGsx4AqKqq9NpEb5-4" />
-                            <span
-                                class="absolute top-4 start-4 bg-black/50 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full">{{ __('ui.badge_training') }}</span>
+                                src="{{ $project->image_path ? asset('storage/' . $project->image_path) : 'https://placehold.co/800x450/e2e8f0/64748b?text=' . urlencode($project->title) }}"
+                                loading="lazy" />
+                            @if($project->badge_1)
+                                <span class="absolute top-4 {{ $project->badge_2 ? 'end-4' : 'start-4' }} {{ $project->badge_1_style === 'primary' ? 'px-3 bg-primary text-white font-bold uppercase' : 'bg-black/50 backdrop-blur-md' }} text-white text-xs px-3 py-1 rounded-full">{{ $project->badge_1 }}</span>
+                            @endif
+                            @if($project->badge_2)
+                                <span class="absolute top-4 start-4 {{ $project->badge_2_style === 'primary' ? 'px-3 bg-primary text-white font-bold uppercase' : 'bg-black/50 backdrop-blur-md' }} text-white text-xs px-3 py-1 rounded-full">{{ $project->badge_2 }}</span>
+                            @endif
                         </div>
                         <div class="p-6 text-start flex flex-col flex-1">
-                            <h3 class="text-xl font-bold mb-3 dark:text-white">{{ __('ui.project_tamkeen') }}</h3>
-                            <p
-                                class="text-slate-500 dark:text-text-secondary-dark text-sm leading-relaxed mb-6 line-clamp-2">
-                                {{ __('ui.project_tamkeen_desc') }}
-                            </p>
+                            <h3 class="text-xl font-bold mb-3 dark:text-white">{{ $project->title }}</h3>
+                            @if($project->description)
+                                <p class="text-slate-500 dark:text-text-secondary-dark text-sm leading-relaxed mb-6 line-clamp-2">{{ $project->description }}</p>
+                            @endif
+                            @if($project->stat_line_1 || $project->stat_percentage !== null)
                             <div class="mb-6">
                                 <div class="flex justify-between text-sm font-bold mb-2">
                                     <div class="flex gap-1 dark:text-text-primary-dark items-center">
-                                        <span>{{ __('ui.trained_count') }}</span>
-                                        <span class="text-primary">150</span>
-                                        <span>{{ __('ui.students') }}</span>
+                                        @if($project->stat_line_1)<span>{{ $project->stat_line_1 }}</span>@endif
+                                        @if($project->stat_value)<span class="text-primary">{{ $project->stat_value }}</span>@endif
+                                        @if($project->stat_suffix)<span>{{ $project->stat_suffix }}</span>@endif
                                     </div>
-                                    <span class="text-primary">85%</span>
+                                    @if($project->stat_percentage !== null)<span class="text-primary">{{ $project->stat_percentage }}%</span>@endif
                                 </div>
+                                @if($project->stat_percentage !== null)
                                 <div class="w-full bg-slate-100 dark:bg-white/10 h-2 rounded-full overflow-hidden">
-                                    <div class="bg-primary h-full rounded-full" style="width: 85%"></div>
+                                    <div class="bg-primary h-full rounded-full" style="width: {{ $project->stat_percentage }}%"></div>
                                 </div>
+                                @endif
+                                @if($project->stat_line_2)
                                 <div class="text-xs text-slate-400 dark:text-text-secondary-dark mt-2 flex gap-1">
-                                    <span>{{ __('ui.annual_goal') }}</span>
-                                    <span>180</span>
-                                    <span>{{ __('ui.trainees') }}</span>
+                                    <span>{{ $project->stat_line_2 }}</span>
                                 </div>
+                                @endif
                             </div>
-                            <a href="{{ localized_route('tamkeen.index') }}"
-                                class="w-full mt-auto bg-primary/10 text-primary dark:bg-primary/20 hover:bg-primary hover:text-white font-bold py-3 rounded-xl transition-all border border-primary/20 text-center">{{ __('ui.training_details') }}</a>
+                            @endif
+                            @if($project->resolved_url && $project->button_text)
+                            <a href="{{ $project->resolved_url }}" {{ $project->link_open_new_tab ? 'target="_blank" rel="noopener noreferrer"' : '' }}
+                                class="w-full mt-auto bg-primary/10 text-primary dark:bg-primary/20 hover:bg-primary hover:text-white font-bold py-3 rounded-xl transition-all border border-primary/20 text-center">{{ $project->button_text }}</a>
+                            @endif
                         </div>
                     </div>
-
-                    <div
-                        class="bg-white dark:bg-card-dark rounded-2xl overflow-hidden shadow-lg dark:shadow-card border border-slate-200 dark:border-white/5 group flex flex-col h-full">
-                        <div class="relative h-56 overflow-hidden shrink-0">
-                            <img alt="{{ __('ui.project_kanani') }}"
-                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQY8R4Twui0hp8dUIuUzD7L84f-wRhijJUFEa6zaCY5trVngdMHRT48eILB4Hkux_96PIY7SLsIu1ZxTX0mneM2OgUp4c2OxAmEocmrh8iDC5YG5YF7oPPDxrQtg5GTAzgWXpcKCmhNX5QKVAT64PhLVXQXaVks3eA2NEoR475Nfc1NmxfkD1vrWWSaQAdaVER9xCQSlFBubc6wgKnMfCBGgfT2cavonrcSNBP1MK8SyePyG4U61HvpaiyhWpXuINjlEkwZeTneEw" />
-                            <span
-                                class="absolute top-4 end-4 px-3 bg-primary text-white text-xs font-bold py-1 rounded-full uppercase">{{ __('ui.badge_our_store') }}</span>
-                            <span
-                                class="absolute top-4 start-4 bg-black/50 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full">{{ __('ui.badge_hand_in_hand') }}</span>
-                        </div>
-                        <div class="p-6 text-start flex flex-col flex-1">
-                            <h3 class="text-xl font-bold mb-3 dark:text-white">{{ __('ui.project_kanani') }}</h3>
-                            <p
-                                class="text-slate-500 dark:text-text-secondary-dark text-sm leading-relaxed mb-6 line-clamp-2">
-                                {{ __('ui.project_kanani_desc') }}
-                            </p>
-                            <div class="mb-6">
-                                <div class="flex justify-between text-sm font-bold mb-2">
-                                    <div class="flex gap-1 dark:text-text-primary-dark items-center">
-                                        <span>{{ __('ui.provided_count') }}</span>
-                                        <span class="text-primary">420</span>
-                                        <span>{{ __('ui.scholarships_count') }}</span>
-                                    </div>
-                                    <span class="text-primary">70%</span>
-                                </div>
-                                <div class="w-full bg-slate-100 dark:bg-white/10 h-2 rounded-full overflow-hidden">
-                                    <div class="bg-primary h-full rounded-full" style="width: 70%"></div>
-                                </div>
-                                <div class="text-xs text-slate-400 dark:text-text-secondary-dark mt-2 flex gap-1">
-                                    <span>{{ __('ui.grants_goal') }}</span>
-                                    <span>600</span>
-                                    <span>{{ __('ui.scholarships_count') }}</span>
-                                </div>
-                            </div>
-                            <a href="https://kanani.bzufa.com/" target="_blank" rel="noopener noreferrer"
-                                class="w-full mt-auto bg-primary/10 text-primary dark:bg-primary/20 hover:bg-primary hover:text-white font-bold py-3 rounded-xl transition-all border border-primary/20 text-center">{{ __('ui.visit_store') }}</a>
-
-                        </div>
-                    </div>
-
-                    <div
-                        class="bg-white dark:bg-card-dark rounded-2xl overflow-hidden shadow-lg dark:shadow-card border border-slate-200 dark:border-white/5 group flex flex-col h-full">
-                        <div class="relative h-56 overflow-hidden shrink-0">
-                            <img alt="{{ __('ui.project_parasols') }}"
-                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjhSMsb_wCIv9rqETWGjnkWrFDfjmQV4YUiK4WowuP8SR5z81I-kzL6KIxOjY_iOmYwrRKdFoeOcnnqH8waRG9oYyg1w7L9MBBO5Bw6ayf98MAxtX0ZqyMKjWjlmJaBZS_a6WTY8tUWCyUkq80PH2lYK_7-PEu0bxAVbjB12J24CtxUAxQ8iOKBxI1HVbVWC67ttLNw4tfXwDJiAVLy5-ITyBKBu9eV99hU7AZFj650a4bmSRUKAJDdH9m6RSkc6C1nAtW_A6FYDE" />
-                            <span
-                                class="absolute top-4 end-4 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">{{ __('ui.badge_sustainability') }}</span>
-                            <span
-                                class="absolute top-4 start-4 bg-black/50 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full">{{ __('ui.badge_student_fund') }}</span>
-                        </div>
-                        <div class="p-6 text-start flex flex-col flex-1">
-                            <h3 class="text-xl font-bold mb-3 dark:text-white">{{ __('ui.project_parasols') }}</h3>
-                            <p
-                                class="text-slate-500 dark:text-text-secondary-dark text-sm leading-relaxed mb-6 line-clamp-2">
-                                {{ __('ui.project_parasols_desc') }}
-                            </p>
-                            <div class="mb-6">
-                                <div class="flex justify-between text-sm font-bold mb-2">
-                                    <div class="flex gap-1 dark:text-text-primary-dark items-center">
-                                        <span>{{ __('ui.vacancy_rate') }}</span>
-                                    </div>
-                                    <span class="text-primary">62%</span>
-                                </div>
-                                <div class="w-full bg-slate-100 dark:bg-white/10 h-2 rounded-full overflow-hidden">
-                                    <div class="bg-primary h-full rounded-full" style="width: 62%"></div>
-                                </div>
-                                <div class="text-xs text-slate-400 dark:text-text-secondary-dark mt-2 flex gap-1">
-                                    <span>{{ __('ui.goal_reach') }}</span>
-                                </div>
-                            </div>
-                            <a href="{{ localized_route('parasols.index') }}"
-                                class="w-full mt-auto bg-primary/10 text-primary dark:bg-primary/20 hover:bg-primary hover:text-white font-bold py-3 rounded-xl transition-all border border-primary/20 text-center">{{ __('ui.view_vacancies') }}</a>
-                        </div>
-                    </div>
+                    @empty
+                    <div class="col-span-full text-center py-12 text-slate-500 dark:text-slate-400">{{ __('ui.our_projects') }} — لا توجد مشاريع معروضة. أضفها من لوحة التحكم.</div>
+                    @endforelse
                 </div>
             </div>
         </section>
@@ -376,20 +326,19 @@
 
                 <div class="relative flex overflow-hidden group mb-16" dir="ltr">
                     <div
-                        class="absolute inset-y-0 start-0 w-20 bg-gradient-to-r rtl:bg-gradient-to-l from-white dark:from-background-dark to-transparent z-10">
+                        class="absolute inset-y-0 start-0 w-20 bg-gradient-to-r from-white dark:from-background-dark to-transparent z-10 pointer-events-none">
+                    </div>
+                    <div
+                        class="absolute inset-y-0 end-0 w-20 bg-gradient-to-l from-white dark:from-background-dark to-transparent z-10 pointer-events-none">
                     </div>
 
-                    <div
-                        class="absolute inset-y-0 end-0 w-20 bg-gradient-to-l rtl:bg-gradient-to-r from-white dark:from-background-dark to-transparent z-10">
-                    </div>
-
-                    <div
-                        class="flex animate-infinite-scroll rtl:direction-reverse gap-24 items-center whitespace-nowrap">
-                        @php $partnerLogoClass = 'max-h-12 w-auto min-w-[120px] object-contain transition-all duration-500'; @endphp
+                    <div class="flex animate-partner-scroll gap-24 items-center whitespace-nowrap w-max">
+                        @php $partnerLogoClass = 'max-h-12 w-auto min-w-[120px] object-contain transition-all duration-500 flex-shrink-0'; @endphp
+                        {{-- النسخة الأولى --}}
                         <div class="flex gap-24 items-center flex-shrink-0">
                             @forelse($partners as $partner)
                             <a href="{{ $partner->link ?? '#' }}" {{ $partner->link ? 'target="_blank" rel="noopener"' : '' }}
-                                class="block focus:outline-none">
+                                class="block focus:outline-none flex-shrink-0">
                                 <img alt="{{ localized($partner, 'name') }}"
                                     class="{{ $partnerLogoClass }}"
                                     src="{{ $partner->logo_path ? asset('storage/' . $partner->logo_path) : asset('assets/img/logo-l.svg') }}" />
@@ -401,10 +350,11 @@
                             <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" />
                             @endforelse
                         </div>
+                        {{-- النسخة الثانية (للاستمرارية) --}}
                         <div class="flex gap-24 items-center flex-shrink-0">
                             @forelse($partners as $partner)
                             <a href="{{ $partner->link ?? '#' }}" {{ $partner->link ? 'target="_blank" rel="noopener"' : '' }}
-                                class="block focus:outline-none">
+                                class="block focus:outline-none flex-shrink-0">
                                 <img alt="{{ localized($partner, 'name') }}"
                                     class="{{ $partnerLogoClass }}"
                                     src="{{ $partner->logo_path ? asset('storage/' . $partner->logo_path) : asset('assets/img/logo-l.svg') }}" />

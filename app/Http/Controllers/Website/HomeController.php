@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use App\Models\HomeProject;
 use App\Models\HomeSetting;
 use App\Models\HomeStatistic;
 use App\Models\News;
@@ -42,6 +43,10 @@ class HomeController extends Controller
                 ->get();
         });
 
-        return view('website.home', compact('homeSetting', 'statistics', 'partners', 'newsItems', 'successStories'));
+        $homeProjects = cache()->remember('home_projects', 3600, function () {
+            return HomeProject::getActive();
+        });
+
+        return view('website.home', compact('homeSetting', 'statistics', 'partners', 'newsItems', 'successStories', 'homeProjects'));
     }
 }

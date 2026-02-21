@@ -23,4 +23,23 @@ return [
     'cta_subtitle' => 'We believe that strength lies in unity. Join our partner network today and help put a smile on thousands of faces.',
     'cta_policy_pdf' => 'Partnership policy (PDF)',
     'cta_whatsapp' => 'Talk to our team',
+    'request_success' => 'Partnership request submitted successfully. Thank you!',
+    'form_title' => 'Submit partnership request',
+    'form_company' => 'Company or organization name',
+    'form_contact' => 'Contact person name',
+    'form_email' => 'Email',
+    'form_phone' => 'Phone number',
+    'form_message' => 'Message (optional)',
+    'form_submit' => 'Submit request',
+    'form_cancel' => 'Cancel',
+    'form_sending' => 'Sending...',
+    'form_close' => 'Close',
+    'form_error' => 'An error occurred. Please try again.',
+
+    // Partnership form validation messages
+    'validation_company_name' => 'Please enter the company or organization name.',
+    'validation_contact_name' => 'Please enter the contact person name.',
+    'validation_email_required' => 'Please enter your email address.',
+    'validation_email_email' => 'Please enter a valid email address.',
+    'validation_phone' => 'Please enter your phone number.',
 ];

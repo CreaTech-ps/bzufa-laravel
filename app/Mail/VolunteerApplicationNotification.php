@@ -31,7 +31,7 @@ class VolunteerApplicationNotification extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'طلب تطوع',
+            subject: 'طلب تطوع جديد — ' . ($this->application->name ?? 'متطوع'),
         );
     }
 
@@ -56,9 +56,10 @@ class VolunteerApplicationNotification extends Mailable
     public function attachments(): array
     {
         $extension = pathinfo($this->application->cv_path, PATHINFO_EXTENSION);
+        $safeName = preg_replace('/[^a-zA-Z0-9\-_]/u', '_', $this->application->name ?? 'cv');
         return [
             Attachment::fromStorageDisk('public', $this->application->cv_path)
-                ->as('cv_' . $this->application->name . '.' . $extension),
+                ->as('volunteer_cv_' . $safeName . '.' . $extension),
         ];
     }
 }

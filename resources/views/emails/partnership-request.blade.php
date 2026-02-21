@@ -3,17 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>طلب تطوع جديد — جمعية أصدقاء جامعة بيرزيت</title>
+    <title>طلب شراكة جديد — جمعية أصدقاء جامعة بيرزيت</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <!--[if mso]>
-    <noscript>
-        <xml>
-            <o:OfficeDocumentSettings>
-                <o:PixelsPerInch>96</o:PixelsPerInch>
-            </o:OfficeDocumentSettings>
-        </xml>
-    </noscript>
-    <![endif]-->
 </head>
 <body style="margin: 0; padding: 0; font-family: 'Tajawal', Arial, sans-serif; background-color: #f1f5f9; line-height: 1.7;">
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f1f5f9;">
@@ -27,8 +18,8 @@
                                 <tr>
                                     <td>
                                         <p style="margin: 0 0 8px 0; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 2px;">إشعار جديد</p>
-                                        <h1 style="margin: 0; font-size: 28px; font-weight: 800; color: #ffffff;">طلب تطوع جديد</h1>
-                                        <p style="margin: 12px 0 0 0; font-size: 15px; color: rgba(255,255,255,0.95);">جمعية أصدقاء جامعة بيرزيت</p>
+                                        <h1 style="margin: 0; font-size: 28px; font-weight: 800; color: #ffffff;">طلب شراكة جديد</h1>
+                                        <p style="margin: 12px 0 0 0; font-size: 15px; color: rgba(255,255,255,0.95);">جمعية أصدقاء جامعة بيرزيت — شركاء النجاح</p>
                                     </td>
                                 </tr>
                             </table>
@@ -37,39 +28,44 @@
                     {{-- Body --}}
                     <tr>
                         <td style="padding: 40px;">
-                            <p style="margin: 0 0 24px 0; font-size: 16px; color: #475569;">تم استلام طلب تطوع جديد من الموقع. فيما يلي تفاصيل الطلب:</p>
+                            <p style="margin: 0 0 24px 0; font-size: 16px; color: #475569;">تم استلام طلب شراكة جديد من الموقع. فيما يلي تفاصيل الطلب:</p>
 
                             <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
                                 <tr style="background-color: #f8fafc;">
-                                    <td style="padding: 16px 20px; font-weight: 700; color: #64748b; width: 180px; font-size: 14px; border-bottom: 1px solid #e2e8f0;">الاسم الكامل</td>
-                                    <td style="padding: 16px 20px; color: #1e293b; font-size: 15px; border-bottom: 1px solid #e2e8f0;">{{ $application->name }}</td>
+                                    <td style="padding: 16px 20px; font-weight: 700; color: #64748b; width: 180px; font-size: 14px; border-bottom: 1px solid #e2e8f0;">اسم الشركة/المؤسسة</td>
+                                    <td style="padding: 16px 20px; color: #1e293b; font-size: 15px; border-bottom: 1px solid #e2e8f0;">{{ $request->company_name }}</td>
                                 </tr>
                                 <tr>
+                                    <td style="padding: 16px 20px; font-weight: 700; color: #64748b; font-size: 14px; border-bottom: 1px solid #e2e8f0;">اسم المسؤول</td>
+                                    <td style="padding: 16px 20px; color: #1e293b; font-size: 15px; border-bottom: 1px solid #e2e8f0;">{{ $request->contact_name }}</td>
+                                </tr>
+                                <tr style="background-color: #f8fafc;">
                                     <td style="padding: 16px 20px; font-weight: 700; color: #64748b; font-size: 14px; border-bottom: 1px solid #e2e8f0;">البريد الإلكتروني</td>
                                     <td style="padding: 16px 20px; color: #1e293b; font-size: 15px; border-bottom: 1px solid #e2e8f0;">
-                                        <a href="mailto:{{ $application->email }}" style="color: #0BA66D; text-decoration: none; font-weight: 500;">{{ $application->email }}</a>
-                                    </td>
-                                </tr>
-                                <tr style="background-color: #f8fafc;">
-                                    <td style="padding: 16px 20px; font-weight: 700; color: #64748b; font-size: 14px; border-bottom: 1px solid #e2e8f0;">رقم التواصل</td>
-                                    <td style="padding: 16px 20px; color: #1e293b; font-size: 15px; border-bottom: 1px solid #e2e8f0;">
-                                        <a href="tel:{{ $application->phone }}" style="color: #0BA66D; text-decoration: none; font-weight: 500;">{{ $application->phone }}</a>
+                                        <a href="mailto:{{ $request->email }}" style="color: #0BA66D; text-decoration: none; font-weight: 500;">{{ $request->email }}</a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 16px 20px; font-weight: 700; color: #64748b; font-size: 14px; border-bottom: 1px solid #e2e8f0;">القسم المطلوب</td>
-                                    <td style="padding: 16px 20px; color: #1e293b; font-size: 15px; border-bottom: 1px solid #e2e8f0;">{{ $application->department ? (app()->getLocale() === 'ar' ? ($application->department->name_ar ?? $application->department->name_en) : ($application->department->name_en ?? $application->department->name_ar)) : '—' }}</td>
+                                    <td style="padding: 16px 20px; font-weight: 700; color: #64748b; font-size: 14px; border-bottom: 1px solid #e2e8f0;">رقم التواصل</td>
+                                    <td style="padding: 16px 20px; color: #1e293b; font-size: 15px; border-bottom: 1px solid #e2e8f0;">
+                                        <a href="tel:{{ $request->phone }}" style="color: #0BA66D; text-decoration: none; font-weight: 500;">{{ $request->phone }}</a>
+                                    </td>
                                 </tr>
+                                @if(!empty($request->message))
+                                <tr style="background-color: #f8fafc;">
+                                    <td style="padding: 16px 20px; font-weight: 700; color: #64748b; font-size: 14px; border-bottom: 1px solid #e2e8f0; vertical-align: top;">الرسالة</td>
+                                    <td style="padding: 16px 20px; color: #1e293b; font-size: 15px; border-bottom: 1px solid #e2e8f0;">{{ $request->message }}</td>
+                                </tr>
+                                @endif
                                 <tr style="background-color: #f8fafc;">
                                     <td style="padding: 16px 20px; font-weight: 700; color: #64748b; font-size: 14px;">تاريخ وتوقيت التقديم</td>
-                                    <td style="padding: 16px 20px; color: #1e293b; font-size: 15px;">{{ $application->created_at->locale('ar')->translatedFormat('l، d F Y - h:i a') }}</td>
+                                    <td style="padding: 16px 20px; color: #1e293b; font-size: 15px;">{{ $request->created_at->locale('ar')->translatedFormat('l، d F Y - h:i a') }}</td>
                                 </tr>
                             </table>
 
-                            {{-- CV Notice --}}
                             <div style="margin-top: 24px; padding: 20px; background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border-right: 4px solid #0BA66D; border-radius: 12px;">
                                 <p style="margin: 0; font-size: 15px; color: #166534; font-weight: 500;">
-                                    <strong>📎 ملاحظة:</strong> تم إرفاق السيرة الذاتية (CV) مع هذا الإيميل. يرجى مراجعتها والتواصل مع المتطوع في أقرب وقت.
+                                    <strong>💼 ملاحظة:</strong> يرجى التواصل مع طالب الشراكة في أقرب وقت لمعالجة طلبه.
                                 </p>
                             </div>
                         </td>

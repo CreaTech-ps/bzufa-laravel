@@ -18,4 +18,33 @@ return [
     'cta_desc' => 'Join us today and contribute to changing the lives of many for the better. Your donation or volunteer work makes a real difference.',
     'volunteer_btn' => 'Join Us as a Volunteer',
     'donate_btn' => 'Donate Now',
+
+    // Volunteer form
+    'volunteer_form_title' => 'Join Us as a Volunteer',
+    'volunteer_form_name' => 'Full Name',
+    'volunteer_form_email' => 'Email',
+    'volunteer_form_phone' => 'Phone Number',
+    'volunteer_form_department' => 'Department',
+    'volunteer_form_department_placeholder' => 'Select department',
+    'volunteer_form_department_loading' => 'Loading...',
+    'volunteer_form_cv' => 'CV (PDF, DOC, DOCX)',
+    'volunteer_form_cv_hint' => 'Maximum file size: 10 MB',
+    'volunteer_form_close' => 'Close',
+    'volunteer_form_cancel' => 'Cancel',
+    'volunteer_form_submit' => 'Submit',
+    'volunteer_form_sending' => 'Sending...',
+    'volunteer_form_error' => 'An error occurred. Please try again.',
+    'volunteer_request_success' => 'Volunteer application submitted successfully. Thank you!',
+
+    // Volunteer form validation messages
+    'volunteer_validation_name' => 'Please enter your full name.',
+    'volunteer_validation_email_required' => 'Please enter your email address.',
+    'volunteer_validation_email_email' => 'Please enter a valid email address.',
+    'volunteer_validation_phone' => 'Please enter your phone number.',
+    'volunteer_validation_department_required' => 'Please select a department.',
+    'volunteer_validation_department_exists' => 'The selected department is invalid.',
+    'volunteer_validation_cv_required' => 'Please upload your CV.',
+    'volunteer_validation_cv_file' => 'Please upload a valid file.',
+    'volunteer_validation_cv_mimes' => 'Please upload a PDF, DOC or DOCX file.',
+    'volunteer_validation_cv_max' => 'File size must not exceed 10 MB.',
 ];

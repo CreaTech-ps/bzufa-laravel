@@ -5,7 +5,11 @@
 @section('content')
 <main class="container-custom py-16 md:py-20 pb-20">
     <section class="mb-16 md:mb-20">
-        @php $chairperson = $boardMembers->first(); @endphp
+        @php
+            $chairperson = $boardMembers->first();
+            $chairpersonName = trim(__('team.chairperson_name')) ?: ($chairperson ? localized($chairperson, 'name') : '');
+            $chairpersonPosition = trim(__('team.chairperson_position')) ?: ($chairperson ? localized($chairperson, 'title') : '');
+        @endphp
         <div class="relative mt-12">
             <div class="absolute -top-12 -start-12 w-64 h-64 bg-primary/5 rounded-full blur-3xl invisible lg:visible"></div>
 
@@ -20,16 +24,16 @@
 
                 <div class="lg:col-span-5 relative group overflow-hidden {{ $imageOrder }}">
                     <img src="{{ $chairperson && $chairperson->photo_path ? asset('storage/' . $chairperson->photo_path) : asset('assets/img/nisreen.webp') }}"
-                        alt="{{ $chairperson ? localized($chairperson, 'name') : __('team.chairperson_title_highlight') }}"
+                        alt="{{ $chairpersonName ?: __('team.chairperson_title_highlight') }}"
                         class="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
                         loading="eager" width="600" height="800"
                         onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800';">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent lg:hidden"></div>
 
-                    @if($chairperson)
+                    @if($chairpersonName || $chairpersonPosition)
                     <div class="absolute bottom-6 start-6 lg:hidden">
-                        <h4 class="text-white font-bold text-lg">{{ localized($chairperson, 'name') }}</h4>
-                        <p class="text-primary text-sm">{{ localized($chairperson, 'title') }}</p>
+                        @if($chairpersonName)<h4 class="text-white font-bold text-lg">{{ $chairpersonName }}</h4>@endif
+                        @if($chairpersonPosition)<p class="text-primary text-sm">{{ $chairpersonPosition }}</p>@endif
                     </div>
                     @endif
                 </div>
@@ -48,10 +52,10 @@
                             <p>{{ __('team.chairperson_message_3') }}</p>
                         </div>
 
-                        @if($chairperson)
+                        @if($chairpersonName || $chairpersonPosition)
                         <div class="mt-8 pt-6 border-t border-slate-200 dark:border-white/10 hidden lg:block text-start">
-                            <h4 class="text-xl font-bold text-slate-900 dark:text-white tracking-wide">{{ localized($chairperson, 'name') }}</h4>
-                            <p class="text-primary font-semibold uppercase text-sm tracking-wider mt-1">{{ localized($chairperson, 'title') }}</p>
+                            @if($chairpersonName)<h4 class="text-xl font-bold text-slate-900 dark:text-white tracking-wide">{{ $chairpersonName }}</h4>@endif
+                            @if($chairpersonPosition)<p class="text-primary font-semibold uppercase text-sm tracking-wider mt-1">{{ $chairpersonPosition }}</p>@endif
                         </div>
                         @endif
                     </div>

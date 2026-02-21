@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\Models\SeoSetting;
 use App\Models\SiteSetting;
+use App\Translation\DatabaseMergingLoader;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -18,6 +20,11 @@ class AppServiceProvider extends ServiceProvider
         if (file_exists($helpers)) {
             require_once $helpers;
         }
+
+        // استبدال محمّل الترجمات بمحمّل يدمج نصوص site_texts من قاعدة البيانات
+        $this->app->extend('translation.loader', function ($loader) {
+            return new DatabaseMergingLoader($loader);
+        });
     }
 
     /**
@@ -26,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
+
         View::composer('website.partials.social-bar', function ($view) {
             $view->with('settings', SiteSetting::get());
         });

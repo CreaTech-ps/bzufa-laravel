@@ -3,6 +3,8 @@
 return [
     'page_title' => 'Our Team',
     'page_intro' => 'At Friends of Birzeit University Association, we believe that education is the foundation of Palestine\'s future. Our team comprises a select group of national professionals committed to supporting the academic journey and empowering students.',
+    'chairperson_name' => '',
+    'chairperson_position' => '',
     'chairperson_title' => 'Message from the',
     'chairperson_title_highlight' => 'Board Chairperson',
     'chairperson_message_1' => 'I address you in the framework of our annual report for this year, as we review our Association\'s performance and assess the challenges and achievements we faced during the past year.',

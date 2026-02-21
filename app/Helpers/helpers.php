@@ -44,6 +44,24 @@ if (!function_exists('current_slug')) {
     }
 }
 
+if (!function_exists('stat_value')) {
+    /**
+     * الحصول على قيمة إحصائية قابلة للتحرير مع قيمة بديلة.
+     *
+     * @param  string  $key  مفتاح الإحصائية (مثل partners_stat2)
+     * @param  string|int|null  $fallback  القيمة البديلة إن كانت من site_texts فارغة
+     * @return string|null
+     */
+    function stat_value(string $key, $fallback = null): ?string
+    {
+        $val = __('stats.' . $key);
+        if (trim((string) $val) !== '' && $val !== 'stats.' . $key) {
+            return $val;
+        }
+        return $fallback !== null ? (string) $fallback : null;
+    }
+}
+
 if (!function_exists('localized_route')) {
     /**
      * رابط مسار محلي حسب اللغة الحالية (للمسارات الأمامية فقط).

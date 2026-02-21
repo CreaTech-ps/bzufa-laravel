@@ -185,45 +185,45 @@
 </div>
 
 {{-- مودال نموذج التطوع --}}
-<div id="volunteer-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/60 backdrop-blur-md transition-all duration-300 opacity-0 px-4">
+<div id="volunteer-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/60 backdrop-blur-md transition-all duration-300 opacity-0 px-4" aria-hidden="true">
     <div class="bg-white dark:bg-card-dark w-full max-w-2xl rounded-[32px] p-8 sm:p-12 relative shadow-2xl scale-95 transition-transform duration-300 flex flex-col max-h-[85vh]" id="volunteer-modal-content">
-        <button onclick="closeVolunteerForm()" class="absolute top-6 end-6 text-slate-400 hover:text-primary transition-colors z-20">
+        <button type="button" onclick="closeVolunteerForm()" class="absolute top-6 end-6 text-slate-400 hover:text-primary transition-colors z-20" aria-label="{{ __('about.volunteer_form_close') }}">
             <span class="material-symbols-outlined text-3xl">close</span>
         </button>
         <div class="overflow-y-auto custom-scrollbar">
-            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6 text-center">انضم إلينا كمتطوع</h2>
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6 text-center">{{ __('about.volunteer_form_title') }}</h2>
             <form id="volunteer-form" class="space-y-6">
                 @csrf
                 <div>
-                    <label for="volunteer-name" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">الاسم الكامل *</label>
+                    <label for="volunteer-name" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">{{ __('about.volunteer_form_name') }} *</label>
                     <input type="text" id="volunteer-name" name="name" required class="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-3 focus:ring-2 focus:ring-primary/30 focus:border-primary">
                 </div>
                 <div>
-                    <label for="volunteer-email" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">البريد الإلكتروني *</label>
+                    <label for="volunteer-email" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">{{ __('about.volunteer_form_email') }} *</label>
                     <input type="email" id="volunteer-email" name="email" required class="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-3 focus:ring-2 focus:ring-primary/30 focus:border-primary">
                 </div>
                 <div>
-                    <label for="volunteer-phone" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">رقم التواصل *</label>
+                    <label for="volunteer-phone" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">{{ __('about.volunteer_form_phone') }} *</label>
                     <input type="tel" id="volunteer-phone" name="phone" required class="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-3 focus:ring-2 focus:ring-primary/30 focus:border-primary">
                 </div>
                 <div>
-                    <label for="volunteer-department" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">القسم *</label>
+                    <label for="volunteer-department" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">{{ __('about.volunteer_form_department') }} *</label>
                     <select id="volunteer-department" name="department_id" required class="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-3 focus:ring-2 focus:ring-primary/30 focus:border-primary">
-                        <option value="">جاري التحميل...</option>
+                        <option value="">{{ __('about.volunteer_form_department_loading') }}</option>
                     </select>
                 </div>
                 <div>
-                    <label for="volunteer-cv" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">السيرة الذاتية (PDF, DOC, DOCX) *</label>
+                    <label for="volunteer-cv" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">{{ __('about.volunteer_form_cv') }} *</label>
                     <input type="file" id="volunteer-cv" name="cv" accept=".pdf,.doc,.docx" required class="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-3 focus:ring-2 focus:ring-primary/30 focus:border-primary">
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">الحد الأقصى لحجم الملف: 10 ميجابايت</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">{{ __('about.volunteer_form_cv_hint') }}</p>
                 </div>
                 <div class="flex justify-end gap-4 pt-4">
                     <button type="button" onclick="closeVolunteerForm()" class="px-6 py-3 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
-                        إلغاء
+                        {{ __('about.volunteer_form_cancel') }}
                     </button>
                     <button type="submit" class="px-6 py-3 rounded-xl bg-primary text-white hover:bg-primary-dark transition-colors font-medium inline-flex items-center gap-2">
                         <span class="material-symbols-outlined">send</span>
-                        تقديم
+                        {{ __('about.volunteer_form_submit') }}
                     </button>
                 </div>
             </form>
@@ -395,7 +395,7 @@
                 volunteerDepartments = data;
                 var select = document.getElementById('volunteer-department');
                 if (select) {
-                    select.innerHTML = '<option value="">اختر القسم</option>';
+                    select.innerHTML = '<option value="">' + @json(__('about.volunteer_form_department_placeholder')) + '</option>';
                     data.forEach(function(dept) {
                         var option = document.createElement('option');
                         option.value = dept.id;
@@ -446,7 +446,7 @@
         var submitBtn = this.querySelector('button[type="submit"]');
         var originalText = submitBtn.innerHTML;
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> جاري الإرسال...';
+        submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> ' + @json(__('about.volunteer_form_sending'));
         
         fetch('{{ route("volunteer.store") }}', {
             method: 'POST',
@@ -461,12 +461,12 @@
                 alert(data.message);
                 closeVolunteerForm();
             } else {
-                alert('حدث خطأ. يرجى المحاولة مرة أخرى.');
+                alert(@json(__('about.volunteer_form_error')));
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('حدث خطأ. يرجى المحاولة مرة أخرى.');
+            alert(@json(__('about.volunteer_form_error')));
         })
         .finally(() => {
             submitBtn.disabled = false;

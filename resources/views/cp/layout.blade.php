@@ -64,9 +64,21 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('cp.home.edit') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.home.*') || request()->routeIs('cp.home-statistics.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
+                            <a href="{{ route('cp.site-texts.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.site-texts.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
+                                <span class="material-symbols-outlined text-xl">text_fields</span>
+                                <span>النصوص والمحتوى</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('cp.home.edit') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.home.*') || request()->routeIs('cp.home-statistics.*') || request()->routeIs('cp.home-projects.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
                                 <span class="material-symbols-outlined text-xl">home</span>
                                 <span>الصفحة الرئيسية</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('cp.home-projects.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.home-projects.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
+                                <span class="material-symbols-outlined text-xl">work</span>
+                                <span>بطاقات المشاريع</span>
                             </a>
                         </li>
                         <li class="pt-2 mt-2 border-t border-slate-200 dark:border-slate-700">
@@ -103,12 +115,6 @@
                             <a href="{{ route('cp.tamkeen.partnerships.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.tamkeen.partnerships.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
                                 <span class="material-symbols-outlined text-xl">handshake</span>
                                 <span>شراكات تمكين</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('cp.empowerment-requests.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.empowerment-requests.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
-                                <span class="material-symbols-outlined text-xl">person_add</span>
-                                <span>طلبات انضمام تمكين</span>
                             </a>
                         </li>
                         <li>
@@ -151,12 +157,6 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('cp.empowerment-requests.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.empowerment-requests.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
-                                <span class="material-symbols-outlined text-xl">person_add</span>
-                                <span>طلبات تمكين</span>
-                            </a>
-                        </li>
-                        <li>
                             <a href="{{ route('cp.volunteer-departments.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.volunteer-departments.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
                                 <span class="material-symbols-outlined text-xl">volunteer_activism</span>
                                 <span>أقسام التطوع</span>
@@ -172,6 +172,12 @@
                             <a href="{{ route('cp.tamkeen.partnership-requests.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.tamkeen.partnership-requests.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
                                 <span class="material-symbols-outlined text-xl">handshake</span>
                                 <span>طلبات شراكة تمكين</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('cp.partnership-requests.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.partnership-requests.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
+                                <span class="material-symbols-outlined text-xl">handshake</span>
+                                <span>طلبات شراكة شركاء النجاح</span>
                             </a>
                         </li>
                     </ul>

@@ -67,6 +67,24 @@
             </div>
         </section>
 
+        {{-- إحصائيات المشروع --}}
+        <section class="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+            <h2 class="text-lg font-bold text-slate-800 dark:text-white mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">analytics</span>
+                إحصائيات المشروع
+            </h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">أرقام البطاقات الثلاث (مثل: +150 حرفي، 12,000 ساعة، +500 قطعة).</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                @foreach([1,2,3] as $i)
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 space-y-2">
+                    <label class="cp-label block text-xs font-medium text-slate-500 dark:text-slate-400">البطاقة {{ $i }}</label>
+                    <input type="text" name="stat{{ $i }}_value" value="{{ old('stat'.$i.'_value', $settings->{'stat'.$i.'_value'}) }}" placeholder="+150" class="cp-input w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-3 py-2 text-sm focus:ring-2 focus:ring-primary/30" />
+                    <input type="text" name="stat{{ $i }}_label_ar" value="{{ old('stat'.$i.'_label_ar', $settings->{'stat'.$i.'_label_ar'}) }}" placeholder="حرفيون مدعومون" class="cp-input w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-3 py-2 text-sm focus:ring-2 focus:ring-primary/30" />
+                </div>
+                @endforeach
+            </div>
+        </section>
+
         <section class="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
             <h2 class="text-lg font-bold text-slate-800 dark:text-white mb-4 flex items-center gap-2">
                 <span class="material-symbols-outlined text-primary">store</span>

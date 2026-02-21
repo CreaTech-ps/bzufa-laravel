@@ -16,6 +16,12 @@ class KananiSetting extends Model
         'discover_more_text_en',
         'hero_video_url',
         'store_url',
+        'stat1_value',
+        'stat1_label_ar',
+        'stat2_value',
+        'stat2_label_ar',
+        'stat3_value',
+        'stat3_label_ar',
     ];
 
     public static function get(): self
