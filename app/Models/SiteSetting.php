@@ -17,6 +17,7 @@ class SiteSetting extends Model
         'contact_phone',
         'address_ar',
         'address_en',
+        'maps_url',
         'facebook_url',
         'twitter_url',
         'instagram_url',

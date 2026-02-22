@@ -98,6 +98,8 @@ class SuccessStoryController extends Controller
                 'string',
                 'max:120',
             ],
+            'specialization_ar' => ['nullable', 'string', 'max:150'],
+            'specialization_en' => ['nullable', 'string', 'max:150'],
             'content_ar' => [
                 'required',
                 'string',

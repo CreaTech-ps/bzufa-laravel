@@ -81,6 +81,11 @@
                     <label for="address_en" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">العنوان (إنجليزي)</label>
                     <textarea name="address_en" id="address_en" rows="2" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30 focus:border-primary">{{ old('address_en', $settings->address_en) }}</textarea>
                 </div>
+                <div>
+                    <label for="maps_url" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">رابط خرائط جوجل (اختياري)</label>
+                    <input type="url" name="maps_url" id="maps_url" value="{{ old('maps_url', $settings->maps_url) }}" placeholder="https://www.google.com/maps/place/..." class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30 focus:border-primary" />
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">في حالة عدم إدخال رابط، سيتم إنشاء رابط تلقائياً من العنوان أعلاه</p>
+                </div>
             </div>
         </section>
 

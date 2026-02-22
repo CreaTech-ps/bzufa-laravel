@@ -31,6 +31,15 @@
                     <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">حد أقصى 120 حرفاً (يظهر تحت الاسم في السلايدر)</p>
                     @error('title_en')<p class="mt-1 text-sm text-red-500">{{ $message }}</p>@enderror
                 </div>
+                <div>
+                    <label for="specialization_ar" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">التخصص (عربي)</label>
+                    <input type="text" name="specialization_ar" id="specialization_ar" value="{{ old('specialization_ar', $item->specialization_ar) }}" maxlength="150" placeholder="مثال: هندسة حاسوب - دفعة 2023" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
+                    <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">يظهر أسفل اسم الخريج في قصص النجاح (الصفحة الرئيسية)</p>
+                </div>
+                <div>
+                    <label for="specialization_en" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">التخصص (إنجليزي)</label>
+                    <input type="text" name="specialization_en" id="specialization_en" value="{{ old('specialization_en', $item->specialization_en) }}" maxlength="150" placeholder="e.g. Computer Engineering - Class of 2023" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
+                </div>
             </div>
             <div>
                 <label for="content_ar" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">نص الإشادة (عربي) <span class="text-red-500">*</span></label>

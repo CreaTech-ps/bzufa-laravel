@@ -10,7 +10,7 @@
 @endif
     <div class="w-24 h-24 bg-slate-50 dark:bg-accent-dark rounded-2xl flex items-center justify-center mb-6 p-4 overflow-hidden">
         @if($item->logo_path)
-        <img alt="{{ localized($item, 'supporter_name') }}" class="w-full h-full object-cover dark:invert opacity-90"
+        <img alt="{{ localized($item, 'supporter_name') }}" class="w-full h-full object-cover"
             src="{{ asset('storage/' . $item->logo_path) }}" />
         @else
         <span class="material-symbols-outlined text-5xl text-slate-300">business</span>
@@ -21,7 +21,7 @@
         {{ localized($item, 'supporter_name') }}
     </h3>
     <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-8">
-        {{ $item->sector ? __('tamkeen.sector_' . $item->sector) : '—' }}
+        {{ ($item->sector && isset($sectorsMap[$item->sector])) ? $sectorsMap[$item->sector] : ($item->sector ? __('tamkeen.sector_' . $item->sector) : '—') }}
     </p>
 
     <div class="w-full bg-slate-50 dark:bg-accent-dark/30 rounded-2xl p-5 flex items-center justify-between mb-6 border border-transparent">

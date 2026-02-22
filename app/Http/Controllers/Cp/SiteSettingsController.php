@@ -24,6 +24,7 @@ class SiteSettingsController extends Controller
             'contact_phone' => ['nullable', 'string', 'max:50'],
             'address_ar' => ['nullable', 'string'],
             'address_en' => ['nullable', 'string'],
+            'maps_url' => ['nullable', 'url', 'max:500'],
             'facebook_url' => ['nullable', 'url', 'max:500'],
             'twitter_url' => ['nullable', 'url', 'max:500'],
             'instagram_url' => ['nullable', 'url', 'max:500'],

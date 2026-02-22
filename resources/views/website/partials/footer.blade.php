@@ -2,6 +2,8 @@
     $settings = \App\Models\SiteSetting::get();
     $phone = $settings->contact_phone ?? '+970 2 298 2000';
     $email = $settings->contact_email ?? 'info@fobzu.org';
+    $address = app()->getLocale() === 'ar' ? ($settings->address_ar ?? $settings->address_en) : ($settings->address_en ?? $settings->address_ar);
+    $mapsUrl = $settings->maps_url ?? ($address ? 'https://www.google.com/maps/search/?api=1&query=' . urlencode($address) : null);
 @endphp
 <footer class="bg-white dark:bg-[#0C0C0C] border-t border-slate-100 dark:border-white/5 pt-16 pb-8">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -76,6 +78,12 @@
                     {{ __('ui.rights_reserved', ['year' => date('Y')]) }}
                 </p>
                 <div class="flex flex-wrap justify-center items-center gap-6">
+                    @if($address && $mapsUrl)
+                    <a href="{{ $mapsUrl }}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-xs text-slate-500 hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-[16px]">location_on</span>
+                        <span>{{ $address }}</span>
+                    </a>
+                    @endif
                     <a href="tel:{{ preg_replace('/[^0-9+]/', '', $phone) }}" class="flex items-center gap-2 text-xs text-slate-500 hover:text-primary transition-colors">
                         <span class="material-symbols-outlined text-[16px]">call</span>
                         <span dir="ltr">{{ $phone }}</span>

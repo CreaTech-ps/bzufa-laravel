@@ -33,10 +33,9 @@
                 <label for="sector" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">القطاع</label>
                 <select name="sector" id="sector" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30">
                     <option value="">اختر القطاع</option>
-                    <option value="tech" {{ old('sector', $item->sector) === 'tech' ? 'selected' : '' }}>التكنولوجيا</option>
-                    <option value="banking" {{ old('sector', $item->sector) === 'banking' ? 'selected' : '' }}>المصرفية</option>
-                    <option value="industry" {{ old('sector', $item->sector) === 'industry' ? 'selected' : '' }}>الصناعة</option>
-                    <option value="logistics" {{ old('sector', $item->sector) === 'logistics' ? 'selected' : '' }}>اللوجستيات</option>
+                    @foreach(\App\Models\TamkeenSetting::get()->sectors ?? \App\Models\TamkeenSetting::defaultSectors() as $s)
+                    <option value="{{ $s['key'] ?? '' }}" {{ old('sector', $item->sector) === ($s['key'] ?? '') ? 'selected' : '' }}>{{ $s['label_ar'] ?? $s['label_en'] ?? $s['key'] }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">

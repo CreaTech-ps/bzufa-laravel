@@ -80,13 +80,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // ب: تفعيل عداد الأرقام (Counter Animation)
-  const counters = document.querySelectorAll(".counter");
+  // ب: تفعيل عداد الأرقام (Counter Animation) - يدعم .counter و .stat-number
+  const counters = document.querySelectorAll(".counter, .stat-number");
   const speed = 200;
 
   const startCounter = (el) => {
     const target = +el.getAttribute("data-target");
-    const count = +el.innerText.replace(/,/g, ""); // تنظيف الرقم من الفواصل
+    const rawText = (el.innerText || "").replace(/[^0-9-+]/g, "");
+    const count = rawText ? +rawText : 0;
     const inc = target / speed;
 
     if (count < target) {
@@ -106,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     },
-    { threshold: 1 },
+    { threshold: 0.3 },
   );
 
   counters.forEach((counter) => observer.observe(counter));

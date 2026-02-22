@@ -11,30 +11,30 @@
             <div class="space-y-8 order-2 lg:order-1">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-bold border border-primary/20">
                     <span class="material-symbols-outlined text-sm">history_edu</span>
-                    {{ localized($settings, 'hero_badge') ?? __('kanani.badge_heritage') }}
+                    {{ localized($settings, 'hero_badge') ?: __('kanani.badge_heritage') }}
                 </div>
 
                 <h1 class="text-4xl lg:text-6xl font-extrabold leading-tight text-slate-900 dark:text-white">
-                    {{ $settings->hero_title_ar ?? __('kanani.hero_title_line1') }} <br />
-                    <span class="text-primary">{{ $settings->hero_title_en ?? __('kanani.hero_title_line2') }}</span>
+                    {{ localized($settings, 'hero_title') ?: __('kanani.hero_title_line1') }} <br />
+                    <span class="text-primary">{{ (app()->getLocale() === 'ar' ? ($settings->hero_title_en ?? __('kanani.hero_title_line2')) : ($settings->hero_title_ar ?? $settings->hero_title_en ?? __('kanani.hero_title_line2'))) }}</span>
                 </h1>
 
                 <p class="text-lg text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
-                    {{ localized($settings, 'hero_subtitle') ?? localized($settings, 'intro_text') ?? __('kanani.hero_subtitle') }}
+                    {{ localized($settings, 'hero_subtitle') ?: localized($settings, 'intro_text') ?: __('kanani.hero_subtitle') }}
                 </p>
 
                 <ul class="space-y-5">
                     <li class="flex items-center gap-3 group">
                         <span class="material-symbols-outlined text-primary bg-primary/10 p-1 rounded-md group-hover:bg-primary group-hover:text-white transition-colors duration-300">check_circle</span>
-                        <span class="font-medium text-lg text-slate-700 dark:text-slate-200">{{ localized($settings, 'hero_point1') ?? __('kanani.hero_point1') }}</span>
+                        <span class="font-medium text-lg text-slate-700 dark:text-slate-200">{{ localized($settings, 'hero_point1') ?: __('kanani.hero_point1') }}</span>
                     </li>
                     <li class="flex items-center gap-3 group">
                         <span class="material-symbols-outlined text-primary bg-primary/10 p-1 rounded-md group-hover:bg-primary group-hover:text-white transition-colors duration-300">check_circle</span>
-                        <span class="font-medium text-lg text-slate-700 dark:text-slate-200">{{ localized($settings, 'hero_point2') ?? __('kanani.hero_point2') }}</span>
+                        <span class="font-medium text-lg text-slate-700 dark:text-slate-200">{{ localized($settings, 'hero_point2') ?: __('kanani.hero_point2') }}</span>
                     </li>
                     <li class="flex items-center gap-3 group">
                         <span class="material-symbols-outlined text-primary bg-primary/10 p-1 rounded-md group-hover:bg-primary group-hover:text-white transition-colors duration-300">check_circle</span>
-                        <span class="font-medium text-lg text-slate-700 dark:text-slate-200">{{ localized($settings, 'hero_point3') ?? __('kanani.hero_point3') }}</span>
+                        <span class="font-medium text-lg text-slate-700 dark:text-slate-200">{{ localized($settings, 'hero_point3') ?: __('kanani.hero_point3') }}</span>
                     </li>
                 </ul>
 
@@ -87,7 +87,7 @@
                         <p class="text-slate-500 dark:text-slate-400 text-xs mb-2 font-bold tracking-widest uppercase opacity-80">
                             {{ localized($settings, 'stat1_label') ?? __('kanani.stat1_label') }}
                         </p>
-                        <h3 class="stat-number text-4xl font-black text-primary transition-all duration-300 group-hover:scale-105" data-target="{{ str_replace(['+', ','], '', $settings->stat1_value ?? '150') }}">{{ $settings->stat1_value ?? '+150' }}</h3>
+                        <h3 class="stat-number text-4xl font-black text-primary transition-all duration-300 group-hover:scale-105" data-target="{{ str_replace(['+', ','], '', $settings->stat1_value ?? '150') }}">0</h3>
                     </div>
                     <div class="w-16 h-16 bg-slate-50 dark:bg-white/5 rounded-2xl flex items-center justify-center text-slate-400 transition-all duration-500 group-hover:bg-primary group-hover:text-white">
                         <span class="material-symbols-outlined text-3xl transition-all duration-500">groups</span>
@@ -102,7 +102,7 @@
                         <p class="text-slate-500 dark:text-slate-400 text-xs mb-2 font-bold tracking-widest uppercase opacity-80">
                             {{ localized($settings, 'stat2_label') ?? __('kanani.stat2_label') }}
                         </p>
-                        <h3 class="stat-number text-4xl font-black text-primary transition-all duration-300 group-hover:scale-105" data-target="{{ str_replace(',', '', $settings->stat2_value ?? '12000') }}">{{ $settings->stat2_value ?? '12,000' }}</h3>
+                        <h3 class="stat-number text-4xl font-black text-primary transition-all duration-300 group-hover:scale-105" data-target="{{ str_replace(',', '', $settings->stat2_value ?? '12000') }}">0</h3>
                     </div>
                     <div class="w-16 h-16 bg-slate-50 dark:bg-white/5 rounded-2xl flex items-center justify-center text-slate-400 transition-all duration-500 group-hover:bg-primary group-hover:text-white">
                         <span class="material-symbols-outlined text-3xl transition-all duration-500">precision_manufacturing</span>
@@ -117,7 +117,7 @@
                         <p class="text-slate-500 dark:text-slate-400 text-xs mb-2 font-bold tracking-widest uppercase opacity-80">
                             {{ localized($settings, 'stat3_label') ?? __('kanani.stat3_label') }}
                         </p>
-                        <h3 class="stat-number text-4xl font-black text-primary transition-all duration-300 group-hover:scale-105" data-target="{{ str_replace(['+', ','], '', $settings->stat3_value ?? '500') }}">{{ $settings->stat3_value ?? '+500' }}</h3>
+                        <h3 class="stat-number text-4xl font-black text-primary transition-all duration-300 group-hover:scale-105" data-target="{{ str_replace(['+', ','], '', $settings->stat3_value ?? '500') }}">0</h3>
                     </div>
                     <div class="w-16 h-16 bg-slate-50 dark:bg-white/5 rounded-2xl flex items-center justify-center text-slate-400 transition-all duration-500 group-hover:bg-primary group-hover:text-white">
                         <span class="material-symbols-outlined text-3xl transition-all duration-500">brush</span>
@@ -148,9 +148,10 @@
             @forelse($items as $item)
             <a href="{{ rtrim($settings->store_url ?? 'https://kanani.bzufa.com', '/') }}/product/{{ current_slug($item) }}" target="_blank" rel="noopener" class="related-card bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col cursor-pointer group transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
                 <div class="aspect-square bg-cover bg-center relative overflow-hidden">
-                    <img alt="{{ localized($item, 'name') }}"
+                    <img alt="{{ localized($item, 'title') }}"
                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        src="{{ $item->image_path ? asset('storage/' . $item->image_path) : 'https://lh3.googleusercontent.com/aida-public/AB6AXuANZF-6S6nF0Pq4IhQtgym1L1s7hIXafpt-5FvPa_jhB9iPwxjNljF6zNY4R94UfRpu4xiIXUMLKiS2FS-nt_N0Q4GnBY0UX3rHGSNuTWk3fY_v8qIAWbbstAqLiYyRo8mI445n8u_tXAm-BnCsnwy3Iaz4sTLo1IQFnWxZeImdaLnI7wKQ6CCndw6ZerNztl--SWaTPrw9f6zMmvtztHb7TxRstCysPN7UvM_pGto8W6d7K85hWMkQkyguDBEscE6ubr0llRb4q8c' }}" />
+                        src="{{ $item->image_path ? asset('storage/' . $item->image_path) : 'https://placehold.co/400x400/e2e8f0/64748b?text=Product' }}"
+                        onerror="this.src='https://placehold.co/400x400/e2e8f0/64748b?text=Product'; this.onerror=null;" />
 
                     @if($item->discount_percent && $item->discount_percent > 0)
                     <div class="absolute top-3 end-3 z-10 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md">
@@ -165,7 +166,7 @@
 
                 <div class="p-4 flex flex-col gap-2">
                     <div class="flex items-center justify-between">
-                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors duration-300">{{ localized($item, 'name') }}</h3>
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors duration-300">{{ localized($item, 'title') }}</h3>
                         <span class="text-primary font-bold">{{ $item->price ? $item->price . ' ₪' : '—' }}</span>
                     </div>
                     <span class="text-xs px-1 text-slate-400">{{ __('kanani.category_textiles') }}</span>

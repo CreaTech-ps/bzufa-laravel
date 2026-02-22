@@ -16,4 +16,5 @@ return [
     'no_board' => 'No board members at the moment',
     'no_staff' => 'No staff members at the moment',
     'since_year' => 'Since :year',
+    'default_year' => '2022',
 ];

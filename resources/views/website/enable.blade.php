@@ -23,9 +23,9 @@
                 </p>
 
                 <div class="flex flex-wrap justify-center gap-6">
-                    <a href="{{ __('tamkeen.partner_join_url') ?: '#partner' }}" class="bg-primary text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-primary/40 transition-all transform hover:-translate-y-1 inline-flex items-center justify-center">
+                    <button type="button" onclick="openPartnershipForm()" class="bg-primary text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-primary/40 transition-all transform hover:-translate-y-1 inline-flex items-center justify-center">
                         {{ __('tamkeen.partner_join') }}
-                    </a>
+                    </button>
                     <a href="#partners" class="bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white backdrop-blur-md px-10 py-4 rounded-xl font-bold text-lg border border-slate-200 dark:border-white/20 hover:bg-slate-200 dark:hover:bg-white/20 transition-all inline-flex items-center justify-center">
                         {{ __('tamkeen.browse_guide') }}
                     </a>
@@ -87,9 +87,9 @@
                 <span class="text-sm font-bold text-slate-600 dark:text-slate-300">{{ __('tamkeen.filter_label') }}</span>
                 <select id="sector-filter" class="bg-white dark:bg-card-dark border border-slate-200 dark:border-white/10 rounded-xl text-sm px-4 py-2.5 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all cursor-pointer font-medium text-slate-700 dark:text-slate-200">
                     <option value="">{{ __('tamkeen.filter_all') }}</option>
-                    @foreach(['tech' => __('tamkeen.sector_tech'), 'banking' => __('tamkeen.sector_banking'), 'industry' => __('tamkeen.sector_industry'), 'logistics' => __('tamkeen.sector_logistics')] as $value => $label)
-                        @if(in_array($value, $availableSectors ?? []))
-                        <option value="{{ $value }}" {{ request('sector') === $value ? 'selected' : '' }}>{{ $label }}</option>
+                    @foreach($sectorsList ?? [] as $sector)
+                        @if(in_array($sector['key'] ?? '', $availableSectors ?? []))
+                        <option value="{{ $sector['key'] ?? '' }}" {{ request('sector') === ($sector['key'] ?? '') ? 'selected' : '' }}>{{ app()->getLocale() === 'ar' ? ($sector['label_ar'] ?? $sector['label_en']) : ($sector['label_en'] ?? $sector['label_ar']) }}</option>
                         @endif
                     @endforeach
                 </select>
@@ -97,7 +97,7 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="partners-grid">
-            @include('website.partials.tamkeen-partners-list', ['partnerships' => $partnerships])
+            @include('website.partials.tamkeen-partners-list', ['partnerships' => $partnerships, 'sectorsMap' => $sectorsMap ?? []])
         </div>
 
         @if($partnerships->hasPages())
@@ -115,7 +115,7 @@
                 {{ __('tamkeen.cta_subtitle') }}
             </p>
         </div>
-        <button type="button" onclick="openPartnershipForm()" class="relative z-10 bg-background-dark text-white px-10 py-5 rounded-2xl font-bold flex items-center gap-3 hover:bg-black transition-all transform hover:scale-105 shadow-xl whitespace-nowrap">
+        <button type="button" onclick="openPartnershipForm()" class="relative z-10 bg-white dark:bg-background-dark text-primary dark:text-white px-10 py-5 rounded-2xl font-bold flex items-center gap-3 hover:bg-primary/10 dark:hover:bg-black transition-all transform hover:scale-105 shadow-xl whitespace-nowrap">
             <span class="material-symbols-outlined">business_center</span>
             {{ __('tamkeen.cta_button') }}
         </button>

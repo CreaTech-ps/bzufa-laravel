@@ -56,7 +56,7 @@
             </a>
             @php $homeSetting = \App\Models\HomeSetting::get(); @endphp
             <a href="{{ $homeSetting->cta_url ?? '#' }}"
-                class="bg-primary text-white px-4 sm:px-6 py-2.5 rounded-full font-bold hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary/20 text-xs sm:text-sm shrink-0">
+                class="hidden lg:inline-flex bg-primary text-white px-4 sm:px-6 py-2.5 rounded-full font-bold hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary/20 text-xs sm:text-sm shrink-0">
                 {{ localized($homeSetting, 'cta_text') ?? __('ui.donate_now') }}
             </a>
 
@@ -90,6 +90,10 @@
             <a href="{{ localized_route('grants.index') }}" class="text-base font-medium text-slate-600 dark:text-slate-300 px-4">{{ __('ui.nav_grants') }}</a>
             <a href="{{ localized_route('partners.index') }}" class="text-base font-medium text-slate-600 dark:text-slate-300 px-4">{{ __('ui.nav_partners') }}</a>
             <a href="{{ localized_route('news.index') }}" class="text-base font-medium text-slate-600 dark:text-slate-300 px-4">{{ __('ui.nav_news') }}</a>
+
+            <a href="{{ $homeSetting->cta_url ?? '#' }}" class="mt-4 mx-4 bg-primary text-white px-6 py-3 rounded-full font-bold hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary/20 text-center">
+                {{ localized($homeSetting, 'cta_text') ?? __('ui.donate_now') }}
+            </a>
         </div>
     </div>
 </nav>

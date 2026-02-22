@@ -90,6 +90,7 @@ class TeamMemberController extends Controller
             'photo' => ['nullable', 'image', 'max:2048'],
             'type' => ['required', 'in:board,executive,staff'],
             'sort_order' => ['nullable', 'integer'],
+            'joined_since' => ['nullable', 'string', 'max:4'],
         ]);
         $validated['sort_order'] = (int) ($request->sort_order ?? 0);
         return $validated;

@@ -108,6 +108,8 @@ Route::prefix('cp')->name('cp.')->group(function () {
     Route::put('/kanani', [KananiController::class, 'update'])->name('kanani.update');
     Route::resource('kanani-gallery', KananiGalleryItemController::class)->names('kanani.gallery');
     Route::resource('tamkeen/partnerships', TamkeenPartnershipController::class)->names('tamkeen.partnerships');
+    Route::get('/tamkeen/settings', [\App\Http\Controllers\Cp\TamkeenSettingController::class, 'edit'])->name('tamkeen.settings.edit');
+    Route::put('/tamkeen/settings', [\App\Http\Controllers\Cp\TamkeenSettingController::class, 'update'])->name('tamkeen.settings.update');
     Route::get('/tamkeen/empowerment-requests', [EmpowermentRequestController::class, 'index'])->name('empowerment-requests.index');
     Route::get('/tamkeen/empowerment-requests/{empowerment_request}/edit', [EmpowermentRequestController::class, 'edit'])->name('empowerment-requests.edit');
     Route::put('/tamkeen/empowerment-requests/{empowerment_request}', [EmpowermentRequestController::class, 'update'])->name('empowerment-requests.update');

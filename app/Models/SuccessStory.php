@@ -9,6 +9,8 @@ class SuccessStory extends Model
     protected $fillable = [
         'title_ar',
         'title_en',
+        'specialization_ar',
+        'specialization_en',
         'content_ar',
         'content_en',
         'image_path',

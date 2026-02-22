@@ -273,6 +273,9 @@
                                         @endif
                                     </div>
                                     <h4 class="text-xl font-bold">{{ localized($story, 'title') }}</h4>
+                                    @if(localized($story, 'specialization'))
+                                    <p class="text-white/90 text-sm mt-1">{{ localized($story, 'specialization') }}</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\TamkeenPartnershipRequestNotification;
 use App\Models\TamkeenPartnership;
 use App\Models\TamkeenPartnershipRequest;
+use App\Models\TamkeenSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -21,7 +22,8 @@ class TamkeenPartnershipController extends Controller
 
         $partnerships = $query->get();
 
-        $html = view('website.partials.tamkeen-partners-list', compact('partnerships'))->render();
+        $sectorsMap = TamkeenSetting::get()->getSectorsForLocale();
+        $html = view('website.partials.tamkeen-partners-list', compact('partnerships', 'sectorsMap'))->render();
 
         return response()->json([
             'success' => true,

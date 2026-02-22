@@ -16,5 +16,6 @@ class TeamMember extends Model
         'photo_path',
         'type',
         'sort_order',
+        'joined_since',
     ];
 }
