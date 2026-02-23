@@ -88,10 +88,9 @@ onReady(function () {
   }
 
   // ب: تفعيل عداد الأرقام (Counter Animation) - يدعم .counter و .stat-number
-  function initStatCounters() {
-    var counters = document.querySelectorAll(".counter, .stat-number");
-    var duration = 1800;
+  (function initStatCounters() {
     var doneAttr = "data-counter-done";
+    var duration = 1800;
 
     function formatNum(n, decimals) {
       try {
@@ -105,23 +104,22 @@ onReady(function () {
     }
 
     function startCounter(el) {
-      if (el.getAttribute(doneAttr) === "1") return;
-      el.setAttribute(doneAttr, "1");
+      if (!el || el.getAttribute(doneAttr) === "1") return;
       var targetRaw = +el.getAttribute("data-target");
       if (!Number.isFinite(targetRaw) || targetRaw < 0) return;
+      el.setAttribute(doneAttr, "1");
       var divisor = +el.getAttribute("data-divisor") || 1;
       var target = targetRaw / divisor;
       var suffix = el.getAttribute("data-suffix") || "";
       var prefix = el.getAttribute("data-prefix") || "";
       var decimals = el.hasAttribute("data-decimals") ? +el.getAttribute("data-decimals") : null;
-      var start = 0;
-      var startTime = performance.now();
+      var startTime = typeof performance !== "undefined" ? performance.now() : 0;
 
-      function tick(now) {
-        var elapsed = now - startTime;
+      function tick() {
+        var elapsed = (typeof performance !== "undefined" ? performance.now() : Date.now()) - startTime;
         var progress = Math.min(elapsed / duration, 1);
-        var easeOut = 1 - Math.pow(1 - progress, 2);
-        var current = start + (target - start) * easeOut;
+        var easeOut = 1 - (1 - progress) * (1 - progress);
+        var current = target * easeOut;
         el.textContent = prefix + formatNum(current, decimals) + suffix;
         if (progress < 1) requestAnimationFrame(tick);
         else el.textContent = prefix + formatNum(target, decimals) + suffix;
@@ -129,34 +127,16 @@ onReady(function () {
       requestAnimationFrame(tick);
     }
 
-    function runVisible() {
-      counters.forEach(function (c) {
-        if (c.getAttribute(doneAttr) === "1") return;
-        var rect = c.getBoundingClientRect();
-        if (rect.top < window.innerHeight + 100 && rect.bottom > -100) startCounter(c);
-      });
+    function run() {
+      var counters = document.querySelectorAll(".counter, .stat-number");
+      for (var i = 0; i < counters.length; i++) startCounter(counters[i]);
     }
 
-    if (typeof IntersectionObserver !== "undefined") {
-      var observer = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              startCounter(entry.target);
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.01, rootMargin: "100px 0px 100px 0px" }
-      );
-      counters.forEach(function (c) { observer.observe(c); });
-    }
-    runVisible();
-    setTimeout(runVisible, 300);
-  }
-
-  initStatCounters();
-  window.addEventListener("load", function () { initStatCounters(); });
+    run();
+    setTimeout(run, 150);
+    setTimeout(run, 500);
+    window.addEventListener("load", run);
+  })();
 
   // ج: قائمة الجوال (Mobile Menu Toggle)
   const mobileMenuBtn = document.getElementById("mobile-menu-btn");
