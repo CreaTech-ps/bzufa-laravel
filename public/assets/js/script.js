@@ -82,22 +82,44 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ب: تفعيل عداد الأرقام (Counter Animation) - يدعم .counter و .stat-number
   const counters = document.querySelectorAll(".counter, .stat-number");
-  const speed = 200;
+  const duration = 1800;
+
+  const formatNum = (n, decimals) => {
+    try {
+      const opt = decimals != null && decimals >= 0
+        ? { minimumFractionDigits: decimals, maximumFractionDigits: decimals }
+        : {};
+      return Number(n).toLocaleString("ar-EG", opt);
+    } catch (_) {
+      return decimals != null && decimals >= 0 ? Number(n).toFixed(decimals) : String(Math.round(n));
+    }
+  };
 
   const startCounter = (el) => {
-    const target = +el.getAttribute("data-target");
+    const targetRaw = +el.getAttribute("data-target");
+    if (!Number.isFinite(targetRaw) || targetRaw < 0) return;
+    const divisor = +el.getAttribute("data-divisor") || 1;
+    const target = targetRaw / divisor;
     const suffix = el.getAttribute("data-suffix") || "";
-    const rawText = (el.innerText || "").replace(/[^0-9-]/g, "");
-    const count = rawText ? +rawText : 0;
-    const inc = Math.max(1, Math.ceil(target / speed));
+    const prefix = el.getAttribute("data-prefix") || "";
+    const decimals = el.hasAttribute("data-decimals") ? +el.getAttribute("data-decimals") : null;
 
-    if (count < target) {
-      const next = Math.min(count + inc, target);
-      el.innerText = next.toLocaleString() + suffix;
-      setTimeout(() => startCounter(el), 1);
-    } else {
-      el.innerText = target.toLocaleString() + suffix;
-    }
+    const start = 0;
+    const startTime = performance.now();
+
+    const tick = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeOut = 1 - Math.pow(1 - progress, 2);
+      const current = start + (target - start) * easeOut;
+      el.textContent = prefix + formatNum(current, decimals) + suffix;
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        el.textContent = prefix + formatNum(target, decimals) + suffix;
+      }
+    };
+    requestAnimationFrame(tick);
   };
 
   const observer = new IntersectionObserver(
@@ -109,10 +131,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     },
-    { threshold: 0.3 },
+    { threshold: 0.1, rootMargin: "50px" },
   );
 
-  counters.forEach((counter) => observer.observe(counter));
+  counters.forEach((c) => observer.observe(c));
 
   // ج: قائمة الجوال (Mobile Menu Toggle)
   const mobileMenuBtn = document.getElementById("mobile-menu-btn");

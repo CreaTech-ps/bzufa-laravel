@@ -44,11 +44,11 @@
                     <span class="material-symbols-outlined text-lg">lock</span>
                 </span>
                 @else
-                <a href="{{ localized_route('grants.apply', ['slug' => current_slug($scholarship)]) }}"
-                    class="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-primary/20">
-                    {{ app()->getLocale() === 'ar' ? 'قدم طلبك الآن' : 'Apply now' }}
-                    <span class="material-symbols-outlined text-[20px] rtl:rotate-180">arrow_back</span>
-                </a>
+                    <a href="{{ localized_route('grants.apply', ['slug' => current_slug($scholarship)]) }}"
+                        class="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-primary/20">
+                        {{ app()->getLocale() === 'ar' ? 'قدم طلبك الآن' : 'Apply now' }}
+                        <span class="material-symbols-outlined text-[20px] rtl:rotate-180">arrow_back</span>
+                    </a>
                 @endif
             </div>
         </div>
@@ -67,7 +67,7 @@
                         @if($scholarship->application_start_date)
                             <span class="text-xl font-bold text-slate-900 dark:text-white">{{ $scholarship->application_start_date->locale(app()->getLocale())->translatedFormat('d M Y') }}</span>
                             @if($scholarship->application_end_date)
-                                <span class="text-primary font-bold">→</span>
+                                <span class="text-primary font-bold rtl:rotate-180 inline-block">→</span>
                                 <span class="text-xl font-bold text-slate-900 dark:text-white">{{ $scholarship->application_end_date->locale(app()->getLocale())->translatedFormat('d M Y') }}</span>
                             @endif
                         @elseif($scholarship->application_end_date)
@@ -95,14 +95,15 @@
                 </div>
                 <div class="flex-1 min-w-0">
                     <p class="text-slate-500 dark:text-slate-400 text-sm mb-3 font-medium">{{ __('ui.grants_coverage_label') }}</p>
-                    <div class="flex items-center gap-2 flex-wrap">
+                    <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
                         @if($covMin !== null && $covMax !== null && $covMin != $covMax)
-                            <span class="text-slate-500 dark:text-slate-400 text-sm">{{ __('ui.grants_coverage_from') }}</span>
-                            <span class="inline-flex items-center justify-center min-w-[2.5rem] px-2 py-1 rounded-lg bg-primary/10 dark:bg-primary/15 text-primary font-bold text-lg border border-primary/20">{{ $covMin }}%</span>
-                            <span class="text-slate-500 dark:text-slate-400 text-sm">{{ __('ui.grants_coverage_to') }}</span>
-                            <span class="inline-flex items-center justify-center min-w-[2.5rem] px-2 py-1 rounded-lg bg-primary/10 dark:bg-primary/15 text-primary font-bold text-lg border border-primary/20">{{ $covMax }}%</span>
+                            <span class="text-slate-600 dark:text-slate-300 text-lg">{{ __('ui.grants_coverage_from') }}</span>
+                            <span class="text-slate-900 dark:text-white font-black text-5xl">{{ $covMin }}%</span>
+                            <span class="text-slate-900 dark:text-white font-black rtl:rotate-180 inline-block text-2xl">→</span>
+                            <span class="text-slate-600 dark:text-slate-300 text-lg">{{ __('ui.grants_coverage_to') }}</span>
+                            <span class="text-slate-900 dark:text-white font-black text-5xl">{{ $covMax }}%</span>
                         @else
-                            <span class="inline-flex items-center justify-center min-w-[2.5rem] px-2 py-1 rounded-lg bg-primary/10 dark:bg-primary/15 text-primary font-bold text-xl border border-primary/20">{{ $covMin ?? $covMax }}%</span>
+                            <span class="text-slate-900 dark:text-white font-black text-5xl">{{ $covMin ?? $covMax }}%</span>
                         @endif
                     </div>
                 </div>

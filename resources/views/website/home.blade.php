@@ -48,7 +48,7 @@
 @endpush
 
 @section('content')
-<section class="relative min-h-[600px] flex items-center overflow-hidden">
+<section class="relative min-h-[600px] flex items-center overflow-hidden pt-20 sm:pt-24 lg:pt-8">
             <div class="absolute inset-0 -z-20">
                 <img src="{{ asset('assets/img/hero-bg.webp') }}" class="w-full h-full opacity-100 object-cover" alt="Background" loading="eager" fetchpriority="high" width="1920" height="1080">
                 <div class="absolute inset-0 bg-white/90 dark:bg-slate-950/90 backdrop-blur-[2px]"></div>
