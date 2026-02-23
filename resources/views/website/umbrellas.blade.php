@@ -74,7 +74,7 @@
                         <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
                             <span class="material-symbols-outlined text-2xl">umbrella</span>
                         </div>
-                        <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="stat-number" data-target="{{ $t1 }}" data-suffix="{{ $s1 }}">0</span></h3>
+                        <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="counter" data-target="{{ $t1 }}" data-suffix="{{ $s1 }}">0</span></h3>
                         <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ localized($settings, 'stat1_label') ?? __('parasols.stat1_label') }}</p>
                     </div>
                     <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
@@ -84,7 +84,7 @@
                         <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
                             <span class="material-symbols-outlined text-2xl">school</span>
                         </div>
-                        <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="stat-number" data-target="{{ $t2 }}">0</span></h3>
+                        <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="counter" data-target="{{ $t2 }}">0</span></h3>
                         <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ localized($settings, 'stat2_label') ?? __('parasols.stat2_label') }}</p>
                     </div>
                     <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
@@ -94,7 +94,7 @@
                         <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
                             <span class="material-symbols-outlined text-2xl">location_city</span>
                         </div>
-                        <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="stat-number" data-target="{{ $t3 }}">0</span></h3>
+                        <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="counter" data-target="{{ $t3 }}">0</span></h3>
                         <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ localized($settings, 'stat3_label') ?? __('parasols.stat3_label') }}</p>
                     </div>
                     <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
@@ -104,7 +104,7 @@
                         <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
                             <span class="material-symbols-outlined text-2xl">leaderboard</span>
                         </div>
-                        <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="stat-number" data-target="{{ $t4 }}" data-suffix="{{ $s4 }}">0</span></h3>
+                        <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="counter" data-target="{{ $t4 }}" data-suffix="{{ $s4 }}">0</span></h3>
                         <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ localized($settings, 'stat4_label') ?? __('parasols.stat4_label') }}</p>
                     </div>
                     <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>

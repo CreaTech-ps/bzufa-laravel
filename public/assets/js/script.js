@@ -135,7 +135,8 @@ onReady(function () {
     run();
     setTimeout(run, 150);
     setTimeout(run, 500);
-    window.addEventListener("load", run);
+    window.addEventListener("load", function () { run(); setTimeout(run, 100); });
+    setTimeout(run, 1200);
   })();
 
   // ج: قائمة الجوال (Mobile Menu Toggle)

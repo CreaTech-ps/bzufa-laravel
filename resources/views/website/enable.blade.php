@@ -43,7 +43,7 @@
                             <span class="material-symbols-outlined text-2xl">school</span>
                         </div>
                         @php $t1 = stat_value('tamkeen_stat1', null); $displayT1 = $t1 ?? ($totalBeneficiaries > 0 ? number_format($totalBeneficiaries) . '+' : '1,500+'); $targetT1 = (int)preg_replace('/[^0-9]/', '', $displayT1) ?: 1500; @endphp
-                        <h3 class="stat-number text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1" data-target="{{ $targetT1 }}" data-suffix="{{ str_contains((string)$displayT1, '+') ? '+' : '' }}">0</h3>
+                        <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="counter" data-target="{{ $targetT1 }}" data-suffix="{{ str_contains((string)$displayT1, '+') ? '+' : '' }}">0</span></h3>
                         <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ __('tamkeen.stat1_label') }}</p>
                     </div>
                     <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
@@ -54,7 +54,7 @@
                             <span class="material-symbols-outlined text-2xl">corporate_fare</span>
                         </div>
                         @php $t2 = stat_value('tamkeen_stat2', null); $displayT2 = $t2 ?? ($totalPartnerships > 0 ? $totalPartnerships . '+' : '45+'); $targetT2 = (int)preg_replace('/[^0-9]/', '', $displayT2) ?: 45; @endphp
-                        <h3 class="stat-number text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1" data-target="{{ $targetT2 }}" data-suffix="{{ str_contains((string)$displayT2, '+') ? '+' : '' }}">0</h3>
+                        <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="counter" data-target="{{ $targetT2 }}" data-suffix="{{ str_contains((string)$displayT2, '+') ? '+' : '' }}">0</span></h3>
                         <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ __('tamkeen.stat2_label') }}</p>
                     </div>
                     <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
@@ -65,7 +65,7 @@
                             <span class="material-symbols-outlined text-2xl">schedule</span>
                         </div>
                         @php $t3 = stat_value('tamkeen_stat3', '10,000+'); $targetT3 = (int)preg_replace('/[^0-9]/', '', (string)$t3) ?: 10000; @endphp
-                        <h3 class="stat-number text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1" data-target="{{ $targetT3 }}" data-suffix="+">0</h3>
+                        <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="counter" data-target="{{ $targetT3 }}" data-suffix="+">0</span></h3>
                         <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ __('tamkeen.stat3_label') }}</p>
                     </div>
                     <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
