@@ -42,12 +42,14 @@
                 </div>
                 <nav class="flex-1 overflow-y-auto py-4 px-3">
                     <ul class="space-y-0.5">
+                        {{-- لوحة التحكم --}}
                         <li>
                             <a href="{{ route('cp.dashboard') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary dark:hover:text-primary transition-colors {{ request()->routeIs('cp.dashboard') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
                                 <span class="material-symbols-outlined text-xl">dashboard</span>
                                 <span>لوحة التحكم</span>
                             </a>
                         </li>
+                        {{-- إعدادات الموقع --}}
                         <li class="pt-2 mt-2 border-t border-slate-200 dark:border-slate-700">
                             <p class="px-3 py-1.5 text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">إعدادات الموقع</p>
                         </li>
@@ -69,8 +71,12 @@
                                 <span>النصوص والمحتوى</span>
                             </a>
                         </li>
+                        {{-- الصفحة الرئيسية --}}
+                        <li class="pt-2 mt-2 border-t border-slate-200 dark:border-slate-700">
+                            <p class="px-3 py-1.5 text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">الصفحة الرئيسية</p>
+                        </li>
                         <li>
-                            <a href="{{ route('cp.home.edit') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.home.*') || request()->routeIs('cp.home-statistics.*') || request()->routeIs('cp.home-projects.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
+                            <a href="{{ route('cp.home.edit') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.home.*') || request()->routeIs('cp.home-statistics.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
                                 <span class="material-symbols-outlined text-xl">home</span>
                                 <span>الصفحة الرئيسية</span>
                             </a>
@@ -81,8 +87,9 @@
                                 <span>بطاقات المشاريع</span>
                             </a>
                         </li>
+                        {{-- صفحات ثابتة --}}
                         <li class="pt-2 mt-2 border-t border-slate-200 dark:border-slate-700">
-                            <p class="px-3 py-1.5 text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">المحتوى</p>
+                            <p class="px-3 py-1.5 text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">صفحات ثابتة</p>
                         </li>
                         <li>
                             <a href="{{ route('cp.about.edit') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.about.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
@@ -96,19 +103,14 @@
                                 <span>الفريق</span>
                             </a>
                         </li>
+                        {{-- المشاريع --}}
                         <li class="pt-2 mt-2 border-t border-slate-200 dark:border-slate-700">
                             <p class="px-3 py-1.5 text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">المشاريع</p>
                         </li>
                         <li>
-                            <a href="{{ route('cp.kanani.edit') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.kanani.edit') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
+                            <a href="{{ route('cp.kanani.edit') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.kanani.edit') || request()->routeIs('cp.kanani.gallery.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
                                 <span class="material-symbols-outlined text-xl">storefront</span>
                                 <span>كنعاني</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('cp.kanani.gallery.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.kanani.gallery.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
-                                <span class="material-symbols-outlined text-xl">inventory_2</span>
-                                <span>منتجات المتجر</span>
                             </a>
                         </li>
                         <li>
@@ -129,8 +131,12 @@
                                 <span>المظلات</span>
                             </a>
                         </li>
+                        {{-- المنح والشراكات --}}
+                        <li class="pt-2 mt-2 border-t border-slate-200 dark:border-slate-700">
+                            <p class="px-3 py-1.5 text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">المنح والشراكات</p>
+                        </li>
                         <li>
-                            <a href="{{ route('cp.scholarships.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.scholarships.*') || request()->routeIs('cp.scholarship-applications.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
+                            <a href="{{ route('cp.scholarships.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.scholarships.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
                                 <span class="material-symbols-outlined text-xl">school</span>
                                 <span>المنح الجامعية</span>
                             </a>
@@ -140,6 +146,10 @@
                                 <span class="material-symbols-outlined text-xl">handshake</span>
                                 <span>شركاء النجاح</span>
                             </a>
+                        </li>
+                        {{-- المحتوى الديناميكي --}}
+                        <li class="pt-2 mt-2 border-t border-slate-200 dark:border-slate-700">
+                            <p class="px-3 py-1.5 text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">المحتوى</p>
                         </li>
                         <li>
                             <a href="{{ route('cp.news.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.news.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
@@ -153,12 +163,13 @@
                                 <span>قصص النجاح</span>
                             </a>
                         </li>
+                        {{-- الطلبات والنماذج --}}
                         <li class="pt-2 mt-2 border-t border-slate-200 dark:border-slate-700">
                             <p class="px-3 py-1.5 text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">الطلبات والنماذج</p>
                         </li>
                         <li>
                             <a href="{{ route('cp.scholarship-applications.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.scholarship-applications.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
-                                <span class="material-symbols-outlined text-xl">school</span>
+                                <span class="material-symbols-outlined text-xl">description</span>
                                 <span>طلبات المنح</span>
                             </a>
                         </li>
@@ -184,6 +195,22 @@
                             <a href="{{ route('cp.partnership-requests.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.partnership-requests.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
                                 <span class="material-symbols-outlined text-xl">handshake</span>
                                 <span>طلبات شراكة شركاء النجاح</span>
+                            </a>
+                        </li>
+                        {{-- النشرة الإخبارية --}}
+                        <li class="pt-2 mt-2 border-t border-slate-200 dark:border-slate-700">
+                            <p class="px-3 py-1.5 text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">النشرة الإخبارية</p>
+                        </li>
+                        <li>
+                            <a href="{{ route('cp.newsletter.index') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.newsletter.index') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
+                                <span class="material-symbols-outlined text-xl">mail</span>
+                                <span>المشتركون</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('cp.newsletter.broadcast') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.newsletter.broadcast') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
+                                <span class="material-symbols-outlined text-xl">campaign</span>
+                                <span>إرسال رسالة جماعية</span>
                             </a>
                         </li>
                     </ul>

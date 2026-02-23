@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Cp;
 use App\Http\Controllers\Controller;
 use App\Models\ParasolsSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ParasolsController extends Controller
 {
@@ -17,6 +18,7 @@ class ParasolsController extends Controller
     public function update(Request $request)
     {
         $request->validate([
+            'cta_secondary_pdf' => ['nullable', 'file', 'mimes:pdf', 'max:10240'],
             'hero_title_ar' => ['nullable', 'string', 'max:255'],
             'hero_title_en' => ['nullable', 'string', 'max:255'],
             'hero_subtitle_ar' => ['nullable', 'string'],
@@ -31,23 +33,37 @@ class ParasolsController extends Controller
             'description_en' => ['nullable', 'string'],
             'stat1_value' => ['nullable', 'string', 'max:50'],
             'stat1_label_ar' => ['nullable', 'string', 'max:255'],
+            'stat1_label_en' => ['nullable', 'string', 'max:255'],
             'stat2_value' => ['nullable', 'string', 'max:50'],
             'stat2_label_ar' => ['nullable', 'string', 'max:255'],
+            'stat2_label_en' => ['nullable', 'string', 'max:255'],
             'stat3_value' => ['nullable', 'string', 'max:50'],
             'stat3_label_ar' => ['nullable', 'string', 'max:255'],
+            'stat3_label_en' => ['nullable', 'string', 'max:255'],
             'stat4_value' => ['nullable', 'string', 'max:50'],
             'stat4_label_ar' => ['nullable', 'string', 'max:255'],
+            'stat4_label_en' => ['nullable', 'string', 'max:255'],
             'whatsapp_url' => ['nullable', 'string', 'max:500'],
         ]);
 
-        ParasolsSetting::get()->update($request->only([
+        $settings = ParasolsSetting::get();
+        $data = $request->only([
             'hero_title_ar', 'hero_title_en', 'hero_subtitle_ar', 'hero_subtitle_en',
             'cta_primary_text_ar', 'cta_primary_url', 'cta_secondary_text_ar', 'cta_secondary_url',
             'section_title_ar', 'section_title_en', 'description_ar', 'description_en',
-            'stat1_value', 'stat1_label_ar', 'stat2_value', 'stat2_label_ar',
-            'stat3_value', 'stat3_label_ar', 'stat4_value', 'stat4_label_ar',
+            'stat1_value', 'stat1_label_ar', 'stat1_label_en', 'stat2_value', 'stat2_label_ar', 'stat2_label_en',
+            'stat3_value', 'stat3_label_ar', 'stat3_label_en', 'stat4_value', 'stat4_label_ar', 'stat4_label_en',
             'whatsapp_url',
-        ]));
+        ]);
+
+        if ($request->hasFile('cta_secondary_pdf')) {
+            if ($settings->cta_secondary_pdf_path) {
+                Storage::disk('public')->delete($settings->cta_secondary_pdf_path);
+            }
+            $data['cta_secondary_pdf_path'] = $request->file('cta_secondary_pdf')->store('cp/parasols', 'public');
+        }
+
+        $settings->update($data);
 
         return redirect()->route('cp.parasols.edit')->with('success', 'تم حفظ إعدادات المظلات بنجاح.');
     }

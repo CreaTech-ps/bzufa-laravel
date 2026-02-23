@@ -57,13 +57,20 @@
                 </div>
 
                 <div class="p-8 lg:p-10 flex flex-col flex-grow">
+                    @php $isClosed = $endDate && $daysLeft !== null && $daysLeft <= 0; @endphp
                     <div class="flex justify-between items-center mb-6">
                         <span class="text-[10px] font-black text-primary uppercase tracking-widest bg-primary/10 px-4 py-1.5 rounded-full border border-primary/20">
                             {{ __('ui.stat_scholarship') }}
                         </span>
+                        @if($isClosed)
+                        <div class="flex items-center gap-1.5 text-slate-400 dark:text-slate-500 text-[10px] font-black uppercase">
+                            <span class="w-2.5 h-2.5 rounded-full bg-slate-400 dark:bg-slate-500"></span> {{ __('ui.closed') }}
+                        </div>
+                        @else
                         <div class="flex items-center gap-1.5 text-emerald-500 text-[10px] font-black uppercase">
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span> {{ __('ui.open') }}
                         </div>
+                        @endif
                     </div>
 
                     <h3 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white group-hover:text-primary transition-colors duration-300">
@@ -77,9 +84,23 @@
                     <div class="mt-auto">
                         <div class="flex justify-between items-end mb-8 border-t border-slate-100 dark:border-white/5 pt-6">
                             <div class="flex-1">
-                                @if($scholarship->coverage_percentage)
-                                <span class="text-[10px] font-bold text-slate-400 block mb-1 uppercase tracking-tighter">{{ __('ui.grants_coverage_label') }}</span>
-                                <span class="font-black text-primary text-2xl">{{ $scholarship->coverage_percentage }}%</span>
+                                @php
+                                    $covMin = $scholarship->coverage_percentage_min ?? $scholarship->coverage_percentage;
+                                    $covMax = $scholarship->coverage_percentage_max ?? $scholarship->coverage_percentage;
+                                    $hasCoverage = $covMin !== null || $covMax !== null;
+                                @endphp
+                                @if($hasCoverage)
+                                <div class="flex items-center gap-2 flex-nowrap text-base">
+                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter shrink-0">{{ __('ui.grants_coverage_label') }}</span>
+                                    @if($covMin !== null && $covMax !== null && $covMin != $covMax)
+                                        <span class="text-slate-500 dark:text-slate-400 text-sm font-medium shrink-0">{{ __('ui.grants_coverage_from') }}</span>
+                                        <span class="inline-flex items-center justify-center min-w-[2.5rem] px-2 py-1 rounded-lg bg-primary/10 dark:bg-primary/15 text-primary font-bold text-lg border border-primary/20 shadow-sm shrink-0">{{ $covMin }}%</span>
+                                        <span class="text-slate-500 dark:text-slate-400 text-sm font-medium shrink-0">{{ __('ui.grants_coverage_to') }}</span>
+                                        <span class="inline-flex items-center justify-center min-w-[2.5rem] px-2 py-1 rounded-lg bg-primary/10 dark:bg-primary/15 text-primary font-bold text-lg border border-primary/20 shadow-sm shrink-0">{{ $covMax }}%</span>
+                                    @else
+                                        <span class="inline-flex items-center justify-center min-w-[2.5rem] px-2 py-1 rounded-lg bg-primary/10 dark:bg-primary/15 text-primary font-bold text-lg border border-primary/20 shadow-sm shrink-0">{{ $covMin ?? $covMax }}%</span>
+                                    @endif
+                                </div>
                                 @elseif($scholarship->estimated_value)
                                 <span class="text-[10px] font-bold text-slate-400 block mb-1 uppercase tracking-tighter">{{ __('ui.grants_value_label') }}</span>
                                 <span class="font-black text-primary text-2xl">{{ $scholarship->estimated_value }}</span>
@@ -88,7 +109,7 @@
                                 <span class="font-black text-primary text-2xl">{{ $endDate ? $endDate->locale(app()->getLocale())->translatedFormat('d/m/Y') : '—' }}</span>
                                 @endif
                             </div>
-                            @if($scholarship->estimated_value && !$scholarship->coverage_percentage)
+                            @if($scholarship->estimated_value && !$hasCoverage)
                             <span class="text-slate-400 text-xs italic bg-slate-100 dark:bg-white/5 px-2 py-1 rounded">{{ __('ui.grants_per_year') }}</span>
                             @endif
                         </div>

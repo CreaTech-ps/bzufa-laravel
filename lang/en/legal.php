@@ -7,7 +7,7 @@ return [
         'sections' => [
             'data_collection' => [
                 'title' => 'Data We Collect',
-                'content' => 'We collect data you voluntarily provide when: applying for scholarships, subscribing to our newsletter, contacting us, or making donations. This includes: name, email, phone number, address, and academic information when applying for grants.',
+                'content' => 'We collect data you voluntarily provide when: applying for scholarships, subscribing to our newsletter, contacting us, or making donations. This includes: name, email, phone number, address, and academic information when applying for scholarships.',
             ],
             'usage' => [
                 'title' => 'How We Use Your Data',

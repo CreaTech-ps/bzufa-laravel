@@ -67,6 +67,7 @@ $registerLocalizedRoutes = function () use ($localizedMiddleware) {
         Route::post('/volunteer', [WebsiteVolunteerController::class, 'store'])->name('volunteer.store');
         Route::get('/tamkeen/partnerships/filter', [WebsiteTamkeenPartnershipController::class, 'filter'])->name('tamkeen.partnerships.filter');
         Route::post('/tamkeen/partnerships', [WebsiteTamkeenPartnershipController::class, 'store'])->name('tamkeen.partnerships.store');
+        Route::post('/newsletter/subscribe', [\App\Http\Controllers\Website\NewsletterSubscriptionController::class, 'store'])->name('newsletter.subscribe');
         Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
         Route::get('/robots.txt', [RobotsController::class, 'index'])->name('robots');
     });
@@ -126,6 +127,10 @@ Route::prefix('cp')->name('cp.')->group(function () {
     Route::get('/tamkeen/partnership-requests', [TamkeenPartnershipRequestController::class, 'index'])->name('tamkeen.partnership-requests.index');
     Route::get('/tamkeen/partnership-requests/{tamkeen_partnership_request}/edit', [TamkeenPartnershipRequestController::class, 'edit'])->name('tamkeen.partnership-requests.edit');
     Route::put('/tamkeen/partnership-requests/{tamkeen_partnership_request}', [TamkeenPartnershipRequestController::class, 'update'])->name('tamkeen.partnership-requests.update');
+    Route::get('/newsletter', [\App\Http\Controllers\Cp\NewsletterController::class, 'index'])->name('newsletter.index');
+    Route::get('/newsletter/broadcast', [\App\Http\Controllers\Cp\NewsletterController::class, 'broadcast'])->name('newsletter.broadcast');
+    Route::post('/newsletter/broadcast', [\App\Http\Controllers\Cp\NewsletterController::class, 'sendBroadcast'])->name('newsletter.send');
+    Route::delete('/newsletter/subscribers/{subscriber}', [\App\Http\Controllers\Cp\NewsletterController::class, 'destroy'])->name('newsletter.destroy');
 });
 
 Route::get('storage/{file}', function ($file) {

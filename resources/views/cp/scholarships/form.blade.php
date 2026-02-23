@@ -90,10 +90,20 @@
                     <label for="sort_order" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">ترتيب العرض</label>
                     <input type="number" name="sort_order" id="sort_order" value="{{ old('sort_order', $item->sort_order) }}" min="0" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
                 </div>
-                <div>
-                    <label for="coverage_percentage" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">نسبة تغطية المنحة من الرسوم الفصلية (%)</label>
-                    <input type="number" name="coverage_percentage" id="coverage_percentage" value="{{ old('coverage_percentage', $item->coverage_percentage) }}" min="0" max="100" placeholder="مثال: 60" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
-                    <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">مثال: 60 يعني أن المنحة تغطي 60% من الرسوم الفصلية</p>
+                <div class="lg:col-span-2">
+                    <label class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">نسبة تغطية المنحة من الرسوم الفصلية (%)</label>
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <div class="flex items-center gap-2">
+                            <label for="coverage_percentage_min" class="text-xs text-slate-500">من</label>
+                            <input type="number" name="coverage_percentage_min" id="coverage_percentage_min" value="{{ old('coverage_percentage_min', $item->coverage_percentage_min ?? $item->coverage_percentage) }}" min="0" max="100" placeholder="50" class="cp-input w-20 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-3 py-2 text-center focus:ring-2 focus:ring-primary/30" />
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <label for="coverage_percentage_max" class="text-xs text-slate-500">إلى</label>
+                            <input type="number" name="coverage_percentage_max" id="coverage_percentage_max" value="{{ old('coverage_percentage_max', $item->coverage_percentage_max ?? $item->coverage_percentage) }}" min="0" max="100" placeholder="80" class="cp-input w-20 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-3 py-2 text-center focus:ring-2 focus:ring-primary/30" />
+                        </div>
+                        <span class="text-slate-400 text-sm">%</span>
+                    </div>
+                    <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">مثال: من 50 إلى 80 يعرض "من 50% إلى 80%". إذا متساويان يعرض نسبة واحدة.</p>
                 </div>
             </div>
         </section>

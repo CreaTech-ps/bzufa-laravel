@@ -9,6 +9,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @php
+        $siteSettings = \App\Models\SiteSetting::get();
+        $faviconUrl = $siteSettings->favicon_path ? asset('storage/' . $siteSettings->favicon_path) : asset('favicon.ico');
+        $faviconType = $siteSettings->favicon_path ? (str_ends_with(strtolower($siteSettings->favicon_path), '.png') ? 'image/png' : (str_ends_with(strtolower($siteSettings->favicon_path), '.gif') ? 'image/gif' : 'image/x-icon')) : 'image/x-icon';
+    @endphp
+    <link rel="icon" type="{{ $faviconType }}" href="{{ $faviconUrl }}">
+    @php
         $seo = $seo ?? \App\Models\SeoSetting::get();
         $siteTitle = localized($seo, 'site_title') ?? __('ui.site_name');
     @endphp

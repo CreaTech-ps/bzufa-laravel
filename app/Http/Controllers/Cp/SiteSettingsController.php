@@ -18,6 +18,7 @@ class SiteSettingsController extends Controller
     public function update(Request $request)
     {
         $validated = $request->validate([
+            'favicon' => ['nullable', 'file', 'mimes:ico,png,gif,jpeg,jpg', 'max:512'],
             'action_color' => ['nullable', 'string', 'max:20'],
             'donation_url' => ['nullable', 'url', 'max:500'],
             'contact_email' => ['nullable', 'email', 'max:255'],
@@ -45,6 +46,12 @@ class SiteSettingsController extends Controller
                 Storage::disk('public')->delete($settings->logo_dark_path);
             }
             $validated['logo_dark_path'] = $request->file('logo_dark')->store('cp/site', 'public');
+        }
+        if ($request->hasFile('favicon')) {
+            if ($settings->favicon_path) {
+                Storage::disk('public')->delete($settings->favicon_path);
+            }
+            $validated['favicon_path'] = $request->file('favicon')->store('cp/site', 'public');
         }
 
         $settings->update($validated);

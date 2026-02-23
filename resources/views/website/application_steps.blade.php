@@ -148,7 +148,8 @@
                     <p class="mt-2 text-sm text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
-                <button type="submit" class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 hover:shadow-lg hover:shadow-primary/20 transition-all">
+                <button type="submit" id="submit-application-btn" disabled
+                    class="w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-slate-300 dark:disabled:bg-white/10 disabled:text-slate-500 dark:disabled:text-slate-400 bg-primary text-white hover:shadow-lg hover:shadow-primary/20 enabled:hover:bg-primary/90">
                     {{ __('ui.submit_final_application') }}
                     <span class="material-symbols-outlined">send</span>
                 </button>
@@ -237,6 +238,10 @@ function updateSidebarSteps() {
     var step3Done = nameEl && idEl && nameEl.value.trim() !== '' && idEl.value.trim() !== '';
     var consentEl = document.getElementById('consent');
     var step4Done = consentEl && consentEl.checked;
+    var submitBtn = document.getElementById('submit-application-btn');
+    if (submitBtn) {
+        submitBtn.disabled = !(step2Done && step3Done && step4Done);
+    }
     var completed = [ true, step2Done, step3Done, step4Done ];
     var currentStep = 1;
     for (var s = 1; s <= 4; s++) {

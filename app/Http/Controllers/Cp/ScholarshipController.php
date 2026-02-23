@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cp;
 
 use App\Http\Controllers\Controller;
 use App\Models\Scholarship;
+use App\Services\NewsletterService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -56,7 +57,11 @@ class ScholarshipController extends Controller
         $validated['slug_ar'] = $validated['slug_ar'] ?: Str::slug($validated['title_ar']);
         $validated['slug_en'] = $validated['slug_en'] ?: Str::slug($validated['title_en'] ?? $validated['title_ar']);
 
-        Scholarship::create($validated);
+        $scholarship = Scholarship::create($validated);
+
+        if ($scholarship->is_active) {
+            app(NewsletterService::class)->notifyNewScholarship($scholarship);
+        }
 
         return redirect()->route('cp.scholarships.index')->with('success', 'تم إضافة المنحة بنجاح.');
     }
@@ -86,7 +91,12 @@ class ScholarshipController extends Controller
         $validated['slug_ar'] = $validated['slug_ar'] ?: Str::slug($validated['title_ar']);
         $validated['slug_en'] = $validated['slug_en'] ?: Str::slug($validated['title_en'] ?? $validated['title_ar']);
 
+        $wasActive = $scholarship->is_active;
         $scholarship->update($validated);
+
+        if ($scholarship->is_active && !$wasActive) {
+            app(NewsletterService::class)->notifyNewScholarship($scholarship);
+        }
 
         return redirect()->route('cp.scholarships.index')->with('success', 'تم تحديث المنحة بنجاح.');
     }
@@ -123,6 +133,8 @@ class ScholarshipController extends Controller
             'required_documents_en' => ['nullable', 'string'],
             'application_form_pdf' => ['nullable', 'file', 'mimes:pdf', 'max:5120'],
             'coverage_percentage' => ['nullable', 'integer', 'min:0', 'max:100'],
+            'coverage_percentage_min' => ['nullable', 'integer', 'min:0', 'max:100'],
+            'coverage_percentage_max' => ['nullable', 'integer', 'min:0', 'max:100'],
             'is_active' => ['nullable', 'boolean'],
             'sort_order' => ['nullable', 'integer'],
         ]);

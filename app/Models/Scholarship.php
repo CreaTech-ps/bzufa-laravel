@@ -25,6 +25,8 @@ class Scholarship extends Model
         'required_documents_en',
         'application_form_pdf_path',
         'coverage_percentage',
+        'coverage_percentage_min',
+        'coverage_percentage_max',
         'is_active',
         'sort_order',
     ];

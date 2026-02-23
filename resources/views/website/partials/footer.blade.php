@@ -52,13 +52,22 @@
 
             <div class="text-center sm:text-start flex flex-col items-center sm:items-start">
                 <h3 class="font-bold text-slate-900 dark:text-white mb-6">{{ __('ui.footer_subscribe') }}</h3>
-                <div class="relative w-full max-w-xs mb-8">
-                    <input type="email" placeholder="{{ __('ui.email_placeholder') }}"
-                        class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl py-3.5 px-4 text-sm focus:outline-none focus:border-primary/50 transition-all placeholder:text-slate-400">
-                    <button class="absolute end-1.5 top-1.5 bg-primary text-white p-2 rounded-xl hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary/20 flex items-center justify-center" type="button">
-                        <span class="material-symbols-outlined text-sm rtl:rotate-180">send</span>
-                    </button>
-                </div>
+                @if(session('newsletter_success'))
+                <p class="text-sm text-emerald-600 dark:text-emerald-400 mb-4">{{ session('newsletter_success') }}</p>
+                @endif
+                @if($errors->has('email'))
+                <p class="text-sm text-red-600 dark:text-red-400 mb-4">{{ $errors->first('email') }}</p>
+                @endif
+                <form action="{{ localized_route('newsletter.subscribe') }}" method="post" class="w-full max-w-xs mb-8">
+                    @csrf
+                    <div class="relative">
+                        <input type="email" name="email" placeholder="{{ __('ui.email_placeholder') }}" value="{{ old('email') }}" required
+                            class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl py-3.5 px-4 text-sm focus:outline-none focus:border-primary/50 transition-all placeholder:text-slate-400">
+                        <button class="absolute end-1.5 top-1.5 bg-primary text-white p-2 rounded-xl hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary/20 flex items-center justify-center" type="submit">
+                            <span class="material-symbols-outlined text-sm rtl:rotate-180">send</span>
+                        </button>
+                    </div>
+                </form>
 
                 <h3 class="font-bold mb-4 text-sm text-slate-900 dark:text-white md:hidden">{{ __('ui.follow_us') }}</h3>
                 <div class="flex gap-4 md:hidden">

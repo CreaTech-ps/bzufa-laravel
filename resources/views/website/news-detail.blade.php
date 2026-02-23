@@ -6,6 +6,22 @@
 @if(!empty($news->image_path))
 <meta property="og:image" content="{{ asset('storage/' . $news->image_path) }}" />
 @endif
+{{-- Quill output styles: المحتوى المُخزَن من المحرر يستخدم classes مثل ql-align-center, ql-indent-1 --}}
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+<style>
+/* تغطية كاملة للصفحة من اليسار لليمين - إلغاء تنسيقات محرر Quill للحاوية */
+.news-content.ql-editor { font-size: 1.125rem; line-height: 1.75; width: 100%; max-width: 100%; padding: 0; border: none; overflow-y: visible; min-height: auto; outline: none; }
+.news-content.ql-editor p { margin-bottom: 1rem; }
+.news-content.ql-editor h1, .news-content.ql-editor h2, .news-content.ql-editor h3, .news-content.ql-editor h4 { font-weight: 700; color: rgb(15 23 42); margin-top: 1.5rem; margin-bottom: 0.75rem; }
+.dark .news-content.ql-editor h1, .dark .news-content.ql-editor h2, .dark .news-content.ql-editor h3, .dark .news-content.ql-editor h4 { color: #fff; }
+.news-content.ql-editor blockquote { border-inline-start: 4px solid var(--primary, #0ba66d); background: rgba(11,166,109,0.08); padding: 0.75rem 1rem; margin: 1rem 0; border-radius: 0.75rem; font-style: italic; }
+.dark .news-content.ql-editor blockquote { background: rgba(11,166,109,0.15); }
+.news-content.ql-editor pre, .news-content.ql-editor .ql-syntax { background: rgb(241 245 249); padding: 1rem; border-radius: 0.75rem; overflow-x: auto; font-size: 0.875rem; margin: 1rem 0; }
+.dark .news-content.ql-editor pre, .dark .news-content.ql-editor .ql-syntax { background: rgb(30 41 59); }
+.news-content.ql-editor img { max-width: 100%; height: auto; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin: 1rem 0; }
+.news-content.ql-editor a { color: var(--primary, #0ba66d); font-weight: 500; text-decoration: none; }
+.news-content.ql-editor a:hover { text-decoration: underline; }
+</style>
 @endpush
     
 @section('content')
@@ -62,18 +78,19 @@
     </div>
     @endif
 
-    {{-- Content --}}
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
-        <div class="lg:col-span-8 rich-text text-slate-700 dark:text-slate-300 prose prose-lg dark:prose-invert max-w-none">
-            @if(localized($news, 'summary') && !localized($news, 'content'))
-            <p class="mb-6 text-lg leading-relaxed">{{ localized($news, 'summary') }}</p>
-            @elseif(localized($news, 'content'))
-            {!! localized($news, 'content') !!}
+    {{-- Content: عرض المحتوى بعرض كامل داخل الحاوية --}}
+    <article class="w-full">
+        <div class="news-content ql-editor rich-text text-slate-700 dark:text-slate-300"
+            @if(app()->getLocale() === 'ar') dir="rtl" @endif>
+            @if(localized($news, 'content'))
+                {!! localized($news, 'content') !!}
+            @elseif(localized($news, 'summary'))
+                <p class="text-lg leading-relaxed">{{ localized($news, 'summary') }}</p>
             @else
-            <p class="mb-6 text-lg leading-relaxed">{{ localized($news, 'summary') ?? localized($news, 'title') }}</p>
+                <p class="text-lg leading-relaxed text-slate-500">{{ localized($news, 'title') }}</p>
             @endif
         </div>
-    </div>
+    </article>
 
     {{-- Related News --}}
     @if($relatedNews->isNotEmpty())

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cp;
 
 use App\Http\Controllers\Controller;
 use App\Models\News;
+use App\Services\NewsletterService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -53,7 +54,11 @@ class NewsController extends Controller
         $validated['slug_ar'] = $validated['slug_ar'] ?: Str::slug($validated['title_ar']);
         $validated['slug_en'] = $validated['slug_en'] ?: Str::slug($validated['title_en'] ?? $validated['title_ar']);
 
-        News::create($validated);
+        $news = News::create($validated);
+
+        if ($news->is_published) {
+            app(NewsletterService::class)->notifyNewNews($news);
+        }
 
         return redirect()->route('cp.news.index')->with('success', 'تم إضافة الخبر بنجاح.');
     }
@@ -77,7 +82,12 @@ class NewsController extends Controller
         $validated['slug_ar'] = $validated['slug_ar'] ?: Str::slug($validated['title_ar']);
         $validated['slug_en'] = $validated['slug_en'] ?: Str::slug($validated['title_en'] ?? $validated['title_ar']);
 
+        $wasPublished = $news->is_published;
         $news->update($validated);
+
+        if ($news->is_published && !$wasPublished) {
+            app(NewsletterService::class)->notifyNewNews($news);
+        }
 
         return redirect()->route('cp.news.index')->with('success', 'تم تحديث الخبر بنجاح.');
     }

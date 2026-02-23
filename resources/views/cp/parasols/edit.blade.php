@@ -21,7 +21,7 @@
         <p class="mb-0">القسم البطل ← إحصائيات المشروع ← عنوان معرض المساحات + فلتر المناطق ← بطاقات المساحات (صورة، عنوان، موقع، سعر، حالة).</p>
     </div>
 
-    <form action="{{ route('cp.parasols.update') }}" method="post" class="space-y-6">
+    <form action="{{ route('cp.parasols.update') }}" method="post" enctype="multipart/form-data" class="space-y-6">
         @csrf
         @method('PUT')
 
@@ -61,8 +61,17 @@
                         <input type="text" name="cta_secondary_text_ar" id="cta_secondary_text_ar" value="{{ old('cta_secondary_text_ar', $settings->cta_secondary_text_ar) }}" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
                     </div>
                     <div>
-                        <label for="cta_secondary_url" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">رابط الزر الثاني</label>
-                        <input type="url" name="cta_secondary_url" id="cta_secondary_url" value="{{ old('cta_secondary_url', $settings->cta_secondary_url) }}" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
+                        <label for="cta_secondary_pdf" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">ملف PDF للزر الثاني (كيف يعمل المشروع؟)</label>
+                        @if($settings->cta_secondary_pdf_path)
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-2">الحالي: <code class="bg-slate-100 dark:bg-slate-700 px-1 rounded">{{ $settings->cta_secondary_pdf_path }}</code></p>
+                        @else
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-2">عند رفع ملف PDF، سيتم تنزيله عند النقر على الزر. أولوية أعلى من الرابط الخارجي.</p>
+                        @endif
+                        <input type="file" name="cta_secondary_pdf" id="cta_secondary_pdf" accept=".pdf,application/pdf" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 file:mr-4 file:py-2 file:rounded-lg file:border-0 file:bg-primary/10 file:text-primary" />
+                    </div>
+                    <div>
+                        <label for="cta_secondary_url" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">رابط خارجي (بديل عند عدم وجود PDF)</label>
+                        <input type="url" name="cta_secondary_url" id="cta_secondary_url" value="{{ old('cta_secondary_url', $settings->cta_secondary_url) }}" placeholder="https://..." class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
                     </div>
                 </div>
             </div>
@@ -94,7 +103,8 @@
                 <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 space-y-2">
                     <label class="cp-label block text-xs font-medium text-slate-500 dark:text-slate-400">البطاقة {{ $i }}</label>
                     <input type="text" name="stat{{ $i }}_value" value="{{ old('stat'.$i.'_value', $settings->{'stat'.$i.'_value'}) }}" placeholder="120+" class="cp-input w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-3 py-2 text-sm focus:ring-2 focus:ring-primary/30" />
-                    <input type="text" name="stat{{ $i }}_label_ar" value="{{ old('stat'.$i.'_label_ar', $settings->{'stat'.$i.'_label_ar'}) }}" placeholder="مظلة مفعلة" class="cp-input w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-3 py-2 text-sm focus:ring-2 focus:ring-primary/30" />
+                    <input type="text" name="stat{{ $i }}_label_ar" value="{{ old('stat'.$i.'_label_ar', $settings->{'stat'.$i.'_label_ar'}) }}" placeholder="العنوان (عربي)" class="cp-input w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-3 py-2 text-sm focus:ring-2 focus:ring-primary/30" />
+                    <input type="text" name="stat{{ $i }}_label_en" value="{{ old('stat'.$i.'_label_en', $settings->{'stat'.$i.'_label_en'}) }}" placeholder="Label (English)" class="cp-input w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-3 py-2 text-sm focus:ring-2 focus:ring-primary/30" />
                 </div>
                 @endforeach
             </div>

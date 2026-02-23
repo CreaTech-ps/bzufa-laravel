@@ -5,7 +5,7 @@
 @push('styles')
 <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
 <style>
-    .ql-editor { min-height: 200px; font-family: 'Tajawal', sans-serif; }
+    .ql-editor { min-height: 280px; font-family: 'Tajawal', sans-serif; }
     .ql-container { font-size: 1rem; }
     .ql-toolbar.ql-snow { border-radius: 0.75rem 0.75rem 0 0; border-color: rgb(203 213 225); }
     .dark .ql-toolbar.ql-snow { border-color: rgb(71 85 105); }
@@ -154,10 +154,12 @@ document.addEventListener('DOMContentLoaded', function() {
             placeholder: 'اكتب محتوى الخبر هنا...',
             modules: {
                 toolbar: [
-                    [{ 'header': [1, 2, 3, false] }],
+                    [{ 'header': [1, 2, 3, 4, false] }],
                     ['bold', 'italic', 'underline', 'strike'],
-                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'color': [] }, { 'background': [] }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'indent': '-1'}, { 'indent': '+1' }],
                     [{ 'align': [] }],
+                    ['blockquote', 'code-block'],
                     ['link', 'image'],
                     ['clean']
                 ]
@@ -176,10 +178,12 @@ document.addEventListener('DOMContentLoaded', function() {
             placeholder: 'Write news content here...',
             modules: {
                 toolbar: [
-                    [{ 'header': [1, 2, 3, false] }],
+                    [{ 'header': [1, 2, 3, 4, false] }],
                     ['bold', 'italic', 'underline', 'strike'],
-                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'color': [] }, { 'background': [] }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'indent': '-1'}, { 'indent': '+1' }],
                     [{ 'align': [] }],
+                    ['blockquote', 'code-block'],
                     ['link', 'image'],
                     ['clean']
                 ]

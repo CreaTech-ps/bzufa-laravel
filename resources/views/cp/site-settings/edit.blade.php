@@ -54,6 +54,15 @@
                     @endif
                     <input type="file" name="logo_dark" accept="image/*" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 file:mr-4 file:py-2 file:rounded-lg file:border-0 file:bg-primary/10 file:text-primary" />
                 </div>
+                <div>
+                    <label class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">أيقونة الموقع (Favicon)</label>
+                    @if($settings->favicon_path)
+                        <p class="text-sm text-slate-500 dark:text-slate-400 mb-2">الحالية: <img src="{{ asset('storage/' . $settings->favicon_path) }}" alt="Favicon" class="inline-block w-6 h-6 object-contain align-middle"> <code class="bg-slate-100 dark:bg-slate-700 px-1 rounded text-xs">{{ $settings->favicon_path }}</code></p>
+                    @else
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-2">تظهر في تبويب المتصفح والمرجعيات. يفضل صورة .ico أو .png مربعة (مثل 32×32)</p>
+                    @endif
+                    <input type="file" name="favicon" accept="image/x-icon,image/png,image/gif,.ico,.png,.gif" class="cp-input w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 file:mr-4 file:py-2 file:rounded-lg file:border-0 file:bg-primary/10 file:text-primary" />
+                </div>
             </div>
         </section>
 

@@ -86,15 +86,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const startCounter = (el) => {
     const target = +el.getAttribute("data-target");
-    const rawText = (el.innerText || "").replace(/[^0-9-+]/g, "");
+    const suffix = el.getAttribute("data-suffix") || "";
+    const rawText = (el.innerText || "").replace(/[^0-9-]/g, "");
     const count = rawText ? +rawText : 0;
-    const inc = target / speed;
+    const inc = Math.max(1, Math.ceil(target / speed));
 
     if (count < target) {
-      el.innerText = Math.ceil(count + inc).toLocaleString();
+      const next = Math.min(count + inc, target);
+      el.innerText = next.toLocaleString() + suffix;
       setTimeout(() => startCounter(el), 1);
     } else {
-      el.innerText = target.toLocaleString();
+      el.innerText = target.toLocaleString() + suffix;
     }
   };
 

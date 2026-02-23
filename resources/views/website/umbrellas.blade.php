@@ -31,7 +31,13 @@
                     <a href="#spaces" class="bg-primary text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-primary/40 transition-all transform hover:-translate-y-1 inline-flex items-center justify-center">
                         {{ localized($settings, 'cta_primary_text') ?? __('parasols.cta_primary') }}
                     </a>
-                    @if(!empty($settings->cta_secondary_url))
+                    @if(!empty($settings->cta_secondary_pdf_path))
+                    <a href="{{ asset('storage/' . $settings->cta_secondary_pdf_path) }}" download
+                        class="bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white backdrop-blur-md px-10 py-4 rounded-xl font-bold text-lg border border-slate-200 dark:border-white/20 hover:bg-slate-200 dark:hover:bg-white/20 transition-all inline-flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined">download</span>
+                        {{ localized($settings, 'cta_secondary_text') ?? __('parasols.cta_secondary') }}
+                    </a>
+                    @elseif(!empty($settings->cta_secondary_url))
                     <a href="{{ $settings->cta_secondary_url }}" target="_blank" rel="noopener"
                         class="bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white backdrop-blur-md px-10 py-4 rounded-xl font-bold text-lg border border-slate-200 dark:border-white/20 hover:bg-slate-200 dark:hover:bg-white/20 transition-all inline-flex items-center justify-center">
                         {{ localized($settings, 'cta_secondary_text') ?? __('parasols.cta_secondary') }}
@@ -49,12 +55,26 @@
     <section class="relative z-30 mt-4">
         <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                @php
+                    $v1 = $settings->stat1_value ?? '120+';
+                    $t1 = (int) str_replace(['+', ',', '%'], '', $v1) ?: 120;
+                    $s1 = str_contains($v1, '+') ? '+' : '';
+                    $v2 = $settings->stat2_value ?? '1,500';
+                    $t2 = (int) str_replace([',', '+', '%'], '', $v2) ?: 1500;
+                    $s2 = '';
+                    $v3 = $settings->stat3_value ?? '3';
+                    $t3 = (int) str_replace([',', '+', '%'], '', $v3) ?: 3;
+                    $s3 = '';
+                    $v4 = $settings->stat4_value ?? '98%';
+                    $t4 = (int) str_replace(['%', ',', '+'], '', $v4) ?: 98;
+                    $s4 = str_contains($v4, '%') ? '%' : '';
+                @endphp
                 <div class="group relative bg-white dark:bg-[#121212] p-6 md:p-8 rounded-[2rem] shadow-2xl border border-slate-100 dark:border-white/5 transition-all duration-500 hover:-translate-y-3 hover:border-primary/20 overflow-hidden">
                     <div class="relative z-10 text-center">
                         <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
                             <span class="material-symbols-outlined text-2xl">umbrella</span>
                         </div>
-                        <h3 class="stat-number text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1" data-target="{{ str_replace(['+', ','], '', $settings->stat1_value ?? '120') }}">{{ $settings->stat1_value ?? '120+' }}</h3>
+                        <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="stat-number" data-target="{{ $t1 }}" data-suffix="{{ $s1 }}">0</span></h3>
                         <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ localized($settings, 'stat1_label') ?? __('parasols.stat1_label') }}</p>
                     </div>
                     <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
@@ -64,7 +84,7 @@
                         <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
                             <span class="material-symbols-outlined text-2xl">school</span>
                         </div>
-                        <h3 class="stat-number text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1" data-target="{{ str_replace(',', '', $settings->stat2_value ?? '1500') }}">{{ $settings->stat2_value ?? '1,500' }}</h3>
+                        <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="stat-number" data-target="{{ $t2 }}">0</span></h3>
                         <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ localized($settings, 'stat2_label') ?? __('parasols.stat2_label') }}</p>
                     </div>
                     <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
@@ -74,7 +94,7 @@
                         <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
                             <span class="material-symbols-outlined text-2xl">location_city</span>
                         </div>
-                        <h3 class="stat-number text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1" data-target="{{ $settings->stat3_value ?? '3' }}">{{ $settings->stat3_value ?? '3' }}</h3>
+                        <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="stat-number" data-target="{{ $t3 }}">0</span></h3>
                         <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ localized($settings, 'stat3_label') ?? __('parasols.stat3_label') }}</p>
                     </div>
                     <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
@@ -84,7 +104,7 @@
                         <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
                             <span class="material-symbols-outlined text-2xl">leaderboard</span>
                         </div>
-                        <h3 class="stat-number text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1" data-target="{{ str_replace('%', '', $settings->stat4_value ?? '98') }}">{{ $settings->stat4_value ?? '98%' }}</h3>
+                        <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="stat-number" data-target="{{ $t4 }}" data-suffix="{{ $s4 }}">0</span></h3>
                         <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ localized($settings, 'stat4_label') ?? __('parasols.stat4_label') }}</p>
                     </div>
                     <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
