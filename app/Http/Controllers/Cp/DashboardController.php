@@ -9,6 +9,8 @@ use App\Models\Partner;
 use App\Models\SuccessStory;
 use App\Models\ScholarshipApplication;
 use App\Models\VolunteerApplication;
+use App\Models\Donation;
+use App\Models\FinancialTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -32,10 +34,14 @@ class DashboardController extends Controller
             'tamkeen_requests_total' => DB::table('tamkeen_partnership_requests')->count(),
             'partnership_requests' => DB::table('partnership_requests')->where('status', 'pending')->count(),
             'partnership_requests_total' => DB::table('partnership_requests')->count(),
+            'donations_pending' => Donation::where('status', 'pending')->count(),
+            'donations_total' => Donation::where('status', 'approved')->sum('amount'),
+            'transactions_pending' => FinancialTransaction::where('status', 'pending_review')->count(),
         ];
 
         $stats['pending_total'] = $stats['scholarship_applications'] + $stats['volunteer_applications']
-            + $stats['tamkeen_requests'] + $stats['partnership_requests'];
+            + $stats['tamkeen_requests'] + $stats['partnership_requests']
+            + ($stats['donations_pending'] ?? 0) + ($stats['transactions_pending'] ?? 0);
 
         $recentNews = News::orderByDesc('published_at')->take(5)->get(['id', 'title_ar', 'title_en', 'published_at']);
         $recentApplications = ScholarshipApplication::with('scholarship')->orderByDesc('created_at')->take(5)->get();

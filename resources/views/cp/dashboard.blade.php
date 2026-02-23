@@ -4,12 +4,6 @@
 
 @section('content')
 <div class="space-y-8">
-    {{-- ترحيب --}}
-    <section class="rounded-2xl bg-gradient-to-l from-primary/10 to-primary/5 dark:from-primary/20 dark:to-primary/10 border border-primary/20 dark:border-primary/30 p-6 shadow-sm">
-        <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-1">مرحباً بك في لوحة التحكم</h2>
-        <p class="text-slate-600 dark:text-slate-400">إدارة محتوى موقع جمعية أصدقاء جامعة بيرزيت. استخدم القائمة الجانبية للتنقل بين الأقسام.</p>
-    </section>
-
     {{-- تنبيه الطلبات المعلقة --}}
     @if($stats['pending_total'] > 0)
     <section class="rounded-2xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 p-4 flex items-center gap-4">
@@ -241,6 +235,10 @@
             <a href="{{ route('cp.news.index') }}" class="rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4 hover:border-primary/30 hover:shadow-md transition-all flex items-center gap-3 group">
                 <span class="material-symbols-outlined text-slate-400 group-hover:text-primary">newspaper</span>
                 <span class="text-sm font-medium text-slate-700 dark:text-slate-300">الأخبار</span>
+            </a>
+            <a href="{{ route('cp.financial.index') }}" class="rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4 hover:border-primary/30 hover:shadow-md transition-all flex items-center gap-3 group">
+                <span class="material-symbols-outlined text-slate-400 group-hover:text-primary">account_balance</span>
+                <span class="text-sm font-medium text-slate-700 dark:text-slate-300">المالية والتبرعات</span>
             </a>
         </div>
     </section>

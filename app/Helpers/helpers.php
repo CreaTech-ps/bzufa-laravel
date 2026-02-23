@@ -62,6 +62,26 @@ if (!function_exists('stat_value')) {
     }
 }
 
+if (!function_exists('cpCan')) {
+    /**
+     * Check if current user can access CP permission.
+     *
+     * @param  string  $permission  Permission slug (e.g. 'settings', 'financial')
+     * @return bool
+     */
+    function cpCan(string $permission): bool
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return false;
+        }
+        if ($user->is_super_admin ?? false) {
+            return true;
+        }
+        return $user->canAccess($permission);
+    }
+}
+
 if (!function_exists('localized_route')) {
     /**
      * رابط مسار محلي حسب اللغة الحالية (للمسارات الأمامية فقط).

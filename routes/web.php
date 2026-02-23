@@ -77,7 +77,11 @@ Route::prefix('en')->group($registerLocalizedRoutes);
 Route::prefix('ar')->group($registerLocalizedRoutes);
 Route::prefix('')->group($registerLocalizedRoutes);
 
-Route::prefix('cp')->name('cp.')->group(function () {
+Route::get('/cp/login', [\App\Http\Controllers\Cp\AuthController::class, 'showLoginForm'])->name('cp.login');
+Route::post('/cp/login', [\App\Http\Controllers\Cp\AuthController::class, 'login']);
+Route::match(['get', 'post'], '/cp/logout', [\App\Http\Controllers\Cp\AuthController::class, 'logout'])->name('cp.logout');
+
+Route::prefix('cp')->name('cp.')->middleware(['cp.auth', 'cp.check'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/site-settings', [SiteSettingsController::class, 'edit'])->name('site-settings.edit');
     Route::put('/site-settings', [SiteSettingsController::class, 'update'])->name('site-settings.update');
@@ -131,6 +135,25 @@ Route::prefix('cp')->name('cp.')->group(function () {
     Route::get('/newsletter/broadcast', [\App\Http\Controllers\Cp\NewsletterController::class, 'broadcast'])->name('newsletter.broadcast');
     Route::post('/newsletter/broadcast', [\App\Http\Controllers\Cp\NewsletterController::class, 'sendBroadcast'])->name('newsletter.send');
     Route::delete('/newsletter/subscribers/{subscriber}', [\App\Http\Controllers\Cp\NewsletterController::class, 'destroy'])->name('newsletter.destroy');
+
+    // المالية والتبرعات
+    Route::get('/financial', [\App\Http\Controllers\Cp\FinancialDashboardController::class, 'index'])->name('financial.index');
+    Route::resource('donations', \App\Http\Controllers\Cp\DonationController::class)->names('donations');
+    Route::post('/donations/{donation}/approve', [\App\Http\Controllers\Cp\DonationController::class, 'approve'])->name('donations.approve');
+    Route::post('/donations/{donation}/reject', [\App\Http\Controllers\Cp\DonationController::class, 'reject'])->name('donations.reject');
+    Route::resource('financial-transactions', \App\Http\Controllers\Cp\FinancialTransactionController::class)->names('financial-transactions')->except(['destroy']);
+    Route::post('/financial-transactions/{financial_transaction}/submit', [\App\Http\Controllers\Cp\FinancialTransactionController::class, 'submitForReview'])->name('financial-transactions.submit');
+    Route::post('/financial-transactions/{financial_transaction}/approve', [\App\Http\Controllers\Cp\FinancialTransactionController::class, 'approve'])->name('financial-transactions.approve');
+    Route::post('/financial-transactions/{financial_transaction}/reject', [\App\Http\Controllers\Cp\FinancialTransactionController::class, 'reject'])->name('financial-transactions.reject');
+    Route::post('/financial-transactions/{financial_transaction}/complete', [\App\Http\Controllers\Cp\FinancialTransactionController::class, 'markCompleted'])->name('financial-transactions.complete');
+    Route::get('/financial/reports', [\App\Http\Controllers\Cp\FinancialReportController::class, 'index'])->name('financial.reports.index');
+    Route::get('/financial/reports/donations', [\App\Http\Controllers\Cp\FinancialReportController::class, 'donations'])->name('financial.reports.donations');
+    Route::get('/financial/reports/expenses', [\App\Http\Controllers\Cp\FinancialReportController::class, 'expenses'])->name('financial.reports.expenses');
+    Route::get('/financial/reports/cash-flow', [\App\Http\Controllers\Cp\FinancialReportController::class, 'cashFlow'])->name('financial.reports.cash-flow');
+
+    // المستخدمين والصلاحيات (للمدير فقط)
+    Route::resource('users', \App\Http\Controllers\Cp\UserController::class)->names('users')->except(['show']);
+    Route::resource('roles', \App\Http\Controllers\Cp\RoleController::class)->names('roles')->except(['show']);
 });
 
 Route::get('storage/{file}', function ($file) {

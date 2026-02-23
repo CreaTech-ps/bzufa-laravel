@@ -12,6 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
+            'cp.auth' => \App\Http\Middleware\EnsureCpAuth::class,
+            'cp.permission' => \App\Http\Middleware\CheckPermission::class,
+            'cp.check' => \App\Http\Middleware\CheckCpPermission::class,
             'locale' => \App\Http\Middleware\SetLocale::class,
             'locale.from.url' => \App\Http\Middleware\SetLocaleFromUrl::class,
             'localize' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
