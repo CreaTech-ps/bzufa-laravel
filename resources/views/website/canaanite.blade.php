@@ -148,9 +148,9 @@
             @forelse($items as $item)
             <a href="{{ rtrim($settings->store_url ?? 'https://kanani.bzufa.com', '/') }}/product/{{ current_slug($item) }}" target="_blank" rel="noopener" class="related-card bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col cursor-pointer group transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
                 <div class="aspect-square bg-cover bg-center relative overflow-hidden">
-                    <img alt="{{ localized($item, 'title') }}"
+                    <img alt="{{ localized($item, 'name') }}"
                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        src="{{ $item->image_path ? asset('storage/' . $item->image_path) : 'https://placehold.co/400x400/e2e8f0/64748b?text=Product' }}"
+                        src="{{ $item->image_path ? rtrim($settings->store_url ?? 'https://kanani.bzufa.com', '/') . '/storage/' . $item->image_path : 'https://placehold.co/400x400/e2e8f0/64748b?text=Product' }}"
                         onerror="this.src='https://placehold.co/400x400/e2e8f0/64748b?text=Product'; this.onerror=null;" />
 
                     @if($item->discount_percent && $item->discount_percent > 0)
@@ -166,7 +166,7 @@
 
                 <div class="p-4 flex flex-col gap-2">
                     <div class="flex items-center justify-between">
-                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors duration-300">{{ localized($item, 'title') }}</h3>
+                        <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors duration-300">{{ localized($item, 'name') }}</h3>
                         <span class="text-primary font-bold">{{ $item->price ? $item->price . ' ₪' : '—' }}</span>
                     </div>
                     <span class="text-xs px-1 text-slate-400">{{ __('kanani.category_textiles') }}</span>
