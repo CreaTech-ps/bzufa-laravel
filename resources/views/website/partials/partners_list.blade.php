@@ -8,7 +8,8 @@
     @endif
         <div class="w-24 h-24 mb-6 flex items-center justify-center grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110">
             <img alt="{{ localized($partner, 'name') }}" class="max-w-full h-auto object-contain"
-                src="{{ $partner->logo_path ? asset('storage/' . $partner->logo_path) : 'https://api.placeholder.com/150?text=Logo' }}" />
+                src="{{ $partner->logo_path ? asset('storage/' . $partner->logo_path) : 'https://api.placeholder.com/150?text=Logo' }}"
+                loading="lazy" width="96" height="96" />
         </div>
         <h3 class="font-black text-lg text-slate-900 dark:text-white mb-1 group-hover:text-primary transition-colors">{{ localized($partner, 'name') }}</h3>
         <p class="text-xs text-slate-500 dark:text-slate-400">{{ $partner->type === 'company' ? __('partners.role_company') : __('partners.role_individual') }}</p>

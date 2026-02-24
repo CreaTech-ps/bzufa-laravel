@@ -66,6 +66,7 @@
                         <img alt="{{ __('kanani.video_label') }}"
                             class="w-full h-full object-cover opacity-90 group-hover:scale-110 transition-transform duration-1000"
                             src="{{ $heroImage }}"
+                            loading="eager" width="800" height="600"
                             onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800';" />
                         <div class="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors duration-300"></div>
                         <div class="absolute inset-0 flex items-center justify-center">
@@ -151,6 +152,7 @@
                     <img alt="{{ localized($item, 'name') }}"
                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         src="{{ $item->image_path ? rtrim($settings->store_url ?? 'https://kanani.bzufa.com', '/') . '/storage/' . $item->image_path : 'https://placehold.co/400x400/e2e8f0/64748b?text=Product' }}"
+                        loading="lazy" width="400" height="400"
                         onerror="this.src='https://placehold.co/400x400/e2e8f0/64748b?text=Product'; this.onerror=null;" />
 
                     @if($item->discount_percent && $item->discount_percent > 0)

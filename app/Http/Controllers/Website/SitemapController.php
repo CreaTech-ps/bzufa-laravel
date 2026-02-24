@@ -28,15 +28,21 @@ class SitemapController extends Controller
                 ['name' => 'kanani.index', 'priority' => '0.8', 'changefreq' => 'monthly'],
                 ['name' => 'tamkeen.index', 'priority' => '0.8', 'changefreq' => 'monthly'],
                 ['name' => 'parasols.index', 'priority' => '0.8', 'changefreq' => 'weekly'],
+                ['name' => 'parasols.spaces', 'priority' => '0.7', 'changefreq' => 'monthly'],
+                ['name' => 'privacy', 'priority' => '0.4', 'changefreq' => 'yearly'],
+                ['name' => 'terms', 'priority' => '0.4', 'changefreq' => 'yearly'],
             ];
             
             foreach ($staticRoutes as $route) {
                 try {
-                    $arUrl = LaravelLocalization::getLocalizedURL('ar', route($route['name'], [], false), [], true);
-                    $enUrl = LaravelLocalization::getLocalizedURL('en', route($route['name'], [], false), [], true);
-                    
+                    $routePath = route($route['name'], [], false);
+                    $arUrl = LaravelLocalization::getLocalizedURL('ar', $routePath, [], true);
+                    $enUrl = LaravelLocalization::getLocalizedURL('en', $routePath, [], true);
+
+                    // Add both language versions for better indexation
                     $routes[] = [
                         'url' => $arUrl,
+                        'url_en' => $enUrl,
                         'priority' => $route['priority'],
                         'changefreq' => $route['changefreq'],
                     ];
@@ -54,10 +60,13 @@ class SitemapController extends Controller
             foreach ($news as $item) {
                 try {
                     $slug = current_slug($item);
-                    $arUrl = LaravelLocalization::getLocalizedURL('ar', route('news.show', ['slug' => $slug], false), [], true);
-                    
+                    $routePath = route('news.show', ['slug' => $slug], false);
+                    $arUrl = LaravelLocalization::getLocalizedURL('ar', $routePath, [], true);
+                    $enUrl = LaravelLocalization::getLocalizedURL('en', $routePath, [], true);
+
                     $routes[] = [
                         'url' => $arUrl,
+                        'url_en' => $enUrl,
                         'priority' => '0.7',
                         'changefreq' => 'monthly',
                         'lastmod' => $item->updated_at->toAtomString(),
@@ -75,10 +84,13 @@ class SitemapController extends Controller
             foreach ($scholarships as $item) {
                 try {
                     $slug = current_slug($item);
-                    $arUrl = LaravelLocalization::getLocalizedURL('ar', route('grants.show', ['slug' => $slug], false), [], true);
-                    
+                    $routePath = route('grants.show', ['slug' => $slug], false);
+                    $arUrl = LaravelLocalization::getLocalizedURL('ar', $routePath, [], true);
+                    $enUrl = LaravelLocalization::getLocalizedURL('en', $routePath, [], true);
+
                     $routes[] = [
                         'url' => $arUrl,
+                        'url_en' => $enUrl,
                         'priority' => '0.8',
                         'changefreq' => 'weekly',
                         'lastmod' => $item->updated_at->toAtomString(),

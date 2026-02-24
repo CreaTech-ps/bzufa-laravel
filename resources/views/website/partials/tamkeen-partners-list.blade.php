@@ -11,7 +11,7 @@
     <div class="w-24 h-24 bg-slate-50 dark:bg-accent-dark rounded-2xl flex items-center justify-center mb-6 p-4 overflow-hidden">
         @if($item->logo_path)
         <img alt="{{ localized($item, 'supporter_name') }}" class="w-full h-full object-cover"
-            src="{{ asset('storage/' . $item->logo_path) }}" />
+            src="{{ asset('storage/' . $item->logo_path) }}" loading="lazy" width="96" height="96" />
         @else
         <span class="material-symbols-outlined text-5xl text-slate-300">business</span>
         @endif

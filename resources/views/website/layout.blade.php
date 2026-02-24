@@ -19,9 +19,7 @@
         $siteTitle = localized($seo, 'site_title') ?? __('ui.site_name');
     @endphp
     <title>@hasSection('title')@yield('title') — {{ $siteTitle }}@else{{ $siteTitle }}@endif</title>
-    @if(!empty(localized($seo, 'meta_description')))
-        <meta name="description" content="{{ Str::limit(strip_tags(localized($seo, 'meta_description')), 160) }}">
-    @endif
+    <meta name="description" content="{{ !empty(localized($seo, 'meta_description')) ? Str::limit(strip_tags(localized($seo, 'meta_description')), 160) : Str::limit(__('ui.site_name') . ' - ' . __('ui.hero_default_subtitle'), 160) }}">
     @if(!empty(localized($seo, 'meta_keywords')))
         <meta name="keywords" content="{{ strip_tags(localized($seo, 'meta_keywords')) }}">
     @endif
@@ -35,8 +33,10 @@
         <meta property="og:description" content="{{ Str::limit(strip_tags(localized($seo, 'og_description')), 200) }}">
     @endif
     @if(!empty($seo->og_image_path))
-        <meta property="og:image" content="{{ asset('storage/' . $seo->og_image_path) }}">
+        <meta property="og:image" content="{{ url(asset('storage/' . $seo->og_image_path)) }}">
+        <meta property="og:image:alt" content="{{ $siteTitle }}">
     @endif
+    <meta property="og:site_name" content="{{ $siteTitle }}">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:locale" content="{{ $locale === 'ar' ? 'ar_AR' : 'en_GB' }}">
     {{-- Twitter Card --}}
@@ -96,17 +96,17 @@
     {{-- Tailwind CSS --}}
     <script src="https://cdn.tailwindcss.com"></script>
     
-    {{-- Swiper CSS - defer loading --}}
+    @if(request()->routeIs('home'))
+    {{-- Swiper: تحميل فقط في الصفحة الرئيسية --}}
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" as="style" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" /></noscript>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+    @endif
 
     {{-- Main CSS --}}
     <link rel="preload" href="{{ asset('assets/css/style.css') }}" as="style" />
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    
-    {{-- Swiper JS - defer loading --}}
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
     
     {{-- Main JS --}}
     <script src="{{ asset('assets/js/script.js') }}" defer></script>
@@ -123,6 +123,29 @@
     @endif
     @if(!empty($seo->organization_schema))
         <script type="application/ld+json">{!! $seo->organization_schema !!}</script>
+    @else
+    {{-- Default WebSite + Organization schema for SEO --}}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "{{ url('/') }}/#website",
+                "url": "{{ url('/') }}",
+                "name": {{ json_encode($siteTitle) }},
+                "publisher": {"@id": "{{ url('/') }}/#organization"},
+                "inLanguage": ["ar", "en"]
+            },
+            {
+                "@type": "Organization",
+                "@id": "{{ url('/') }}/#organization",
+                "name": {{ json_encode($siteTitle) }},
+                "url": "{{ url('/') }}"
+            }
+        ]
+    }
+    </script>
     @endif
     @yield('styles')
     @stack('styles')

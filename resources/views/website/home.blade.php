@@ -188,7 +188,7 @@
                             <img alt="{{ $project->title }}"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                 src="{{ $project->image_path ? asset('storage/' . $project->image_path) : 'https://placehold.co/800x450/e2e8f0/64748b?text=' . urlencode($project->title) }}"
-                                loading="lazy" />
+                                loading="lazy" width="800" height="450" />
                             @if($project->badge_1)
                                 <span class="absolute top-4 {{ $project->badge_2 ? 'end-4' : 'start-4' }} {{ $project->badge_1_style === 'primary' ? 'px-3 bg-primary text-white font-bold uppercase' : 'bg-black/50 backdrop-blur-md' }} text-white text-xs px-3 py-1 rounded-full">{{ $project->badge_1 }}</span>
                             @endif
@@ -344,13 +344,14 @@
                                 class="block focus:outline-none flex-shrink-0">
                                 <img alt="{{ localized($partner, 'name') }}"
                                     class="{{ $partnerLogoClass }}"
-                                    src="{{ $partner->logo_path ? asset('storage/' . $partner->logo_path) : asset('assets/img/logo-l.svg') }}" />
+                                    src="{{ $partner->logo_path ? asset('storage/' . $partner->logo_path) : asset('assets/img/logo-l.svg') }}"
+                                    loading="lazy" width="120" height="48" />
                             </a>
                             @empty
-                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" />
-                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" />
-                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" />
-                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" />
+                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="120" height="48" />
+                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="120" height="48" />
+                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="120" height="48" />
+                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="120" height="48" />
                             @endforelse
                         </div>
                         {{-- النسخة الثانية (للاستمرارية) --}}
@@ -360,13 +361,14 @@
                                 class="block focus:outline-none flex-shrink-0">
                                 <img alt="{{ localized($partner, 'name') }}"
                                     class="{{ $partnerLogoClass }}"
-                                    src="{{ $partner->logo_path ? asset('storage/' . $partner->logo_path) : asset('assets/img/logo-l.svg') }}" />
+                                    src="{{ $partner->logo_path ? asset('storage/' . $partner->logo_path) : asset('assets/img/logo-l.svg') }}"
+                                    loading="lazy" width="120" height="48" />
                             </a>
                             @empty
-                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" />
-                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" />
-                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" />
-                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" />
+                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="120" height="48" />
+                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="120" height="48" />
+                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="120" height="48" />
+                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="120" height="48" />
                             @endforelse
                         </div>
                     </div>
