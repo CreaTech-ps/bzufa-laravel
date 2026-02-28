@@ -15,6 +15,6 @@ return [
     'staff_count' => ':count dedicated staff members',
     'no_board' => 'No board members at the moment',
     'no_staff' => 'No staff members at the moment',
-    'since_year' => 'Since :year',
+    'since_year' => ':year',
     'default_year' => '2022',
 ];

@@ -15,6 +15,6 @@ return [
     'staff_count' => ':count موظفاً مخلصاً',
     'no_board' => 'لا يوجد أعضاء في مجلس الإدارة حالياً',
     'no_staff' => 'لا يوجد أعضاء في فريق العمل حالياً',
-    'since_year' => 'منذ :year',
+    'since_year' => ':year',
     'default_year' => '2022',
 ];

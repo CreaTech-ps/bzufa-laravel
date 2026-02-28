@@ -34,60 +34,7 @@
         </div>
     </section>
 
-    <section class="relative z-30 mt-2 md:mt-4">
-        <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="group relative bg-white dark:bg-[#121212] p-6 md:p-8 rounded-[2rem] shadow-2xl border border-slate-100 dark:border-white/5 transition-all duration-500 hover:-translate-y-3 hover:border-primary/20 overflow-hidden text-center">
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
-                            <span class="material-symbols-outlined text-2xl">handshake</span>
-                        </div>
-                        @php
-                            $p1 = stat_value('partners_stat1', null);
-                            $display1 = $p1 !== null ? $p1 : ('+' . $totalPartners);
-                            $target1 = (int) preg_replace('/[^0-9]/', '', $display1) ?: $totalPartners;
-                        @endphp
-                        <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="counter" data-target="{{ $target1 }}" data-prefix="+">0</span></h3>
-                        <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ __('partners.stat1_label') }}</p>
-                    </div>
-                    <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                </div>
-                <div class="group relative bg-white dark:bg-[#121212] p-6 md:p-8 rounded-[2rem] shadow-2xl border border-slate-100 dark:border-white/5 transition-all duration-500 hover:-translate-y-3 hover:border-primary/20 overflow-hidden text-center">
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
-                            <span class="material-symbols-outlined text-2xl">groups</span>
-                        </div>
-                        @php $p2 = stat_value('partners_stat2', '1.2M'); $target2 = (strpos((string)$p2, 'M') !== false) ? 1200000 : ((int)preg_replace('/[^0-9]/', '', (string)$p2) ?: 1200000); @endphp
-                        <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="counter" data-target="{{ $target2 }}" data-divisor="1000000" data-decimals="1" data-suffix="M">0</span></h3>
-                        <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ __('partners.stat2_label') }}</p>
-                    </div>
-                    <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                </div>
-                <div class="group relative bg-white dark:bg-[#121212] p-6 md:p-8 rounded-[2rem] shadow-2xl border border-slate-100 dark:border-white/5 transition-all duration-500 hover:-translate-y-3 hover:border-primary/20 overflow-hidden text-center">
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
-                            <span class="material-symbols-outlined text-2xl">account_balance</span>
-                        </div>
-                        @php $p3 = stat_value('partners_stat3', '85'); $target3 = (int)preg_replace('/[^0-9]/', '', (string)($p3 ?? '85')) ?: 85; @endphp
-                        <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="counter" data-target="{{ $target3 }}">0</span></h3>
-                        <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ __('partners.stat3_label') }}</p>
-                    </div>
-                    <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                </div>
-                <div class="group relative bg-white dark:bg-[#121212] p-6 md:p-8 rounded-[2rem] shadow-2xl border border-slate-100 dark:border-white/5 transition-all duration-500 hover:-translate-y-3 hover:border-primary/20 overflow-hidden text-center">
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
-                            <span class="material-symbols-outlined text-2xl">trending_up</span>
-                        </div>
-                        @php $p4 = stat_value('partners_stat4', '15%'); $target4 = (int)preg_replace('/[^0-9]/', '', (string)($p4 ?? '15')) ?: 15; @endphp
-                        <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="counter" data-target="{{ $target4 }}" data-suffix="%">0</span></h3>
-                        <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ __('partners.stat4_label') }}</p>
-                    </div>
-                    <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                </div>
-            </div>
-        </div>
-    </section>
+    @php /* قسم الإحصائيات مخفي حسب الطلب */ @endphp
 
     <section id="partners-grid" class="py-16 md:py-20 bg-white dark:bg-transparent transition-colors duration-300 overflow-hidden">
         <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">

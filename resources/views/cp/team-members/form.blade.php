@@ -53,7 +53,7 @@
             <div>
                 <label for="joined_since" class="cp-label block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">سنة بداية العمل</label>
                 <input type="text" name="joined_since" id="joined_since" value="{{ old('joined_since', $item->joined_since) }}" placeholder="2022" maxlength="4" class="cp-input w-32 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-4 py-2.5 focus:ring-2 focus:ring-primary/30" />
-                <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">يظهر في فريق العمل كـ "منذ :year"</p>
+                <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">يظهر في فريق العمل كـ السنة (مثل: 2022)</p>
             </div>
         </section>
 

@@ -32,13 +32,6 @@
                 <h3 class="text-xl font-extrabold text-slate-900 dark:text-white group-hover:text-primary transition-colors leading-snug">
                     {{ localized($item, 'title') }}
                 </h3>
-                {{-- عرض السعر فقط للمساحات المتاحة للحجز أو التي تنتهي قريباً --}}
-                @if(($item->status === 'available' || $item->status === 'ending_soon') && !empty($item->price))
-                <div class="text-start">
-                    <p class="text-primary font-black text-2xl">${{ $item->price }}</p>
-                    <p class="text-[10px] text-slate-400 font-bold uppercase text-center">/ {{ __('parasols.per_month') }}</p>
-                </div>
-                @endif
             </div>
 
             @if(localized($item, 'location') || localized($item, 'detailed_location'))
