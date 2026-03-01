@@ -9,6 +9,9 @@
 .animate-partner-scroll {
   animation: partner-infinite-scroll 120s linear infinite;
 }
+.partner-scroll-container:hover .animate-partner-scroll {
+  animation-play-state: paused;
+}
 [dir="rtl"] .animate-partner-scroll {
   animation-direction: reverse;
 }
@@ -327,7 +330,7 @@
                     </p>
                 </div>
 
-                <div class="relative flex overflow-hidden group mb-16" dir="ltr">
+                <div class="relative flex overflow-hidden group mb-16 partner-scroll-container" dir="ltr">
                     <div
                         class="absolute inset-y-0 start-0 w-20 bg-gradient-to-r from-white dark:from-background-dark to-transparent z-10 pointer-events-none">
                     </div>
@@ -335,40 +338,56 @@
                         class="absolute inset-y-0 end-0 w-20 bg-gradient-to-l from-white dark:from-background-dark to-transparent z-10 pointer-events-none">
                     </div>
 
-                    <div class="flex animate-partner-scroll gap-24 items-center whitespace-nowrap w-max">
-                        @php $partnerLogoClass = 'max-h-12 w-auto min-w-[120px] object-contain transition-all duration-500 flex-shrink-0'; @endphp
+                    <div class="flex animate-partner-scroll gap-20 items-center whitespace-nowrap w-max">
+                        @php $partnerLogoClass = 'max-h-20 w-auto min-w-[180px] object-contain transition-all duration-500 flex-shrink-0 opacity-70 hover:opacity-100'; @endphp
                         {{-- النسخة الأولى --}}
-                        <div class="flex gap-24 items-center flex-shrink-0">
+                        <div class="flex gap-20 items-center flex-shrink-0">
                             @forelse($partners as $partner)
-                            <a href="{{ $partner->link ?? '#' }}" {{ $partner->link ? 'target="_blank" rel="noopener"' : '' }}
-                                class="block focus:outline-none flex-shrink-0">
+                            @if(!empty($partner->link))
+                            <a href="{{ $partner->link }}" target="_blank" rel="noopener" class="block focus:outline-none flex-shrink-0 px-2 py-1 rounded-lg hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
                                 <img alt="{{ localized($partner, 'name') }}"
                                     class="{{ $partnerLogoClass }}"
                                     src="{{ $partner->logo_path ? asset('storage/' . $partner->logo_path) : asset('assets/img/logo-l.svg') }}"
-                                    loading="lazy" width="120" height="48" />
+                                    loading="lazy" width="180" height="80" />
                             </a>
+                            @else
+                            <div class="block flex-shrink-0 px-2 py-1">
+                                <img alt="{{ localized($partner, 'name') }}"
+                                    class="{{ $partnerLogoClass }}"
+                                    src="{{ $partner->logo_path ? asset('storage/' . $partner->logo_path) : asset('assets/img/logo-l.svg') }}"
+                                    loading="lazy" width="180" height="80" />
+                            </div>
+                            @endif
                             @empty
-                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="120" height="48" />
-                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="120" height="48" />
-                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="120" height="48" />
-                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="120" height="48" />
+                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="180" height="80" />
+                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="180" height="80" />
+                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="180" height="80" />
+                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="180" height="80" />
                             @endforelse
                         </div>
                         {{-- النسخة الثانية (للاستمرارية) --}}
-                        <div class="flex gap-24 items-center flex-shrink-0">
+                        <div class="flex gap-20 items-center flex-shrink-0">
                             @forelse($partners as $partner)
-                            <a href="{{ $partner->link ?? '#' }}" {{ $partner->link ? 'target="_blank" rel="noopener"' : '' }}
-                                class="block focus:outline-none flex-shrink-0">
+                            @if(!empty($partner->link))
+                            <a href="{{ $partner->link }}" target="_blank" rel="noopener" class="block focus:outline-none flex-shrink-0 px-2 py-1 rounded-lg hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
                                 <img alt="{{ localized($partner, 'name') }}"
                                     class="{{ $partnerLogoClass }}"
                                     src="{{ $partner->logo_path ? asset('storage/' . $partner->logo_path) : asset('assets/img/logo-l.svg') }}"
-                                    loading="lazy" width="120" height="48" />
+                                    loading="lazy" width="180" height="80" />
                             </a>
+                            @else
+                            <div class="block flex-shrink-0 px-2 py-1">
+                                <img alt="{{ localized($partner, 'name') }}"
+                                    class="{{ $partnerLogoClass }}"
+                                    src="{{ $partner->logo_path ? asset('storage/' . $partner->logo_path) : asset('assets/img/logo-l.svg') }}"
+                                    loading="lazy" width="180" height="80" />
+                            </div>
+                            @endif
                             @empty
-                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="120" height="48" />
-                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="120" height="48" />
-                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="120" height="48" />
-                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="120" height="48" />
+                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="180" height="80" />
+                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="180" height="80" />
+                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="180" height="80" />
+                            <img alt="Partner" class="{{ $partnerLogoClass }}" src="{{ asset('assets/img/logo-l.svg') }}" loading="lazy" width="180" height="80" />
                             @endforelse
                         </div>
                     </div>

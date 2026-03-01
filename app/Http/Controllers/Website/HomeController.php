@@ -23,8 +23,8 @@ class HomeController extends Controller
             return HomeStatistic::orderBy('sort_order')->orderBy('id')->get();
         });
         
-        $partners = cache()->remember('home_partners', 3600, function () {
-            return Partner::orderBy('sort_order')->orderBy('id')->get();
+        $partners = cache()->remember('home_partners_companies', 3600, function () {
+            return Partner::where('type', 'company')->orderBy('sort_order')->orderBy('id')->get();
         });
         
         $newsItems = cache()->remember('home_news_items', 1800, function () {
