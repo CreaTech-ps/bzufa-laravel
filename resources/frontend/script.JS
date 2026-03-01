@@ -87,10 +87,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const inc = target / speed;
 
     if (count < target) {
-      el.innerText = Math.ceil(count + inc).toLocaleString();
+      el.innerText = Math.ceil(count + inc).toLocaleString("en-US");
       setTimeout(() => startCounter(el), 1);
     } else {
-      el.innerText = target.toLocaleString();
+      el.innerText = target.toLocaleString("en-US");
     }
   };
 

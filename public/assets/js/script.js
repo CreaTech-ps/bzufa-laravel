@@ -97,7 +97,7 @@ onReady(function () {
         var opt = decimals != null && decimals >= 0
           ? { minimumFractionDigits: decimals, maximumFractionDigits: decimals }
           : {};
-        return Number(n).toLocaleString("ar-EG", opt);
+        return Number(n).toLocaleString("en-US", opt);
       } catch (_) {
         return decimals != null && decimals >= 0 ? Number(n).toFixed(decimals) : String(Math.round(n));
       }
