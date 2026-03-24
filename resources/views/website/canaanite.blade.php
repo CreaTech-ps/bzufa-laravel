@@ -167,9 +167,8 @@
                 </div>
 
                 <div class="p-4 flex flex-col gap-2">
-                    <div class="flex items-center justify-between">
+                    <div class="flex items-center">
                         <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors duration-300">{{ localized($item, 'name') }}</h3>
-                        <span class="text-primary font-bold">{{ $item->price ? $item->price . ' ₪' : '—' }}</span>
                     </div>
                     <span class="text-xs px-1 text-slate-400">{{ __('kanani.category_textiles') }}</span>
                 </div>

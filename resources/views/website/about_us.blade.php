@@ -5,6 +5,28 @@
 @section('content')
 <main class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 space-y-16 md:space-y-20">
     <section class="pb-20 space-y-24 overflow-hidden">
+        
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="space-y-8 text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-3xl font-bold text-slate-900 dark:text-white">{{ __('about.story_title') }}</h2>
+                <p class="text-slate-500 dark:text-slate-400">
+                    {{ __('about.story_desc') }}
+                </p>
+            </div>
+
+            <div class="relative rounded-[40px] overflow-hidden aspect-video bg-black shadow-2xl border border-slate-200 dark:border-white/5" id="story-video-container">
+                @if($aboutPage->story_video_url)
+                    <div id="story-video-player" class="w-full h-full"></div>
+                @else
+                    <div class="w-full h-full flex items-center justify-center bg-slate-900">
+                        <div class="text-center text-slate-400">
+                            <span class="material-symbols-outlined text-6xl mb-4 block">videocam_off</span>
+                            <p class="text-sm">لم يتم إضافة فيديو قصة الجمعية بعد</p>
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </div>
 
         <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -73,27 +95,6 @@
             </div>
         </div>
 
-        <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="space-y-8 text-center max-w-3xl mx-auto mb-12">
-                <h2 class="text-3xl font-bold text-slate-900 dark:text-white">{{ __('about.story_title') }}</h2>
-                <p class="text-slate-500 dark:text-slate-400">
-                    {{ __('about.story_desc') }}
-                </p>
-            </div>
-
-            <div class="relative rounded-[40px] overflow-hidden aspect-video bg-black shadow-2xl border border-slate-200 dark:border-white/5" id="story-video-container">
-                @if($aboutPage->story_video_url)
-                    <div id="story-video-player" class="w-full h-full"></div>
-                @else
-                    <div class="w-full h-full flex items-center justify-center bg-slate-900">
-                        <div class="text-center text-slate-400">
-                            <span class="material-symbols-outlined text-6xl mb-4 block">videocam_off</span>
-                            <p class="text-sm">لم يتم إضافة فيديو قصة الجمعية بعد</p>
-                        </div>
-                    </div>
-                @endif
-            </div>
-        </div>
     </section>
 
     <section class="space-y-14 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
