@@ -36,6 +36,7 @@ use App\Http\Controllers\Cp\VolunteerDepartmentController;
 use App\Http\Controllers\Website\TamkeenPartnershipController as WebsiteTamkeenPartnershipController;
 use App\Http\Controllers\Website\SitemapController;
 use App\Http\Controllers\Website\RobotsController;
+use App\Http\Controllers\Website\DonationController as WebsiteDonationController;
 use App\Http\Controllers\Cp\VolunteerApplicationController;
 use App\Http\Controllers\Cp\TamkeenPartnershipRequestController;
 use App\Http\Controllers\Cp\PartnershipRequestController;
@@ -68,6 +69,11 @@ $registerLocalizedRoutes = function () use ($localizedMiddleware) {
         Route::get('/tamkeen/partnerships/filter', [WebsiteTamkeenPartnershipController::class, 'filter'])->name('tamkeen.partnerships.filter');
         Route::post('/tamkeen/partnerships', [WebsiteTamkeenPartnershipController::class, 'store'])->name('tamkeen.partnerships.store');
         Route::post('/newsletter/subscribe', [\App\Http\Controllers\Website\NewsletterSubscriptionController::class, 'store'])->name('newsletter.subscribe');
+        Route::get('/donate', [WebsiteDonationController::class, 'create'])->name('donate.form');
+        Route::post('/donate/checkout', [WebsiteDonationController::class, 'checkout'])->name('donate.checkout');
+        Route::get('/donate/callback', [WebsiteDonationController::class, 'callback'])->name('donate.callback');
+        Route::get('/donate/result', [WebsiteDonationController::class, 'result'])->name('donate.result');
+        Route::get('/donate/receipt/{reference}', [WebsiteDonationController::class, 'receipt'])->name('donate.receipt');
         Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
         Route::get('/robots.txt', [RobotsController::class, 'index'])->name('robots');
     });
@@ -76,6 +82,7 @@ Route::prefix('en')->group($registerLocalizedRoutes);
 // تسجيل /ar أيضاً ثم الحزمة توجّه تلقائياً إلى / (لأن hideDefaultLocaleInURL = true)
 Route::prefix('ar')->group($registerLocalizedRoutes);
 Route::prefix('')->group($registerLocalizedRoutes);
+Route::post('/donate/webhook/lahza', [WebsiteDonationController::class, 'webhook'])->name('donate.webhook');
 
 Route::get('/cp/login', [\App\Http\Controllers\Cp\AuthController::class, 'showLoginForm'])->name('cp.login');
 Route::post('/cp/login', [\App\Http\Controllers\Cp\AuthController::class, 'login']);

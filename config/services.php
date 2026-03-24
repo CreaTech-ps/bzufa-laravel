@@ -31,4 +31,16 @@ return [
         ],
     ],
 
+    'lahza' => [
+        'payment_page_url' => env('LAHZA_PAYMENT_PAGE_URL'),
+        'public_key' => env('LAHZA_PUBLIC_KEY'),
+        'secret_key' => env('LAHZA_SECRET_KEY'),
+        'page_id' => env('LAHZA_PAGE_ID'),
+        'checkout_url' => env('LAHZA_CHECKOUT_URL', 'https://pay.lahza.io'),
+        'api_base_url' => env('LAHZA_API_BASE_URL', 'https://api.lahza.io'),
+        'webhook_secret' => env('LAHZA_WEBHOOK_SECRET'),
+        'success_url' => env('LAHZA_SUCCESS_URL'),
+        'cancel_url' => env('LAHZA_CANCEL_URL'),
+    ],
+
 ];

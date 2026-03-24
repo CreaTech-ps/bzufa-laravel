@@ -113,7 +113,6 @@
                         <p class="text-slate-500 dark:text-slate-400">{{ localized($member, 'title') }}</p>
                     </div>
                 </div>
-                <div class="bg-primary/10 text-primary px-4 py-2 rounded-xl text-xs font-bold">{{ __('team.since_year', ['year' => $member->joined_since ?? __('team.default_year')]) }}</div>
             </div>
             @empty
             <div class="col-span-full text-center py-12 text-slate-500 dark:text-slate-400">{{ __('team.no_staff') }}</div>

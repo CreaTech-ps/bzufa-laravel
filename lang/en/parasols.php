@@ -18,6 +18,8 @@ return [
     'status_available' => 'Available for booking',
     'status_newly_booked' => 'New',
     'status_ending_soon' => 'Ending soon',
+    'status_rented' => 'Rented',
+    'status_unavailable' => 'Unavailable for booking',
     'per_month' => 'month',
     'advertiser_label' => 'Advertiser',
     'no_spaces' => 'No spaces displayed at the moment',

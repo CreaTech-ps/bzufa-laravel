@@ -18,6 +18,8 @@ return [
     'status_available' => 'متاحة للحجز',
     'status_newly_booked' => 'جديدة',
     'status_ending_soon' => 'تنتهي قريباً',
+    'status_rented' => 'مستأجرة',
+    'status_unavailable' => 'غير متاحة للحجز',
     'per_month' => 'شهر',
     'advertiser_label' => 'الجهة المعلنة',
     'no_spaces' => 'لا توجد مساحات معروضة حالياً',

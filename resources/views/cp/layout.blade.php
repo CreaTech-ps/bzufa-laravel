@@ -82,7 +82,7 @@
                             <ul class="cp-section-content space-y-0.5">
                                 @if(cpCan('kanani'))
                                 <li>
-                                    <a href="{{ route('cp.kanani.edit') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.kanani.edit') || request()->routeIs('cp.kanani.gallery.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
+                                    <a href="{{ route('cp.kanani.edit') }}" class="cp-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors {{ request()->routeIs('cp.kanani.edit') ? 'bg-primary/10 text-primary dark:bg-primary/20' : '' }}">
                                         <span class="material-symbols-outlined text-xl">storefront</span>
                                         <span>كنعاني</span>
                                     </a>

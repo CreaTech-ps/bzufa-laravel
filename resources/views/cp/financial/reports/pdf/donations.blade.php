@@ -5,10 +5,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>تقرير التبرعات</title>
     <style>
-        body { font-family: DejaVu Sans, sans-serif; font-size: 12px; padding: 20px; }
+        body { font-family: DejaVu Sans, sans-serif; font-size: 12px; padding: 20px; direction: rtl; unicode-bidi: embed; }
         h1 { font-size: 18px; margin-bottom: 20px; text-align: center; }
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { border: 1px solid #333; padding: 8px; text-align: right; }
+        th, td { border: 1px solid #333; padding: 8px; text-align: right; vertical-align: middle; }
         th { background: #f0f0f0; font-weight: bold; }
         .total { font-weight: bold; font-size: 14px; margin-top: 15px; }
         .meta { margin-bottom: 15px; color: #666; font-size: 11px; }

@@ -28,6 +28,8 @@ class ParasolsImage extends Model
     public const STATUS_AVAILABLE = 'available';
     public const STATUS_NEWLY_BOOKED = 'newly_booked';
     public const STATUS_ENDING_SOON = 'ending_soon';
+    public const STATUS_RENTED = 'rented';
+    public const STATUS_UNAVAILABLE = 'unavailable';
 
     public function region()
     {

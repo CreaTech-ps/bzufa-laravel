@@ -14,8 +14,8 @@
         <span>{{ $title }}</span>
     </div>
 
-    <div class="rounded-2xl bg-primary/5 dark:bg-primary/10 border border-primary/20 p-3 text-sm text-slate-600 dark:text-slate-300 mb-4">
-        بطاقة المساحة الإعلانية تظهر في معرض صفحة المظلات: الصورة، العنوان (مثل: مدخل الحرم الجامعي - B2)، الموقع، السعر، الحالة (متاح حالياً / ينتهي قريباً).
+        <div class="rounded-2xl bg-primary/5 dark:bg-primary/10 border border-primary/20 p-3 text-sm text-slate-600 dark:text-slate-300 mb-4">
+        بطاقة المساحة الإعلانية تظهر في معرض صفحة المظلات: الصورة، العنوان، الموقع، السعر، والحالة (متاحة/جديدة/تنتهي قريباً/مستأجرة/غير متاحة للحجز).
     </div>
 
     <form action="{{ $item->id ? route('cp.parasols.regions.images.update', [$region, $item]) : route('cp.parasols.regions.images.store', $region) }}" method="post" enctype="multipart/form-data" class="space-y-6">
@@ -100,6 +100,8 @@
                         <option value="available" {{ old('status', $item->status) === 'available' || old('status', $item->status) === null ? 'selected' : '' }}>متاحة للحجز</option>
                         <option value="newly_booked" {{ old('status', $item->status) === 'newly_booked' ? 'selected' : '' }}>جديدة (محجوزة حديثاً)</option>
                         <option value="ending_soon" {{ old('status', $item->status) === 'ending_soon' ? 'selected' : '' }}>تنتهي قريباً (ستكون متاحة للحجز قريباً)</option>
+                        <option value="rented" {{ old('status', $item->status) === 'rented' ? 'selected' : '' }}>مستأجرة</option>
+                        <option value="unavailable" {{ old('status', $item->status) === 'unavailable' ? 'selected' : '' }}>غير متاحة للحجز</option>
                     </select>
                 </div>
             </div>

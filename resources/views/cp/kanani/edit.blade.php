@@ -6,10 +6,6 @@
 <div class="w-full max-w-none space-y-6">
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h2 class="text-xl font-bold text-slate-800 dark:text-white">إعدادات مشروع كنعاني</h2>
-        <a href="{{ route('cp.kanani.gallery.index') }}" class="cp-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white font-medium shadow-sm transition-colors">
-            <span class="material-symbols-outlined text-xl">photo_library</span>
-            معرض الصور
-        </a>
     </div>
 
     <form action="{{ route('cp.kanani.update') }}" method="post" class="space-y-6">

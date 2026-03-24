@@ -81,7 +81,7 @@ class ParasolsImageController extends Controller
             'detailed_location_ar' => ['nullable', 'string'],
             'detailed_location_en' => ['nullable', 'string'],
             'price' => ['nullable', 'string', 'max:50'],
-            'status' => ['nullable', 'string', 'in:available,newly_booked,ending_soon'],
+            'status' => ['nullable', 'string', 'in:available,newly_booked,ending_soon,rented,unavailable'],
             'advertiser_name_ar' => ['nullable', 'string', 'max:255'],
             'advertiser_name_en' => ['nullable', 'string', 'max:255'],
             'advertiser_logo' => ['nullable', 'image', 'max:2048'],

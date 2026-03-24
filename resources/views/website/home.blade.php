@@ -105,7 +105,7 @@
                         </p>
 
                         <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
-                            <a href="{{ $homeSetting->cta_url ?? '#' }}"
+                            <a href="{{ $homeSetting->cta_url ?: localized_route('donate.form') }}"
                                 class="bg-primary hover:bg-opacity-90 text-white px-8 lg:px-12 py-4 rounded-full text-lg lg:text-xl font-bold transition-all hover:scale-105 shadow-xl shadow-primary/30 text-center">
                                 {{ localized($homeSetting, 'cta_text') ?? __('ui.donate_now') }}
                             </a>

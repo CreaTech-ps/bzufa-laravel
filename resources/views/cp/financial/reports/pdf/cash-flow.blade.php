@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>تقرير التدفق النقدي</title>
     <style>
-        body { font-family: DejaVu Sans, sans-serif; font-size: 12px; padding: 20px; }
+        body { font-family: DejaVu Sans, sans-serif; font-size: 12px; padding: 20px; direction: rtl; unicode-bidi: embed; }
         h1 { font-size: 18px; margin-bottom: 20px; text-align: center; }
         .box { border: 1px solid #333; padding: 15px; margin: 10px 0; }
         .box.donations { background: #e8f5e9; }

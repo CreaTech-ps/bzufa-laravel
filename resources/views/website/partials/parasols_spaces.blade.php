@@ -22,6 +22,16 @@
                     <span class="material-symbols-outlined text-sm">schedule</span>
                     {{ __('parasols.status_ending_soon') }}
                 </span>
+                @elseif($item->status === 'rented')
+                <span class="bg-red-500 text-white text-[11px] font-black px-4 py-2 rounded-full flex items-center gap-2 shadow-xl backdrop-blur-md">
+                    <span class="material-symbols-outlined text-sm">home_work</span>
+                    {{ __('parasols.status_rented') }}
+                </span>
+                @elseif($item->status === 'unavailable')
+                <span class="bg-slate-600 text-white text-[11px] font-black px-4 py-2 rounded-full flex items-center gap-2 shadow-xl backdrop-blur-md">
+                    <span class="material-symbols-outlined text-sm">block</span>
+                    {{ __('parasols.status_unavailable') }}
+                </span>
                 @endif
             </div>
             <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/20 to-transparent"></div>

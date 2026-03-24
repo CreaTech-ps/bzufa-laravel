@@ -49,6 +49,7 @@ class FinancialTransaction extends Model
             'transfer' => 'تحويل',
             'grant_payment' => 'صرف منحة',
             'project_funding' => 'تمويل مشروع',
+            'donation_income' => 'إيراد تبرع',
         ];
     }
 
@@ -68,6 +69,7 @@ class FinancialTransaction extends Model
             'bank_transfer' => 'تحويل بنكي',
             'cheque' => 'شيك',
             'cash' => 'نقدي',
+            'electronic_gateway' => 'بوابة دفع إلكترونية',
         ];
     }
 

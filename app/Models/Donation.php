@@ -24,12 +24,17 @@ class Donation extends Model
         'reviewed_at',
         'reviewed_by',
         'rejection_reason',
+        'gateway',
+        'gateway_status',
+        'gateway_transaction_id',
+        'gateway_payload',
     ];
 
     protected $casts = [
         'amount' => 'decimal:2',
         'donation_date' => 'date',
         'reviewed_at' => 'datetime',
+        'gateway_payload' => 'array',
     ];
 
     public function reviewer(): BelongsTo

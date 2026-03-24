@@ -6,10 +6,16 @@
 <div class="space-y-4">
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h2 class="text-xl font-bold text-slate-800 dark:text-white">تقرير المصروفات</h2>
-        <a href="{{ route('cp.financial.reports.expenses', array_merge(request()->query(), ['export' => 'pdf'])) }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-medium text-sm">
-            <span class="material-symbols-outlined text-lg">picture_as_pdf</span>
-            تصدير PDF
-        </a>
+        <div class="flex items-center gap-2">
+            <a href="{{ route('cp.financial.reports.expenses', array_merge(request()->query(), ['export' => 'excel'])) }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm">
+                <span class="material-symbols-outlined text-lg">table_view</span>
+                تصدير Excel
+            </a>
+            <a href="{{ route('cp.financial.reports.expenses', array_merge(request()->query(), ['export' => 'pdf'])) }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-medium text-sm">
+                <span class="material-symbols-outlined text-lg">picture_as_pdf</span>
+                تصدير PDF
+            </a>
+        </div>
     </div>
 
     <form action="{{ route('cp.financial.reports.expenses') }}" method="get" class="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4 shadow-sm">

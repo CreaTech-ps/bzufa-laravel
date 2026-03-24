@@ -62,6 +62,7 @@
                             <th class="px-4 py-3 text-sm font-medium text-slate-600 dark:text-slate-300">المتبرع</th>
                             <th class="px-4 py-3 text-sm font-medium text-slate-600 dark:text-slate-300">المبلغ</th>
                             <th class="px-4 py-3 text-sm font-medium text-slate-600 dark:text-slate-300">الطريقة</th>
+                            <th class="px-4 py-3 text-sm font-medium text-slate-600 dark:text-slate-300">مرجع الدفع</th>
                             <th class="px-4 py-3 text-sm font-medium text-slate-600 dark:text-slate-300">التاريخ</th>
                             <th class="px-4 py-3 text-sm font-medium text-slate-600 dark:text-slate-300">الحالة</th>
                             <th class="px-4 py-3 text-sm font-medium text-slate-600 dark:text-slate-300 w-24">إجراء</th>
@@ -78,6 +79,15 @@
                                 </td>
                                 <td class="px-4 py-3 font-medium text-slate-800 dark:text-white">{{ number_format($d->amount, 2) }} {{ $d->currency }}</td>
                                 <td class="px-4 py-3 text-sm text-slate-600 dark:text-slate-400">{{ \App\Models\Donation::donationMethods()[$d->donation_method] ?? $d->donation_method }}</td>
+                                <td class="px-4 py-3 text-sm text-slate-500 dark:text-slate-400">
+                                    @if($d->gateway_transaction_id)
+                                        {{ $d->gateway_transaction_id }}
+                                    @elseif($d->reference_number)
+                                        {{ $d->reference_number }}
+                                    @else
+                                        —
+                                    @endif
+                                </td>
                                 <td class="px-4 py-3 text-sm text-slate-500 dark:text-slate-400">{{ $d->donation_date?->format('Y-m-d') ?? '—' }}</td>
                                 <td class="px-4 py-3">
                                     @php $statuses = \App\Models\Donation::statuses(); $sc = match($d->status) { 'approved' => 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-400', 'rejected' => 'bg-red-500/20 text-red-600 dark:text-red-400', 'refunded' => 'bg-slate-200 dark:bg-slate-600 text-slate-600 dark:text-slate-300', default => 'bg-amber-500/20 text-amber-600 dark:text-amber-400' }; @endphp
