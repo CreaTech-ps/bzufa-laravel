@@ -49,7 +49,20 @@ class User extends Authenticatable
         if ($this->is_super_admin) {
             return true;
         }
-        return $this->role && $this->role->hasPermission($permissionSlug);
+        if (! $this->role) {
+            return false;
+        }
+
+        if ($permissionSlug === 'financial' && $this->role->permissions()->whereIn('slug', [
+            'financial',
+            'financial_add',
+            'financial_review',
+            'financial_approve',
+        ])->exists()) {
+            return true;
+        }
+
+        return $this->role->hasPermission($permissionSlug);
     }
 
     public function isSuperAdmin(): bool

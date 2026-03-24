@@ -13,31 +13,40 @@
         @if(in_array($financialTransaction->status, ['draft', 'pending_review', 'approved']))
         <div class="flex items-center gap-2">
             @if($financialTransaction->status === 'draft')
-                <form action="{{ route('cp.financial-transactions.submit', $financialTransaction) }}" method="post" class="inline">
-                    @csrf
-                    <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm">إرسال للمراجعة</button>
-                </form>
-                <a href="{{ route('cp.financial-transactions.edit', $financialTransaction) }}" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-2">
-                    <span class="material-symbols-outlined text-lg">edit</span>تعديل
-                </a>
+                @if(cpCan('financial_add'))
+                    <form action="{{ route('cp.financial-transactions.submit', $financialTransaction) }}" method="post" class="inline">
+                        @csrf
+                        <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm">إرسال للمراجعة</button>
+                    </form>
+                    <a href="{{ route('cp.financial-transactions.edit', $financialTransaction) }}" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">edit</span>تعديل
+                    </a>
+                @endif
             @elseif($financialTransaction->status === 'pending_review')
-                <form action="{{ route('cp.financial-transactions.approve', $financialTransaction) }}" method="post" class="inline">
-                    @csrf
-                    <button type="submit" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm flex items-center gap-2">
-                        <span class="material-symbols-outlined text-lg">check_circle</span>اعتماد
-                    </button>
-                </form>
-                <button type="button" id="reject-btn" class="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-medium text-sm">رفض</button>
+                @if(cpCan('financial_approve'))
+                    <form action="{{ route('cp.financial-transactions.approve', $financialTransaction) }}" method="post" class="inline">
+                        @csrf
+                        <button type="submit" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm flex items-center gap-2">
+                            <span class="material-symbols-outlined text-lg">check_circle</span>اعتماد
+                        </button>
+                    </form>
+                @endif
+                @if(cpCan('financial_review'))
+                    <button type="button" id="reject-btn" class="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-medium text-sm">رفض</button>
+                @endif
             @elseif($financialTransaction->status === 'approved')
-                <form action="{{ route('cp.financial-transactions.complete', $financialTransaction) }}" method="post" class="inline">
-                    @csrf
-                    <button type="submit" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm">تسجيل كمكتمل</button>
-                </form>
+                @if(cpCan('financial_approve'))
+                    <form action="{{ route('cp.financial-transactions.complete', $financialTransaction) }}" method="post" class="inline">
+                        @csrf
+                        <button type="submit" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm">تسجيل كمكتمل</button>
+                    </form>
+                @endif
             @endif
         </div>
         @endif
     </div>
 
+    @if(cpCan('financial_review'))
     <div id="reject-form" class="hidden rounded-2xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4">
         <form action="{{ route('cp.financial-transactions.reject', $financialTransaction) }}" method="post">
             @csrf
@@ -49,6 +58,7 @@
             </div>
         </form>
     </div>
+    @endif
 
     <div class="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 shadow-sm space-y-4">
         <div class="flex items-center justify-between">

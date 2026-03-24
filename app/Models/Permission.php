@@ -19,7 +19,7 @@ class Permission extends Model
         return [
             'settings', 'home', 'about', 'kanani', 'tamkeen', 'parasols',
             'scholarships', 'partners', 'content', 'applications', 'newsletter',
-            'financial', 'users',
+            'financial', 'financial_add', 'financial_review', 'financial_approve', 'users',
         ];
     }
 }

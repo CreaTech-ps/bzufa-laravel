@@ -10,27 +10,34 @@
             <span class="material-symbols-outlined text-lg">chevron_left</span>
             <span>عرض التبرع</span>
         </div>
-        @if($donation->status === 'pending')
+        @if($donation->status === 'pending' && (cpCan('financial_approve') || cpCan('financial_review') || cpCan('financial_add')))
         <div class="flex items-center gap-2">
-            <form action="{{ route('cp.donations.approve', $donation) }}" method="post" class="inline">
-                @csrf
-                <button type="submit" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm flex items-center gap-2">
-                    <span class="material-symbols-outlined text-lg">check_circle</span>
-                    اعتماد
+            @if(cpCan('financial_approve'))
+                <form action="{{ route('cp.donations.approve', $donation) }}" method="post" class="inline">
+                    @csrf
+                    <button type="submit" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">check_circle</span>
+                        اعتماد
+                    </button>
+                </form>
+            @endif
+            @if(cpCan('financial_review'))
+                <button type="button" id="reject-btn" class="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-medium text-sm flex items-center gap-2">
+                    <span class="material-symbols-outlined text-lg">cancel</span>
+                    رفض
                 </button>
-            </form>
-            <button type="button" id="reject-btn" class="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-medium text-sm flex items-center gap-2">
-                <span class="material-symbols-outlined text-lg">cancel</span>
-                رفض
-            </button>
-            <a href="{{ route('cp.donations.edit', $donation) }}" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-2">
-                <span class="material-symbols-outlined text-lg">edit</span>
-                تعديل
-            </a>
+            @endif
+            @if(cpCan('financial_add'))
+                <a href="{{ route('cp.donations.edit', $donation) }}" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-lg">edit</span>
+                    تعديل
+                </a>
+            @endif
         </div>
         @endif
     </div>
 
+    @if(cpCan('financial_review'))
     <div id="reject-form" class="hidden rounded-2xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4">
         <form action="{{ route('cp.donations.reject', $donation) }}" method="post">
             @csrf
@@ -42,6 +49,7 @@
             </div>
         </form>
     </div>
+    @endif
 
     <div class="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 shadow-sm space-y-4">
         <div class="flex items-center justify-between">

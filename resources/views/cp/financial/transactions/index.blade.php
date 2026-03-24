@@ -6,10 +6,12 @@
 <div class="space-y-4">
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h2 class="text-xl font-bold text-slate-800 dark:text-white">الحركات المالية</h2>
-        <a href="{{ route('cp.financial-transactions.create') }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary hover:bg-primary-dark text-white font-medium text-sm">
-            <span class="material-symbols-outlined text-lg">add</span>
-            إضافة حركة مالية
-        </a>
+        @if(cpCan('financial_add'))
+            <a href="{{ route('cp.financial-transactions.create') }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary hover:bg-primary-dark text-white font-medium text-sm">
+                <span class="material-symbols-outlined text-lg">add</span>
+                إضافة حركة مالية
+            </a>
+        @endif
     </div>
 
     <form action="{{ route('cp.financial-transactions.index') }}" method="get" class="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4 shadow-sm">

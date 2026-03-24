@@ -88,7 +88,9 @@
                         <p class="text-slate-500 dark:text-slate-400 text-xs mb-2 font-bold tracking-widest uppercase opacity-80">
                             {{ localized($settings, 'stat1_label') ?? __('kanani.stat1_label') }}
                         </p>
-                        <h3 class="text-4xl font-black text-primary transition-all duration-300 group-hover:scale-105"><span class="counter" data-target="{{ str_replace(['+', ','], '', trim((string)($settings->stat1_value ?? '')) ?: '150') }}">0</span></h3>
+                        <h3 class="text-4xl font-black text-primary transition-all duration-300 group-hover:scale-105">
+                            <span class="counter" data-target="{{ str_replace(['+', ','], '', trim((string)($settings->stat1_value ?? '')) ?: '150') }}">0</span><span class="ms-1">+</span>
+                        </h3>
                     </div>
                     <div class="w-16 h-16 bg-slate-50 dark:bg-white/5 rounded-2xl flex items-center justify-center text-slate-400 transition-all duration-500 group-hover:bg-primary group-hover:text-white">
                         <span class="material-symbols-outlined text-3xl transition-all duration-500">groups</span>
@@ -103,7 +105,9 @@
                         <p class="text-slate-500 dark:text-slate-400 text-xs mb-2 font-bold tracking-widest uppercase opacity-80">
                             {{ localized($settings, 'stat2_label') ?? __('kanani.stat2_label') }}
                         </p>
-                        <h3 class="text-4xl font-black text-primary transition-all duration-300 group-hover:scale-105"><span class="counter" data-target="{{ str_replace(['+', ','], '', trim((string)($settings->stat2_value ?? '')) ?: '12000') }}">0</span></h3>
+                        <h3 class="text-4xl font-black text-primary transition-all duration-300 group-hover:scale-105">
+                            <span class="counter" data-target="{{ str_replace(['+', ','], '', trim((string)($settings->stat2_value ?? '')) ?: '12000') }}">0</span><span class="ms-1">+</span>
+                        </h3>
                     </div>
                     <div class="w-16 h-16 bg-slate-50 dark:bg-white/5 rounded-2xl flex items-center justify-center text-slate-400 transition-all duration-500 group-hover:bg-primary group-hover:text-white">
                         <span class="material-symbols-outlined text-3xl transition-all duration-500">precision_manufacturing</span>
@@ -118,7 +122,9 @@
                         <p class="text-slate-500 dark:text-slate-400 text-xs mb-2 font-bold tracking-widest uppercase opacity-80">
                             {{ localized($settings, 'stat3_label') ?? __('kanani.stat3_label') }}
                         </p>
-                        <h3 class="text-4xl font-black text-primary transition-all duration-300 group-hover:scale-105"><span class="counter" data-target="{{ str_replace(['+', ','], '', trim((string)($settings->stat3_value ?? '')) ?: '500') }}">0</span></h3>
+                        <h3 class="text-4xl font-black text-primary transition-all duration-300 group-hover:scale-105">
+                            <span class="counter" data-target="{{ str_replace(['+', ','], '', trim((string)($settings->stat3_value ?? '')) ?: '500') }}">0</span><span class="ms-1">+</span>
+                        </h3>
                     </div>
                     <div class="w-16 h-16 bg-slate-50 dark:bg-white/5 rounded-2xl flex items-center justify-center text-slate-400 transition-all duration-500 group-hover:bg-primary group-hover:text-white">
                         <span class="material-symbols-outlined text-3xl transition-all duration-500">brush</span>

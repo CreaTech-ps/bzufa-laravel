@@ -25,6 +25,9 @@ class RolesAndPermissionsSeeder extends Seeder
             ['name' => 'طلبات المنح والتطوع والشراكات', 'slug' => 'applications', 'module' => 'الطلبات'],
             ['name' => 'النشرة الإخبارية', 'slug' => 'newsletter', 'module' => 'النشرة'],
             ['name' => 'المالية والتبرعات', 'slug' => 'financial', 'module' => 'المالية'],
+            ['name' => 'المالية - إضافة', 'slug' => 'financial_add', 'module' => 'المالية'],
+            ['name' => 'المالية - تدقيق', 'slug' => 'financial_review', 'module' => 'المالية'],
+            ['name' => 'المالية - اعتماد', 'slug' => 'financial_approve', 'module' => 'المالية'],
             ['name' => 'إدارة المستخدمين والصلاحيات', 'slug' => 'users', 'module' => 'النظام'],
         ];
 

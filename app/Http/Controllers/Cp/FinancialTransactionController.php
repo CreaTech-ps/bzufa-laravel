@@ -10,6 +10,13 @@ use Illuminate\Http\Request;
 
 class FinancialTransactionController extends Controller
 {
+    protected function ensureFinancialPermission(string $permission, string $message): void
+    {
+        if (! auth()->user()?->canAccess($permission)) {
+            abort(403, $message);
+        }
+    }
+
     public function index(Request $request)
     {
         $query = FinancialTransaction::query()->with(['approver', 'creator'])->orderByDesc('transaction_date');
@@ -42,6 +49,8 @@ class FinancialTransactionController extends Controller
 
     public function create()
     {
+        $this->ensureFinancialPermission('financial_add', 'ليس لديك صلاحية إضافة الحركات المالية.');
+
         $scholarshipApplications = ScholarshipApplication::where('status', 'approved')
             ->orderByDesc('created_at')
             ->get(['id', 'applicant_name', 'scholarship_id']);
@@ -50,6 +59,8 @@ class FinancialTransactionController extends Controller
 
     public function store(Request $request)
     {
+        $this->ensureFinancialPermission('financial_add', 'ليس لديك صلاحية إضافة الحركات المالية.');
+
         $validated = $request->validate([
             'type' => ['required', 'in:expense,transfer,grant_payment,project_funding'],
             'amount' => ['required', 'numeric', 'min:0.01'],
@@ -90,6 +101,8 @@ class FinancialTransactionController extends Controller
 
     public function edit(FinancialTransaction $financialTransaction)
     {
+        $this->ensureFinancialPermission('financial_add', 'ليس لديك صلاحية تعديل الحركات المالية.');
+
         if (! in_array($financialTransaction->status, ['draft', 'rejected'])) {
             return back()->with('error', 'لا يمكن تعديل الحركة في حالتها الحالية.');
         }
@@ -102,6 +115,8 @@ class FinancialTransactionController extends Controller
 
     public function update(Request $request, FinancialTransaction $financialTransaction)
     {
+        $this->ensureFinancialPermission('financial_add', 'ليس لديك صلاحية تعديل الحركات المالية.');
+
         if (! in_array($financialTransaction->status, ['draft', 'rejected'])) {
             return back()->with('error', 'لا يمكن تعديل الحركة في حالتها الحالية.');
         }
@@ -141,6 +156,8 @@ class FinancialTransactionController extends Controller
 
     public function submitForReview(FinancialTransaction $financialTransaction)
     {
+        $this->ensureFinancialPermission('financial_add', 'ليس لديك صلاحية إرسال الحركات للمراجعة.');
+
         if ($financialTransaction->status !== 'draft') {
             return back()->with('error', 'لا يمكن إرسال الحركة للمراجعة في حالتها الحالية.');
         }
@@ -154,6 +171,8 @@ class FinancialTransactionController extends Controller
 
     public function approve(FinancialTransaction $financialTransaction)
     {
+        $this->ensureFinancialPermission('financial_approve', 'ليس لديك صلاحية اعتماد الحركات المالية.');
+
         if ($financialTransaction->status !== 'pending_review') {
             return back()->with('error', 'لا يمكن اعتماد الحركة في حالتها الحالية.');
         }
@@ -172,6 +191,8 @@ class FinancialTransactionController extends Controller
 
     public function reject(Request $request, FinancialTransaction $financialTransaction)
     {
+        $this->ensureFinancialPermission('financial_review', 'ليس لديك صلاحية تدقيق/رفض الحركات المالية.');
+
         if ($financialTransaction->status !== 'pending_review') {
             return back()->with('error', 'لا يمكن رفض الحركة في حالتها الحالية.');
         }
@@ -192,6 +213,8 @@ class FinancialTransactionController extends Controller
 
     public function markCompleted(FinancialTransaction $financialTransaction)
     {
+        $this->ensureFinancialPermission('financial_approve', 'ليس لديك صلاحية إكمال الحركات المالية.');
+
         if ($financialTransaction->status !== 'approved') {
             return back()->with('error', 'يجب اعتماد الحركة أولاً.');
         }

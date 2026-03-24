@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 
 class DonationController extends Controller
 {
+    protected function ensureFinancialPermission(string $permission, string $message): void
+    {
+        if (! auth()->user()?->canAccess($permission)) {
+            abort(403, $message);
+        }
+    }
+
     public function index(Request $request)
     {
         $query = Donation::query()->with('reviewer')->orderByDesc('donation_date');
@@ -41,11 +48,14 @@ class DonationController extends Controller
 
     public function create()
     {
+        $this->ensureFinancialPermission('financial_add', 'ليس لديك صلاحية إضافة التبرعات.');
         return view('cp.financial.donations.create');
     }
 
     public function store(Request $request)
     {
+        $this->ensureFinancialPermission('financial_add', 'ليس لديك صلاحية إضافة التبرعات.');
+
         $validated = $request->validate([
             'donor_name' => ['required', 'string', 'max:255'],
             'donor_email' => ['nullable', 'email'],
@@ -77,11 +87,14 @@ class DonationController extends Controller
 
     public function edit(Donation $donation)
     {
+        $this->ensureFinancialPermission('financial_add', 'ليس لديك صلاحية تعديل التبرعات.');
         return view('cp.financial.donations.edit', compact('donation'));
     }
 
     public function update(Request $request, Donation $donation)
     {
+        $this->ensureFinancialPermission('financial_add', 'ليس لديك صلاحية تعديل التبرعات.');
+
         $validated = $request->validate([
             'donor_name' => ['required', 'string', 'max:255'],
             'donor_email' => ['nullable', 'email'],
@@ -105,6 +118,8 @@ class DonationController extends Controller
 
     public function approve(Donation $donation)
     {
+        $this->ensureFinancialPermission('financial_approve', 'ليس لديك صلاحية اعتماد التبرعات.');
+
         if ($donation->status !== 'pending') {
             return back()->with('error', 'لا يمكن اعتماد تبرع غير قيد الانتظار.');
         }
@@ -123,6 +138,8 @@ class DonationController extends Controller
 
     public function reject(Request $request, Donation $donation)
     {
+        $this->ensureFinancialPermission('financial_review', 'ليس لديك صلاحية تدقيق/رفض التبرعات.');
+
         if ($donation->status !== 'pending') {
             return back()->with('error', 'لا يمكن رفض تبرع غير قيد الانتظار.');
         }
