@@ -58,7 +58,7 @@
                 @if($errors->has('email'))
                 <p class="text-sm text-red-600 dark:text-red-400 mb-4">{{ $errors->first('email') }}</p>
                 @endif
-                <form action="{{ localized_route('newsletter.subscribe') }}" method="post" class="w-full max-w-xs mb-8">
+                <form action="{{ localized_route('newsletter.subscribe') }}" method="post" class="w-full max-w-xs mb-3">
                     @csrf
                     <div class="relative">
                         <input type="email" name="email" placeholder="{{ __('ui.email_placeholder') }}" value="{{ old('email') }}" required
@@ -68,6 +68,9 @@
                         </button>
                     </div>
                 </form>
+                <div class="w-full max-w-xs mb-8">
+                    @include('website.partials.payment-card-logos', ['variant' => 'inline'])
+                </div>
 
                 <h3 class="font-bold mb-4 text-sm text-slate-900 dark:text-white md:hidden">{{ __('ui.follow_us') }}</h3>
                 <div class="flex gap-4 md:hidden">
@@ -81,33 +84,34 @@
             </div>
         </div>
 
-        <div class="pt-8 border-t border-slate-100 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-start">
-            <div class="flex flex-col md:flex-row items-center gap-4 md:gap-10">
-                @include('website.partials.payment-card-logos')
-                <p class="text-[11px] sm:text-xs text-slate-400 font-medium tracking-wide uppercase">
-                    {{ __('ui.rights_reserved', ['year' => date('Y')]) }}
-                </p>
-                <div class="flex flex-wrap justify-center items-center gap-6">
-                    @if($address && $mapsUrl)
-                    <a href="{{ $mapsUrl }}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-xs text-slate-500 hover:text-primary transition-colors">
-                        <span class="material-symbols-outlined text-[16px]">location_on</span>
-                        <span>{{ $address }}</span>
-                    </a>
-                    @endif
-                    <a href="tel:{{ preg_replace('/[^0-9+]/', '', $phone) }}" class="flex items-center gap-2 text-xs text-slate-500 hover:text-primary transition-colors">
-                        <span class="material-symbols-outlined text-[16px]">call</span>
-                        <span dir="ltr">{{ $phone }}</span>
-                    </a>
-                    <a href="mailto:{{ $email }}" class="flex items-center gap-2 text-xs text-slate-500 hover:text-primary transition-colors">
-                        <span class="material-symbols-outlined text-[16px]">mail</span>
-                        <span>{{ $email }}</span>
-                    </a>
+        <div class="pt-8 border-t border-slate-100 dark:border-white/5">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-start">
+                <div class="flex flex-col md:flex-row items-center gap-4 md:gap-10">
+                    <p class="text-[11px] sm:text-xs text-slate-400 font-medium tracking-wide uppercase">
+                        {{ __('ui.rights_reserved', ['year' => date('Y')]) }}
+                    </p>
+                    <div class="flex flex-wrap justify-center md:justify-start items-center gap-6">
+                        @if($address && $mapsUrl)
+                        <a href="{{ $mapsUrl }}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-xs text-slate-500 hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined text-[16px]">location_on</span>
+                            <span>{{ $address }}</span>
+                        </a>
+                        @endif
+                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', $phone) }}" class="flex items-center gap-2 text-xs text-slate-500 hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined text-[16px]">call</span>
+                            <span dir="ltr">{{ $phone }}</span>
+                        </a>
+                        <a href="mailto:{{ $email }}" class="flex items-center gap-2 text-xs text-slate-500 hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined text-[16px]">mail</span>
+                            <span>{{ $email }}</span>
+                        </a>
+                    </div>
                 </div>
-            </div>
 
-            <div class="flex gap-8 text-[11px] sm:text-xs font-semibold text-slate-400">
-                <a href="{{ localized_route('privacy') }}" class="hover:text-primary transition-all border-b border-transparent hover:border-primary">{{ __('ui.privacy_policy') }}</a>
-                <a href="{{ localized_route('terms') }}" class="hover:text-primary transition-all border-b border-transparent hover:border-primary">{{ __('ui.terms_of_use') }}</a>
+                <div class="flex flex-wrap justify-center gap-6 md:gap-8 text-[11px] sm:text-xs font-semibold text-slate-400">
+                    <a href="{{ localized_route('privacy') }}" class="hover:text-primary transition-all border-b border-transparent hover:border-primary">{{ __('ui.privacy_policy') }}</a>
+                    <a href="{{ localized_route('terms') }}" class="hover:text-primary transition-all border-b border-transparent hover:border-primary">{{ __('ui.terms_of_use') }}</a>
+                </div>
             </div>
         </div>
     </div>

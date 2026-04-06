@@ -27,6 +27,30 @@ if (!function_exists('localized')) {
     }
 }
 
+if (!function_exists('localizedStrict')) {
+    /**
+     * Current-locale field only (no fallback to the other language).
+     * Pair with ?? __('...') so empty DB values use translation files for that locale.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model|null  $model
+     */
+    function localizedStrict($model, string $attribute): ?string
+    {
+        if ($model === null) {
+            return null;
+        }
+
+        $locale = app()->getLocale();
+        $suffix = $locale === 'ar' ? '_ar' : '_en';
+        $value = $model->getAttribute($attribute . $suffix);
+        if ($value === null) {
+            return null;
+        }
+
+        return trim((string) $value) !== '' ? (string) $value : null;
+    }
+}
+
 if (!function_exists('current_slug')) {
     /**
      * Get slug for current locale (slug_ar or slug_en).

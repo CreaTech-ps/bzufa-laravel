@@ -15,7 +15,7 @@
                 </div>
 
                 @php
-                    $heroTitle = localized($settings, 'hero_title') ?? __('parasols.hero_title');
+                    $heroTitle = localizedStrict($settings, 'hero_title') ?? __('parasols.hero_title');
                     $heroParts = str_contains($heroTitle, ':') ? explode(':', $heroTitle, 2) : [$heroTitle, null];
                 @endphp
 
@@ -24,27 +24,27 @@
                 </h1>
 
                 <p class="text-slate-600 dark:text-slate-300 text-lg md:text-xl max-w-3xl mx-auto mb-14 leading-relaxed opacity-90">
-                    {{ localized($settings, 'hero_subtitle') ?? __('parasols.hero_subtitle') }}
+                    {{ localizedStrict($settings, 'hero_subtitle') ?? __('parasols.hero_subtitle') }}
                 </p>
 
                 <div class="flex flex-wrap justify-center gap-6">
                     <a href="#spaces" class="bg-primary text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-primary/40 transition-all transform hover:-translate-y-1 inline-flex items-center justify-center">
-                        {{ localized($settings, 'cta_primary_text') ?? __('parasols.cta_primary') }}
+                        {{ localizedStrict($settings, 'cta_primary_text') ?? __('parasols.cta_primary') }}
                     </a>
                     @if(!empty($settings->cta_secondary_pdf_path))
                     <a href="{{ asset('storage/' . $settings->cta_secondary_pdf_path) }}" download
                         class="bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white backdrop-blur-md px-10 py-4 rounded-xl font-bold text-lg border border-slate-200 dark:border-white/20 hover:bg-slate-200 dark:hover:bg-white/20 transition-all inline-flex items-center justify-center gap-2">
                         <span class="material-symbols-outlined">download</span>
-                        {{ localized($settings, 'cta_secondary_text') ?? __('parasols.cta_secondary') }}
+                        {{ localizedStrict($settings, 'cta_secondary_text') ?? __('parasols.cta_secondary') }}
                     </a>
                     @elseif(!empty($settings->cta_secondary_url))
                     <a href="{{ $settings->cta_secondary_url }}" target="_blank" rel="noopener"
                         class="bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white backdrop-blur-md px-10 py-4 rounded-xl font-bold text-lg border border-slate-200 dark:border-white/20 hover:bg-slate-200 dark:hover:bg-white/20 transition-all inline-flex items-center justify-center">
-                        {{ localized($settings, 'cta_secondary_text') ?? __('parasols.cta_secondary') }}
+                        {{ localizedStrict($settings, 'cta_secondary_text') ?? __('parasols.cta_secondary') }}
                     </a>
                     @else
                     <a href="#spaces" class="bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white backdrop-blur-md px-10 py-4 rounded-xl font-bold text-lg border border-slate-200 dark:border-white/20 hover:bg-slate-200 dark:hover:bg-white/20 transition-all inline-flex items-center justify-center">
-                        {{ localized($settings, 'cta_secondary_text') ?? __('parasols.cta_secondary') }}
+                        {{ localizedStrict($settings, 'cta_secondary_text') ?? __('parasols.cta_secondary') }}
                     </a>
                     @endif
                 </div>
@@ -75,7 +75,7 @@
                             <span class="material-symbols-outlined text-2xl">umbrella</span>
                         </div>
                         <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="counter" data-target="{{ $t1 }}" data-suffix="{{ $s1 }}">0</span></h3>
-                        <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ localized($settings, 'stat1_label') ?? __('parasols.stat1_label') }}</p>
+                        <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ localizedStrict($settings, 'stat1_label') ?? __('parasols.stat1_label') }}</p>
                     </div>
                     <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                 </div>
@@ -85,7 +85,7 @@
                             <span class="material-symbols-outlined text-2xl">school</span>
                         </div>
                         <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="counter" data-target="{{ $t2 }}">0</span></h3>
-                        <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ localized($settings, 'stat2_label') ?? __('parasols.stat2_label') }}</p>
+                        <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ localizedStrict($settings, 'stat2_label') ?? __('parasols.stat2_label') }}</p>
                     </div>
                     <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                 </div>
@@ -95,7 +95,7 @@
                             <span class="material-symbols-outlined text-2xl">location_city</span>
                         </div>
                         <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="counter" data-target="{{ $t3 }}">0</span></h3>
-                        <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ localized($settings, 'stat3_label') ?? __('parasols.stat3_label') }}</p>
+                        <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ localizedStrict($settings, 'stat3_label') ?? __('parasols.stat3_label') }}</p>
                     </div>
                     <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                 </div>
@@ -105,7 +105,7 @@
                             <span class="material-symbols-outlined text-2xl">leaderboard</span>
                         </div>
                         <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1"><span class="counter" data-target="{{ $t4 }}" data-suffix="{{ $s4 }}">0</span></h3>
-                        <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ localized($settings, 'stat4_label') ?? __('parasols.stat4_label') }}</p>
+                        <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">{{ localizedStrict($settings, 'stat4_label') ?? __('parasols.stat4_label') }}</p>
                     </div>
                     <div class="absolute -bottom-12 -end-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                 </div>
@@ -119,8 +119,10 @@
                 <div class="max-w-xl">
                     <h2 class="text-4xl md:text-5xl font-black mb-6 text-slate-900 dark:text-white leading-tight">
                         @php
-                            $sectionTitle = localized($settings, 'section_title') ?? __('parasols.section_title');
-                            $sectionParts = str_contains($sectionTitle, ' في ') ? explode(' في ', $sectionTitle, 2) : [$sectionTitle, null];
+                            $sectionTitle = localizedStrict($settings, 'section_title') ?? __('parasols.section_title');
+                            $sectionParts = app()->getLocale() === 'ar' && str_contains($sectionTitle, ' في ')
+                                ? explode(' في ', $sectionTitle, 2)
+                                : [$sectionTitle, null];
                         @endphp
                         {{ trim($sectionParts[0]) }}@if($sectionParts[1]) في <span class="text-primary">{{ trim($sectionParts[1]) }}</span>@endif
                     </h2>
