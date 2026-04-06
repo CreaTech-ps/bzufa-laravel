@@ -83,6 +83,7 @@
 
         <div class="pt-8 border-t border-slate-100 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-start">
             <div class="flex flex-col md:flex-row items-center gap-4 md:gap-10">
+                @include('website.partials.payment-card-logos')
                 <p class="text-[11px] sm:text-xs text-slate-400 font-medium tracking-wide uppercase">
                     {{ __('ui.rights_reserved', ['year' => date('Y')]) }}
                 </p>

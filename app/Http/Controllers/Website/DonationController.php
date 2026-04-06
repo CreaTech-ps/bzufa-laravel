@@ -6,20 +6,27 @@ use App\Http\Controllers\Controller;
 use App\Models\Donation;
 use App\Models\FinancialAuditLog;
 use App\Models\FinancialTransaction;
+use App\Mail\DonationReceiptMail;
 use App\Services\LahzaService;
+use App\Services\RecaptchaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class DonationController extends Controller
 {
-    public function __construct(private readonly LahzaService $lahzaService)
-    {
+    public function __construct(
+        private readonly LahzaService $lahzaService,
+        private readonly RecaptchaService $recaptchaService,
+    ) {
     }
 
     public function create()
     {
-        return view('website.donate');
+        return view('website.donate', [
+            'recaptchaSiteKey' => config('services.recaptcha.site_key'),
+        ]);
     }
 
     public function result(Request $request)
@@ -63,11 +70,29 @@ class DonationController extends Controller
             'currency' => ['nullable', 'string', 'max:10'],
             'purpose' => ['nullable', 'in:general,scholarship,project,tribute'],
             'notes' => ['nullable', 'string', 'max:1000'],
+            'accept_policies' => ['accepted'],
+        ], [
+            'accept_policies.accepted' => __('donate.validation_accept_policies'),
         ]);
+
+        if ($this->recaptchaService->isEnabled()) {
+            $request->validate([
+                'g-recaptcha-response' => ['required', 'string'],
+            ], [
+                'g-recaptcha-response.required' => __('donate.recaptcha_required'),
+            ]);
+
+            if (! $this->recaptchaService->verify($request->input('g-recaptcha-response'), $request->ip())) {
+                return back()->withInput()->with('error', __('donate.recaptcha_failed'));
+            }
+        }
 
         $validated['currency'] = $validated['currency'] ?? 'ILS';
         $validated['donor_name'] = $validated['donor_name'] ?? 'متبرع إلكتروني';
         $validated['donor_type'] = $validated['donor_type'] ?? 'anonymous';
+        if (($validated['purpose'] ?? '') === '') {
+            $validated['purpose'] = null;
+        }
 
         $reference = 'DON-' . now()->format('YmdHis') . '-' . Str::upper(Str::random(6));
         $donation = Donation::create([
@@ -153,7 +178,9 @@ class DonationController extends Controller
 
         $status = $this->lahzaService->transactionSucceeded($effectivePayload) ? 'approved' : 'rejected';
 
-        DB::transaction(function () use ($donation, $effectivePayload, $transactionId, $status): void {
+        $becameApproved = false;
+
+        DB::transaction(function () use ($donation, $effectivePayload, $transactionId, $status, &$becameApproved): void {
             $donation->refresh();
             if ($donation->status === 'approved') {
                 return;
@@ -180,6 +207,8 @@ class DonationController extends Controller
             if ($status !== 'approved') {
                 return;
             }
+
+            $becameApproved = true;
 
             $exists = FinancialTransaction::query()
                 ->where('reference_type', Donation::class)
@@ -209,6 +238,56 @@ class DonationController extends Controller
             ]);
             FinancialAuditLog::log('created', $transaction, null, $transaction->toArray());
         });
+
+        if ($becameApproved) {
+            $this->sendBuyerReceiptEmailIfNeeded($donation->fresh());
+        }
+    }
+
+    private function sendBuyerReceiptEmailIfNeeded(Donation $donation): void
+    {
+        $email = $donation->donor_email;
+        if ($email === null || $email === '') {
+            return;
+        }
+
+        $payload = is_array($donation->gateway_payload) ? $donation->gateway_payload : [];
+        if (! empty($payload['buyer_receipt_email_sent'])) {
+            return;
+        }
+
+        try {
+            $storeName = (string) config('app.name');
+            $cardBrand = $this->cardBrandFromGatewayPayload($payload);
+            Mail::to($email)
+                ->locale((string) config('app.locale', 'ar'))
+                ->send(new DonationReceiptMail($donation, $storeName, $cardBrand));
+
+            $merged = array_merge($payload, [
+                'buyer_receipt_email_sent' => true,
+                'buyer_receipt_email_sent_at' => now()->toIso8601String(),
+            ]);
+            $donation->update(['gateway_payload' => $merged]);
+        } catch (\Throwable $e) {
+            report($e);
+        }
+    }
+
+    private function cardBrandFromGatewayPayload(array $payload): ?string
+    {
+        $brand = data_get($payload, 'card.brand')
+            ?? data_get($payload, 'data.card.brand')
+            ?? data_get($payload, 'payment.card.brand')
+            ?? data_get($payload, 'payment_method.card.brand')
+            ?? data_get($payload, 'payment_method_details.card.brand')
+            ?? data_get($payload, 'source.brand')
+            ?? data_get($payload, 'data.payment_method.card.brand');
+
+        if (! is_string($brand) || $brand === '') {
+            return null;
+        }
+
+        return strtoupper($brand);
     }
 
     private function isValidWebhook(Request $request): bool
