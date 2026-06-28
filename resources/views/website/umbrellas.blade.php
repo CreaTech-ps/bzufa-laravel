@@ -9,11 +9,6 @@
 
         <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="text-center relative z-10">
-                <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-primary/10 text-primary border border-primary/20 mb-8 backdrop-blur-sm">
-                    <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                    <span class="text-xs font-bold uppercase tracking-widest">{{ __('parasols.badge') }}</span>
-                </div>
-
                 @php
                     $heroTitle = localizedStrict($settings, 'hero_title') ?? __('parasols.hero_title');
                     $heroParts = str_contains($heroTitle, ':') ? explode(':', $heroTitle, 2) : [$heroTitle, null];
