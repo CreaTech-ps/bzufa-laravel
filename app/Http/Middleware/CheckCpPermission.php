@@ -36,6 +36,7 @@ class CheckCpPermission
         'cp.newsletter' => 'newsletter',
         'cp.financial' => 'financial',
         'cp.donations' => 'financial',
+        'cp.payment-gateway' => 'financial',
         'cp.financial-transactions' => 'financial',
         'cp.financial.reports' => 'financial',
         'cp.users' => 'users',

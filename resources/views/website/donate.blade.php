@@ -26,6 +26,18 @@
             </div>
         @endif
 
+        @if(!empty($donationsDisabled))
+            <div class="bg-white dark:bg-card-dark rounded-2xl p-8 border border-slate-200 dark:border-white/10 shadow-sm text-center">
+                <span class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 mb-4">
+                    <span class="material-symbols-outlined text-3xl">pause_circle</span>
+                </span>
+                <h2 class="text-xl font-extrabold text-slate-900 dark:text-white mb-2">{{ __('donate.donations_disabled_title') }}</h2>
+                <p class="text-slate-600 dark:text-slate-400 mb-6">{{ __('donate.donations_disabled_body') }}</p>
+                <a href="{{ localized_route('home') }}" class="inline-block bg-primary text-white px-6 py-2.5 rounded-full font-bold">
+                    {{ __('ui.nav_home') }}
+                </a>
+            </div>
+        @else
         <form action="{{ route('donate.checkout') }}" method="post" class="bg-white dark:bg-card-dark rounded-2xl p-6 border border-slate-200 dark:border-white/10 shadow-sm space-y-4">
             @csrf
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -85,6 +97,7 @@
                 </button>
             </div>
         </form>
+        @endif
     </div>
 </section>
 @endsection

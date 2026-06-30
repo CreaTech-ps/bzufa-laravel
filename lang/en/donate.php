@@ -40,4 +40,16 @@ return [
 
     'field_purpose' => 'Purpose',
     'field_notes' => 'Notes',
+
+    'result_success_title' => 'Thank you — your donation was successful',
+    'result_success_body' => 'Your donation has been recorded. Your support will go directly to the association’s programs.',
+    'result_failed_title' => 'Donation not completed',
+    'result_failed_body' => 'You can try again or contact us if you were charged but the status did not update.',
+    'result_pending_title' => 'Donation pending verification',
+    'result_pending_body' => 'We are waiting for payment confirmation from the gateway. Please refresh this page in a moment.',
+    'result_pending_invoice_note' => 'Your payment invoice will be sent to the email address you entered on the payment gateway page.',
+
+    'donations_disabled_title' => 'Online donations are currently unavailable',
+    'donations_disabled_body' => 'Sorry, online donations are temporarily disabled. Please contact us for assistance.',
+    'gateway_not_configured' => 'The payment gateway is not configured yet. Please try again later.',
 ];

@@ -8,14 +8,20 @@ use Illuminate\Support\Str;
 
 class LahzaService
 {
+    public function __construct(
+        private readonly PaymentGatewayConfig $gatewayConfig,
+    ) {
+    }
+
     public function checkoutUrl(array $payload): string
     {
-        $customPaymentPageUrl = trim((string) config('services.lahza.payment_page_url', ''));
+        $lahza = $this->gatewayConfig->lahza();
+        $customPaymentPageUrl = trim((string) ($lahza['payment_page_url'] ?? ''));
         if ($customPaymentPageUrl !== '') {
             $base = rtrim($customPaymentPageUrl, '/');
         } else {
-            $base = rtrim((string) config('services.lahza.checkout_url', 'https://pay.lahza.io'), '/');
-            $pageId = trim((string) config('services.lahza.page_id', ''));
+            $base = rtrim((string) ($lahza['checkout_url'] ?? 'https://pay.lahza.io'), '/');
+            $pageId = trim((string) ($lahza['page_id'] ?? ''));
             if ($pageId !== '') {
                 $base .= '/' . $pageId;
             }
@@ -44,8 +50,9 @@ class LahzaService
             return [];
         }
 
-        $apiBase = rtrim((string) config('services.lahza.api_base_url', ''), '/');
-        $secret = (string) config('services.lahza.secret_key', '');
+        $lahza = $this->gatewayConfig->lahza();
+        $apiBase = rtrim((string) ($lahza['api_base_url'] ?? ''), '/');
+        $secret = (string) ($lahza['secret_key'] ?? '');
 
         if ($apiBase === '' || $secret === '') {
             return [];

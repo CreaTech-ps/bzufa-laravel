@@ -8,6 +8,7 @@ use App\Models\FinancialAuditLog;
 use App\Models\FinancialTransaction;
 use App\Mail\DonationReceiptMail;
 use App\Services\LahzaService;
+use App\Services\PaymentGatewayConfig;
 use App\Services\RecaptchaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,13 +20,22 @@ class DonationController extends Controller
     public function __construct(
         private readonly LahzaService $lahzaService,
         private readonly RecaptchaService $recaptchaService,
+        private readonly PaymentGatewayConfig $gatewayConfig,
     ) {
     }
 
     public function create()
     {
+        if (! $this->gatewayConfig->donationsEnabled()) {
+            return view('website.donate', [
+                'recaptchaSiteKey' => config('services.recaptcha.site_key'),
+                'donationsDisabled' => true,
+            ]);
+        }
+
         return view('website.donate', [
             'recaptchaSiteKey' => config('services.recaptcha.site_key'),
+            'donationsDisabled' => false,
         ]);
     }
 
@@ -61,6 +71,14 @@ class DonationController extends Controller
 
     public function checkout(Request $request)
     {
+        if (! $this->gatewayConfig->donationsEnabled()) {
+            return back()->with('error', __('donate.donations_disabled_body'));
+        }
+
+        if (! $this->gatewayConfig->isConfigured()) {
+            return back()->with('error', __('donate.gateway_not_configured'));
+        }
+
         $validated = $request->validate([
             'donor_name' => ['nullable', 'string', 'max:255'],
             'donor_email' => ['nullable', 'email', 'max:255'],
@@ -292,7 +310,7 @@ class DonationController extends Controller
 
     private function isValidWebhook(Request $request): bool
     {
-        $secret = (string) config('services.lahza.webhook_secret', '');
+        $secret = $this->gatewayConfig->webhookSecret();
         if ($secret === '') {
             return true;
         }
@@ -313,13 +331,21 @@ class DonationController extends Controller
 
     private function successUrl(Donation $donation): string
     {
-        return (string) (config('services.lahza.success_url')
-            ?: route('donate.callback', ['reference' => $donation->reference_number, 'status' => 'success'], true));
+        $lahza = $this->gatewayConfig->lahza();
+        $configured = trim((string) ($lahza['success_url'] ?? ''));
+
+        return $configured !== ''
+            ? $configured
+            : route('donate.callback', ['reference' => $donation->reference_number, 'status' => 'success'], true);
     }
 
     private function cancelUrl(Donation $donation): string
     {
-        return (string) (config('services.lahza.cancel_url')
-            ?: route('donate.callback', ['reference' => $donation->reference_number, 'status' => 'failed'], true));
+        $lahza = $this->gatewayConfig->lahza();
+        $configured = trim((string) ($lahza['cancel_url'] ?? ''));
+
+        return $configured !== ''
+            ? $configured
+            : route('donate.callback', ['reference' => $donation->reference_number, 'status' => 'failed'], true);
     }
 }

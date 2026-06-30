@@ -157,6 +157,8 @@ Route::prefix('cp')->name('cp.')->middleware(['cp.auth', 'cp.check'])->group(fun
     Route::get('/financial/reports/donations', [\App\Http\Controllers\Cp\FinancialReportController::class, 'donations'])->name('financial.reports.donations');
     Route::get('/financial/reports/expenses', [\App\Http\Controllers\Cp\FinancialReportController::class, 'expenses'])->name('financial.reports.expenses');
     Route::get('/financial/reports/cash-flow', [\App\Http\Controllers\Cp\FinancialReportController::class, 'cashFlow'])->name('financial.reports.cash-flow');
+    Route::get('/payment-gateway', [\App\Http\Controllers\Cp\PaymentGatewaySettingsController::class, 'edit'])->name('payment-gateway.edit');
+    Route::put('/payment-gateway', [\App\Http\Controllers\Cp\PaymentGatewaySettingsController::class, 'update'])->name('payment-gateway.update');
 
     // المستخدمين والصلاحيات (للمدير فقط)
     Route::resource('users', \App\Http\Controllers\Cp\UserController::class)->names('users')->except(['show']);

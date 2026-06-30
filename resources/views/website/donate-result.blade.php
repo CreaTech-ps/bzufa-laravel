@@ -28,23 +28,32 @@
 
             <h1 class="text-2xl font-extrabold text-slate-900 dark:text-white mb-2">
                 @if($isSuccess)
-                    شكرا لكم، تمت عملية التبرع بنجاح
+                    {{ __('donate.result_success_title') }}
                 @elseif($isFailed)
-                    لم تكتمل عملية التبرع
+                    {{ __('donate.result_failed_title') }}
                 @else
-                    عملية التبرع قيد التحقق
+                    {{ __('donate.result_pending_title') }}
                 @endif
             </h1>
 
-            <p class="text-slate-600 dark:text-slate-400 mb-6">
+            <p class="text-slate-600 dark:text-slate-400 @if(!$isSuccess && !$isFailed) mb-4 @else mb-6 @endif">
                 @if($isSuccess)
-                    تم تسجيل تبرعكم بنجاح، وسيصل أثر دعمكم مباشرة إلى برامج الجمعية.
+                    {{ __('donate.result_success_body') }}
                 @elseif($isFailed)
-                    يمكنكم إعادة المحاولة أو التواصل معنا إذا تم الخصم دون تحديث الحالة.
+                    {{ __('donate.result_failed_body') }}
                 @else
-                    جار استلام تأكيد الدفع من البوابة. يرجى تحديث الصفحة بعد لحظات.
+                    {{ __('donate.result_pending_body') }}
                 @endif
             </p>
+
+            @if(!$isSuccess && !$isFailed)
+                <div class="mb-6 rounded-xl border border-blue-200 dark:border-blue-900/50 bg-blue-50/80 dark:bg-blue-950/30 p-4 text-sm text-slate-700 dark:text-slate-300 text-start leading-relaxed">
+                    <p class="flex items-start gap-2">
+                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-xl shrink-0">mail</span>
+                        <span>{{ __('donate.result_pending_invoice_note') }}</span>
+                    </p>
+                </div>
+            @endif
 
             @if($donation)
                 <div id="donation-receipt" class="text-sm bg-slate-50 dark:bg-slate-800 rounded-xl p-4 text-start">
